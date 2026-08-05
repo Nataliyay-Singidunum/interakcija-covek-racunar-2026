@@ -1,2 +1,40 @@
-<p>{{title()}}</p>
-<router-outlet />
+<nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      <i class="fa-solid fa-graduation-cap" style="color: rgb(215, 155, 198);"></i> ICR2026
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active">
+            <i class="fa-solid fa-house" style="color: rgb(215, 155, 198);"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active">
+            <i class="fa-solid fa-circle-info" style="color: rgb(215, 155, 198);"></i>About
+          </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" routerLink="/signup" routerLinkActive="active">
+          <i class="fa-solid fa-user-plus" style="color: rgb(215, 155, 198);"></i> Signup
+        </a>
+      </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <p>{{title()}}</p>
+  <router-outlet />
+  <div class="text-center mt-3">
+    <p>&copy; {{year}} - Tehnicki fakultet - interakcija covek racunar</p>
+
+  </div>
+
+</div>
