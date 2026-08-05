@@ -18,19 +18,29 @@
             <i class="fa-solid fa-circle-info" style="color: rgb(215, 155, 198);"></i>About
           </a>
         </li>
-        <li class="nav-item">
-        <a class="nav-link" routerLink="/signup" routerLinkActive="active">
-          <i class="fa-solid fa-user-plus" style="color: rgb(215, 155, 198);"></i> Signup
-        </a>
-      </li>
+        @if (hasAuth()) {
+          <li class="nav-item">
+            <button type="button" class="nav-link" (click)="doLogout()" >
+              <i class="fa-solid fa-right-from-bracket" style="color: rgb(215, 155, 198);"></i>Logout
+            </button>
+          </li>
+        } @else {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login" routerLinkActive="active">
+              <i class="fa-solid fa-right-to-bracket" style="color: rgb(215, 155, 198);"></i> Login
+            </a>
+          </li>
+        }
       </ul>
+      @if (hasAuth()) {
+        <div  class="navbar-text"><i class="fa-solid fa-user" style="color: rgb(215, 155, 198);"></i>{{getUserName()}}</div>
+      }
     </div>
   </div>
 </nav>
 
 <div class="container">
-
-  <p>{{title()}}</p>
+  
   <router-outlet />
   <div class="text-center mt-3">
     <p>&copy; {{year}} - Tehnicki fakultet - interakcija covek racunar</p>
