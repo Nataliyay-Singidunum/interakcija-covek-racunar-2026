@@ -13,3 +13,8 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.input-group{
+  max-width: 350px;
+  margin: auto;
+}
