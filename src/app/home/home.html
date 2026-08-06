@@ -1,1 +1,24 @@
-<p>home works!</p>
+<div class="movies">
+  @for (movie of movies(); track $index) {
+    <div class="card">
+      <img [src]="movie.poster" class="card-img-top" [alt]="movie.title">
+      <div class="card-body">
+        <h5 class="card-title ">{{movie.title}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{movie.director.name}}</h6>
+        <p class="card-text">{{movie.shortDescription}}</p>
+      </div>
+      <div class="card-footer btn-group">
+        <a class="btn btn-sm btn-primary" [routerLink]="`/movie/${movie.shortUrl}`">
+          <i class="fa-solid fa-arrow-up-right-from-square" style="color: rgb(215, 155, 198);"></i> Details
+        </a>
+        <div class="btn btn-sm btn-success" [routerLink]="`/movie/${movie.shortUrl}`">
+          <i class="fa-solid fa-cart-shopping" style="color: rgb(215, 155, 198);"></i> Add to cart
+        </div>
+      </div>
+
+    </div>
+  }
+
+</div>
+
+

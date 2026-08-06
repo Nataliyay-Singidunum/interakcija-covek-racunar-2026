@@ -1,0 +1,15 @@
+.movies{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.movies .card{
+  max-width: 240px;
+}
+
+.movies .btn-group{
+  display: flex;
+  justify-content: flex-end;
+}
