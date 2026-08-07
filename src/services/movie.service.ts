@@ -10,7 +10,11 @@ const client = axios.create({
 });
 
 export class MovieService {
-  static async getMovies(search: string = "") {
-    return  client.get<MovieModel[]>(`/movie?search=${search}`);
+  static async getMovies(search: string = '') {
+    return client.get<MovieModel[]>(`/movie?search=${search}`);
+  }
+
+  static async getMovieByShortURL(shortURL: string) {
+    return client.get<MovieModel>(`/movie/short/${shortURL}`);
   }
 }

@@ -3,6 +3,7 @@ import { UserModel } from '../models/user.model';
 export class UserService {
   public static USERS_KEY = 'icr_users';
   public static ACTIVE_KEY = 'icr_active';
+  public static TO_KEY = 'icr_to';
 
   static getUsers(): UserModel[] {
     if (!localStorage.getItem(this.USERS_KEY)) {

@@ -33,14 +33,19 @@
         }
       </ul>
       @if (hasAuth()) {
-        <div  class="navbar-text"><i class="fa-solid fa-user" style="color: rgb(215, 155, 198);"></i>{{getUserName()}}</div>
+        <a class="nav-link" routerLink="/profile" routerLinkActive="active">
+          <i class="fa-solid fa-circle-user" style="color: rgb(215, 155, 198);"></i> Profile
+        </a>
+        <div  class="navbar-text">
+          <i class="fa-solid fa-user" style="color: rgb(215, 155, 198);"></i>{{getUserName()}}
+        </div>
       }
     </div>
   </div>
 </nav>
 
 <div class="container">
-  
+
   <router-outlet />
   <div class="text-center mt-3">
     <p>&copy; {{year}} - Tehnicki fakultet - interakcija covek racunar</p>

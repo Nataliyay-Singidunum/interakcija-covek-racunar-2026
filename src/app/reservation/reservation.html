@@ -1,0 +1,52 @@
+
+@if (movie()){
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a routerLink="/">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a [routerLink]="`/movie/${movie()?.shortUrl}`">{{movie()?.title}}</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        Reservation
+      </li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <img [src]="movie()?.poster" [alt]="movie()?.title" class="img-fluid">
+    </div>
+    <div class="col-12 col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5>{{movie()?.title}}</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label for="title" class="form-label">Movie</label>
+            <input type="text" class="form-control" id="title">
+          </div>
+          <div class="mb-3">
+            <label for="time" class="form-label">Time</label>
+            <select class="form-select" id="time">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-success">
+            <i class="fa-solid fa-cart-shopping" style="color: rgb(215, 155, 198);"></i> Book now
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+}

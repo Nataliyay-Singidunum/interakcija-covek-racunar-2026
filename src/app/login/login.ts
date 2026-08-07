@@ -31,7 +31,12 @@ export class Login {
       return;
     }
 
-  this.router.navigateByUrl('/');
+    let to = '/';
+    if(localStorage.getItem(UserService.TO_KEY)) {
+      to = localStorage.getItem(UserService.TO_KEY)!;
+      localStorage.removeItem(UserService.TO_KEY);
+    }
+    this.router.navigateByUrl(to);
 
   }
 
