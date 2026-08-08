@@ -41,9 +41,55 @@
   </div>
   @if (activeUser()!.data.length > 0) {
     <div class="card-body">
-      @for (order of activeUser()?.data; track $index){
-        <p>{{order}}</p>
-      }
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Movie</th>
+          <th scope="col">Cinema</th>
+          <th scope="col">Hall</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Time</th>
+          <th scope="col">Status</th>
+          <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (order of activeUser()?.data; track $index){
+            <tr>
+              <th scope="row">{{order.movieTitle}}</th>
+              <td>{{order.cinema}}</td>
+              <td>{{order.hall}}</td>
+              <td>{{order.quantity}}</td>
+              <td>{{order.time}}</td>
+              <td>{{statusMap[order.status]}}</td>
+              <td>
+
+                @if (order.status == 'na') {
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="pay(order)">Pay</button>
+                    <button type="button" class="btn btn-sm btn-danger" (click)="cancel(order)">Cancel</button>
+                  </div>
+                }
+                @if (order.status == 'paid') {
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-success" (click)="like(order)">Like</button>
+                    <button type="button" class="btn btn-sm btn-danger" (click)="dislike(order)">Dislike</button>
+                  </div>
+                }
+                @if (order.status == 'liked' || order.status == 'disliked') {
+                  <p>Rewiew submitted!</p>
+                }
+                @if (order.status == 'cancelled') {
+                  <p>Order cancelled.</p>
+                }
+              </td>
+            </tr>
+          }
+
+
+        </tbody>
+      </table>
+
     </div>
   } @else {
     <div class="card-body">

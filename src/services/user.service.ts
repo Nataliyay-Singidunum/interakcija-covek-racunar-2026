@@ -1,4 +1,5 @@
 import { UserModel } from '../models/user.model';
+import { OrderModel } from '../models/order.model';
 
 export class UserService {
   public static USERS_KEY = 'icr_users';
@@ -62,4 +63,29 @@ export class UserService {
   static logout() {
     localStorage.removeItem(this.ACTIVE_KEY);
   }
+
+  static createReservation(order: OrderModel) {
+    const current = localStorage.getItem(this.ACTIVE_KEY);
+    const all = this.getUsers();
+
+    for (let u of all) {
+      if (u.email === current) {
+        u.data.push(order);
+      }
+    }
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
+  }
+
+  static updateOrder(orderId: string, status: 'na' | 'paid' | 'cancelled' | 'liked' | 'disliked'){
+    const all = this.getUsers();
+
+    for (let u of all) {
+      for (let o of u.data) {
+        if (o.orderId === orderId) {
+          o.status = status;
+        }
+      }
+    }
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
+  };
 }

@@ -21,31 +21,48 @@
     </div>
     <div class="col-12 col-md-8">
       <div class="card">
-        <div class="card-header">
-          <h5>{{movie()?.title}}</h5>
-        </div>
-        <div class="card-body">
-          <div class="mb-3">
-            <label for="title" class="form-label">Movie</label>
-            <input type="text" class="form-control" id="title">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="card-header">
+            <h5><i class="fa-solid fa-film" style="color: rgb(215, 155, 198);"></i> {{movie()?.title}}</h5>
           </div>
-          <div class="mb-3">
-            <label for="time" class="form-label">Time</label>
-            <select class="form-select" id="time">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="time" class="form-label">Time</label>
+              <select class="form-select" id="time" formControlName="time">
+                <option value="Monday 22h">Monday 22:00</option>
+                <option value="Tuesday 17h">Tuesday 17:00</option>
+                <option value="Friday 13h">Friday 13:00</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="cinema" class="form-label" >Cinema</label>
+              <select class="form-select" id="cinema" formControlName="cinema">
+                <option value="Usce">Usce</option>
+                <option value="Beo">Beo</option>
+                <option value="Ada Mall">Ada Mall</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="hall" class="form-label">Hall</label>
+              <select class="form-select" id="hall" formControlName="hall">
+                <option value="Big">Big</option>
+                <option value="Small">Small</option>
+                <option value="Private">Private</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="quantity" class="form-label">Number of tickets </label>
+              <input type="number" class="form-control" id="quantity" formControlName="quantity">
+            </div>
+
           </div>
+          <div class="card-footer ">
+            <button class="btn btn btn-success">
+              <i class="fa-solid fa-cart-shopping" style="color: rgb(215, 155, 198);"></i> Book now
+            </button>
 
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-sm btn-success">
-            <i class="fa-solid fa-cart-shopping" style="color: rgb(215, 155, 198);"></i> Book now
-          </button>
-
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
