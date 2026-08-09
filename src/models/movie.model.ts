@@ -1,3 +1,5 @@
+import { GenreModel } from './genre.model';
+
 export interface MovieModel {
   movieId: number;
   internalId: string;
@@ -36,11 +38,7 @@ export interface MovieModel {
     movieGenreId: number;
     movieId: number;
     genreId: number;
-    genre: {
-      genreId: number;
-      name: string;
-      createdAt: string;
-    };
+    genre: GenreModel
   }[];
 
 }

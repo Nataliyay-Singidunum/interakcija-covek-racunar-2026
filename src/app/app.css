@@ -1,0 +1,65 @@
+.chatbox-content{
+  width: 500px;
+  height: 600px;
+}
+
+.chat-body{
+  overflow-y: scroll;
+  max-height: 500px;
+}
+
+.card-chat{
+  max-width: 200px;
+}
+
+.msg-content{
+  max-width: 300px;
+  text-wrap: wrap;
+  font-weight: normal;
+}
+
+/* Za tablet */
+@media only screen and (max-width: 800px) {
+  .chatbox-content{
+    width: 400px;
+    height: 500px;
+  }
+
+  .chat-body{
+    overflow-y: scroll;
+    max-height: 400px;
+  }
+
+  .card-chat{
+    max-width: 200px;
+  }
+
+  .msg-content{
+    max-width: 200px;
+    text-wrap: wrap;
+    font-weight: normal;
+  }
+}
+
+/* Za telefon */
+@media only screen and (max-width: 800px) {
+  .chatbox-content{
+    width: 300px;
+    height: 500px;
+  }
+
+  .chat-body{
+    overflow-y: scroll;
+    max-height: 400px;
+  }
+
+  .card-chat{
+    max-width: 200px;
+  }
+  .msg-content{
+    max-width: 200px;
+    text-wrap: wrap;
+    font-weight: normal;
+  }
+
+}

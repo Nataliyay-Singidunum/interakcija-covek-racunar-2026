@@ -47,6 +47,46 @@
 <div class="container">
 
   <router-outlet />
+  <div class="chatbot-containter position-fixed bottom-0 end-0 p-3">
+    @if (!isChatVisible) {
+      <button type="button" class="btn btn-primary rounded-circle p-3" (click)="toggleChat()">
+        <i class="fa-solid fa-comments" style="color: rgb(215, 155, 198);"></i>
+      </button>
+    } @else {
+      <div class="chatbox card chatbox-content">
+        <div class="card-header d-flex justify-content-between">
+          <span class="fw-bold">Ticket Bot</span>
+          <button class="btn btn-close" aria-label="Close" (click)="toggleChat()"></button>
+        </div>
+        <div class="card-body chat-body">
+          <div class="message mb-2">
+            @for (msg of messages; track $index) {
+              @if (msg.type == "user") {
+                <div class="text-end">
+                  <div class="badge bg-primary msg-content text-white mb-1">{{msg.text}}</div>
+                </div>
+              }
+              @if (msg.type == "bot") {
+                <div class="text-start">
+                  <div class="badge bg-secondary text-white msg-content text-start mb-1" [innerHTML]="msg.text"></div>
+                </div>
+              }
+              @if (msg.type == "error") {
+                <div class="text-start">
+                  <div class="badge bg-danger text-white msg-content mb-1">{{msg.text}}</div>
+                </div>
+              }
+            }
+          </div>
+        </div>
+        <div class="card-footer">
+          <input type="text" class="form-control" placeholder="Type a message" [(ngModel)]="userMessage" (keyup.enter)="sendUserMessage()">
+        </div>
+      </div>
+    }
+
+
+  </div>
   <div class="text-center mt-3">
     <p>&copy; {{year}} - Tehnicki fakultet - interakcija covek racunar</p>
 
