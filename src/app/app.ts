@@ -57,7 +57,6 @@ export class App {
       text: this.botThinkingPlaceholder,
     });
 
-    /*
     RasaService.sendMessage(trimmedMessage).then((rsp) => {
       if (rsp.data.length == 0) {
         this.messages.push({
@@ -67,10 +66,28 @@ export class App {
         return;
       }
 
-      for(let botMessage of rsp.data) {
+      for(let message of rsp.data) {
+        if (message.attachment != null && Array.isArray(message.attachment)){
+          let html = "";
+          for(let movie of message.attachment as MovieModel[]){
+            html += '<ul class="list-unstyled">';
+            html += `<li> Title: ${movie.title}</li>`;
+            html += `<li> Director: ${movie.director.name}</li>`;
+            html += `<li> Genre: ${movie.movieGenres.map((mg) => mg.genre.name)}</li>`;
+            html += `<li> Actors: ${movie.movieActors.map((ma) => ma.actor.name)}</li>`;
+            html += `</ul>`;
+            html += `<p>${movie.description}</p>`;
+          }
+          this.messages.push({
+            type: 'bot',
+            text: html,
+          });
+
+
+        }
         this.messages.push({
           type: 'bot',
-          text: botMessage.text,
+          text: message.text
         });
       }
 
@@ -81,11 +98,10 @@ export class App {
         return true;
       });
     });
-*/
 
     // Lokalna verzija u jsu - Bez Rase - 8. termin - 30+ min
 
-    if (trimmedMessage.includes('all movies')) {
+/*    if (trimmedMessage.includes('all movies')) {
       await this.createBotResponseAsMovieList();
       return;
     }
@@ -136,10 +152,11 @@ export class App {
       this.removeBotPlaceholder();
       return;
     }
-
+    console.log(genres.data);
     for (let genre of genres.data) {
-      if (trimmedMessage.includes('genre' + genre.name.toLowerCase())) {
-        await this.createBotResponseAsMovieList(genre.genreId)
+
+      if (trimmedMessage.includes('genre ' + genre.name.toLowerCase())) {
+        await this.createBotResponseAsMovieList(genre.genreId);
         return
       }
     }
@@ -147,7 +164,7 @@ export class App {
     this.messages.push({
       type: 'bot',
       text: "Seems like i cant help you with that!"
-    });
+    });*/
   }
 
   async createBotResponseAsMovieList(genre: number = 0) {

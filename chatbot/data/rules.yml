@@ -11,3 +11,14 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+
+
+- rule: Use action hello world
+  steps:
+    - intent: hello_world
+    - action: action_hello_world
+
+- rule: Recommend movies
+  steps:
+    - intent: latest_movies
+    - action: action_latest_movies

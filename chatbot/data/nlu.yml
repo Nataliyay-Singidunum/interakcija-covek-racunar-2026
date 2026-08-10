@@ -17,6 +17,47 @@ nlu:
     - goodevening
     - good afternoon
 
+- intent: hello_world
+  examples: |
+    - hello world
+
+- intent: latest_movies
+  examples: |
+    - recommend me some movies
+    - give me some movies
+    - can you recommend me
+    - any chance you got some movies for me
+    - anything new in the offer
+    - anything fresh
+    - can you give me some fresh movies
+    - your recommendations
+    - recommend movies
+    - suggest some movies
+    - movie recommendations
+    - I want movie recommendations
+    - show me some movies
+    - list some movies
+    - what are the latest movies
+    - any new movies available
+    - what movies are new
+    - new movie releases
+    - recently released movies
+    - what’s new to watch
+    - any fresh movie releases
+    - got any good movies
+    - any good movies to watch
+    - what should I watch
+    - what do you recommend watching
+    - I’m looking for something to watch
+    - surprise me with a movie
+    - could you recommend some movies
+    - can you suggest a movie for me
+    - would you recommend any movies
+    - do you have any movie suggestions
+    - movies
+    - new movies
+    - recommendations
+
 - intent: goodbye
   examples: |
     - cu
@@ -89,3 +130,4 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+
