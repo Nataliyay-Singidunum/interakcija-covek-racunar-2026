@@ -58,6 +58,87 @@ nlu:
     - new movies
     - recommendations
 
+- intent: search_movies
+  examples: |
+    - search movies for [brutalista](search_criteria)
+    - search movies for [inception](search_criteria)
+    - search movies for [the godfather](search_criteria)
+    - search movies for [interstellar](search_criteria)
+    - please find movies by [tarantino](search_criteria)
+    - movies like [avatar](search_criteria)
+    - movies like [the matrix](search_criteria)
+
+- regex: search_criteria
+  examples: |
+    - (?<=movies for ).*
+    - (?<=movies by ).*
+    - (?<=search for ).*
+    - (?<=movies like ).*
+
+- intent: genre_list
+  examples: |
+    - list all genres
+    - list movie genres
+    - show all genres
+    - show me all genres
+    - what genres exist
+    - what movie genres are available
+    - which genres do you have
+    - what kinds of movies are there
+    - give me all the genres
+    - give me the list of genres
+    - can you list the genres
+    - tell me the available genres
+    - what genres can I choose from
+    - what categories of movies exist
+    - movie categories
+    - film genres
+    - available genres
+    - genres
+    - genre list
+
+- intent: actor_list
+  examples: |
+    - list all actors
+    - list movie actors
+    - show all actors
+    - show me all actors
+    - what actors are available
+    - which actors do you have
+    - give me a list of actors
+    - give me all the actors
+    - can you list the actors
+    - tell me the actors
+    - actor list
+    - actors
+    - available actors
+    - movie actors
+    - film actors
+    - what actors exist
+    - who are the actors
+    - which movie actors are there
+
+- intent: director_list
+  examples: |
+    - list all directors
+    - list movie directors
+    - show all directors
+    - show me all directors
+    - what directors are available
+    - which directors do you have
+    - give me a list of directors
+    - give me all the directors
+    - can you list the directors
+    - tell me the directors
+    - director list
+    - directors
+    - available directors
+    - movie directors
+    - film directors
+    - what directors exist
+    - who are the directors
+    - which movie directors are there
+
 - intent: goodbye
   examples: |
     - cu

@@ -10,6 +10,21 @@ intents:
   - bot_challenge
   - hello_world
   - latest_movies
+  - search_movies
+  - genre_list
+  - actor_list
+  - director_list
+
+entities:
+  - search_criteria
+
+slots:
+  search_criteria:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type : from_entity
+        entity: search_criteria
 
 responses:
   utter_greet:
@@ -36,6 +51,10 @@ responses:
 actions:
   - action_hello_world
   - action_latest_movies
+  - action_search_movies
+  - action_genre_list
+  - action_actor_list
+  - action_director_list
 
 session_config:
   session_expiration_time: 60

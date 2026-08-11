@@ -8,6 +8,7 @@
 
 /chatbot/.rasa
 /chatbot/models
+/chatbot/actions/__pychache__
 
 # Node
 /node_modules

@@ -1,9 +1,10 @@
 import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
+import { RasaModel } from '../models/rasa.model';
 
 export class RasaService {
   static async sendMessage(content: string) {
-    return await axios.request({
+    return await axios.request<RasaModel[]>({
       url: 'http://localhost:5005/webhooks/rest/webhook',
       method: 'POST',
       data: {
