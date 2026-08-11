@@ -42,3 +42,8 @@ rules:
   steps:
     - intent: director_list
     - action: action_director_list
+
+- rule: Place an order
+  steps:
+    - intent: order_movie
+    - action: action_order_movie

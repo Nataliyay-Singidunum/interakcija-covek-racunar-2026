@@ -90,7 +90,6 @@ export class App {
           if (message.attachment.type == 'genre_list' || message.attachment.type == 'actor_list' || message.attachment.type == 'director_list') {
             let html = '<ul class="list-unstyled">';
 
-            // Wont render all actors since there are more than 1800 entries
             const MAX_ITEMS = 50;
             const itemsToDisplay = message.attachment.data.slice(0, MAX_ITEMS);
 
@@ -109,6 +108,11 @@ export class App {
               text: html,
             });
           }
+
+          // Make an order
+          if (message.attachment.type == 'order_movie') {
+            this.router.navigateByUrl(`/movie/${(message.attachment.data as MovieModel).shortUrl}/reservation`);
+          }
         }
         this.messages.push({
           type: 'bot',
@@ -121,6 +125,14 @@ export class App {
           return m.text != this.botThinkingPlaceholder;
         }
         return true;
+      });
+
+
+    }).catch(()=>{
+      this.removeBotPlaceholder();
+      this.messages.push({
+        type: 'error',
+        text: "Sorry, something went wrong. Please try again."
       });
     });
 

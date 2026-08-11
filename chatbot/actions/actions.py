@@ -62,6 +62,27 @@ class ActionSearchMovies(Action):
     return [SlotSet("search_criteria", None)]
 
 
+class ActionOrderMovies(Action):
+  def name(self) -> Text:
+    return "action_order_movie"
+
+  def run(self, dispatcher: CollectingDispatcher,
+          tracker: Tracker,
+          domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+    criteria = tracker.get_slot("order_criteria")
+    url="https://movie.pequla.com/api/movie?search=" + str(criteria)
+    rsp = requests.get(url)
+    movies = rsp.json()
+
+    if len(movies) > 0:
+      bot_response = {"type": "order_movie","data": movies[0]}
+      dispatcher.utter_message(text="Placing an order for: " + str(criteria), attachment = bot_response)
+    else:
+      dispatcher.utter_message(text="No movies for that criteria found :(" + str(criteria))
+    return [SlotSet("order_criteria", None)]
+
+
 class ActionGenreList(Action):
   def name(self) -> Text:
     return "action_genre_list"

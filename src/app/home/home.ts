@@ -26,7 +26,6 @@ export class Home {
     }
     this.previousSearch = this.search;
     MovieService.getMovies(this.search).then((rsp) => this.movies.set(rsp.data));
-    console.log(this.search);
   }
 
 }
