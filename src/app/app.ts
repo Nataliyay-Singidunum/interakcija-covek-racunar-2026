@@ -63,6 +63,7 @@ export class App {
           type: 'bot',
           text: "Sorry I didn't understand your question. Please try again.",
         });
+        this.removeBotPlaceholder();
         return;
       }
 
