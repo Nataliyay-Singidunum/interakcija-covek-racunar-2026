@@ -15,11 +15,19 @@ intents:
   - genre_list
   - actor_list
   - director_list
+  - order_cinema
+  - order_hall
+  - order_time
+  - order_count
 
 entities:
   - search_criteria
   - order_criteria
   - movie_permalink
+  - cinema_criteria
+  - hall_criteria
+  - time_criteria
+  - count_criteria
 
 slots:
   search_criteria:
@@ -35,6 +43,58 @@ slots:
     mappings:
       - type: from_entity
         entity: order_criteria
+
+  cinema_criteria:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: cinema_criteria
+
+  hall_criteria:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: hall_criteria
+
+  time_criteria:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: time_criteria
+
+  count_criteria:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: count_criteria
+
+  cinema_id:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  hall_id:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  time_id:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  ticket_count:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
 
   movie_permalink:
     type: text
@@ -65,6 +125,11 @@ responses:
   utter_confirm_order:
   - text: "Please confirm your order: "
 
+  utter_confirm_movie:
+    - text: "Please confirm your movie selection: "
+
+  utter_choose_count:
+  - text: "Please choose the number of tickets you want to purchase: "
 
 
 actions:
@@ -75,7 +140,16 @@ actions:
   - action_actor_list
   - action_director_list
   - action_extract_movie
+  - action_select_cinema
+  - action_select_hall
+  - action_select_time
+  - action_select_count
+  - action_list_order
   - action_place_order
+  - action_list_cinema
+  - action_list_hall
+  - action_list_time
+
 
 session_config:
   session_expiration_time: 60

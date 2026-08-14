@@ -17,10 +17,12 @@ nlu:
     - goodevening
     - good afternoon
 
+
 - intent: hello_world
   examples: |
     - hello world
     - action hello world
+
 
 - intent: latest_movies
   examples: |
@@ -59,6 +61,7 @@ nlu:
     - new movies
     - recommendations
 
+
 - intent: search_movies
   examples: |
     - search movies for [brutalista](search_criteria)
@@ -69,12 +72,14 @@ nlu:
     - movies like [avatar](search_criteria)
     - movies like [the matrix](search_criteria)
 
+
 - regex: search_criteria
   examples: |
     - (?<=movies for ).*
     - (?<=movies by ).*
     - (?<=search for ).*
     - (?<=movies like ).*
+
 
 - intent: order_movie
   examples: |
@@ -83,10 +88,62 @@ nlu:
     - order movie [the godfather](order_criteria)
     - order movie name [interstellar](order_criteria)
 
+
 - regex: order_criteria
   examples: |
     - (?<=movie name ).*
     - (?<=movie ).*
+
+
+- intent: order_cinema
+  examples: |
+    - order in cinema [usce](cinema_criteria)
+    - order cinema [rakovica](cinema_criteria)
+    - choose cinema [rajiceva](cinema_criteria)
+    - select cinema [ada](cinema_criteria)
+
+- regex: cinema_criteria
+  examples: |
+    - (?<=in cinema ).*
+    - (?<=cinema ).*
+
+
+- intent: order_hall
+  examples: |
+    - order hall [velika](hall_criteria)
+    - order hall name [mala](hall_criteria)
+    - choose hall [privatana](hall_criteria)
+    - choose hall name [srednja](hall_criteria)
+    - select hall [velika](hall_criteria)
+    - select hall name [privatana](hall_criteria)
+
+- regex: hall_criteria
+  examples: |
+    - (?<=hall name ).*
+    - (?<=hall ).*
+
+- intent: order_time
+  examples: |
+    - order at [today](time_criteria)
+    - choose time [now](time_criteria)
+    - select time [tomorrow](time_criteria)
+
+- regex: time_criteria
+  examples: |
+    - (?<=at ).*
+    - (?<=time ).*
+
+
+- intent: order_count
+  examples: |
+    - order [1](count_criteria)
+    - take [3](count_criteria)
+
+- regex: count_criteria
+  examples: |
+    - (?<=order ).*
+    - (?<=take ).*
+
 
 - intent: genre_list
   examples: |
@@ -110,6 +167,7 @@ nlu:
     - genres
     - genre list
 
+
 - intent: actor_list
   examples: |
     - list all actors
@@ -130,6 +188,7 @@ nlu:
     - what actors exist
     - who are the actors
     - which movie actors are there
+
 
 - intent: director_list
   examples: |
@@ -152,6 +211,7 @@ nlu:
     - who are the directors
     - which movie directors are there
 
+
 - intent: goodbye
   examples: |
     - cu
@@ -165,6 +225,7 @@ nlu:
     - bye bye
     - see you later
 
+
 - intent: affirm
   examples: |
     - yes
@@ -173,6 +234,7 @@ nlu:
     - of course
     - that sounds good
     - correct
+
 
 - intent: deny
   examples: |
@@ -183,6 +245,7 @@ nlu:
     - don't like that
     - no way
     - not really
+
 
 - intent: mood_great
   examples: |
@@ -201,6 +264,7 @@ nlu:
     - so good
     - so perfect
 
+
 - intent: mood_unhappy
   examples: |
     - my day was horrible
@@ -217,6 +281,7 @@ nlu:
     - extremly sad
     - so saad
     - so sad
+
 
 - intent: bot_challenge
   examples: |

@@ -33,16 +33,29 @@ stories:
   steps:
   - intent: order_movie
   - action: action_extract_movie
+  - action: utter_confirm_movie
+  - intent: affirm
+  - action: action_select_cinema
+  - intent: order_cinema
+  - action: action_list_hall
+  - intent: order_hall
+  - action: action_select_hall
+  - action: action_list_time
+  - intent: order_time
+  - action: action_select_time
+  - action: utter_choose_count
+  - intent: order_count
+  - action: action_select_count
+  - action: action_list_order
   - action: utter_confirm_order   # ubi me ovde puca iz nekog razloga, dodala sam samo prompt za confirm u akciju
   - intent: affirm                # skontala sam sta se desava, extract kad cuva slot omete izvrsavanje uttera, radilo je sa odmah akcijom jer je svakako cekao input neki i nije mu smetao "signalcic" u prici koji ometa dalje - barem sam ja ovako razumela - odose 3 sata zivota
   - action: action_place_order
-  - action: utter_goodbye
 
 - story: Deny order
   steps:
   - intent: order_movie
   - action: action_extract_movie
-  - action: utter_confirm_order
+  - action: utter_confirm_movie
   - intent: deny
   - action: utter_goodbye
 
