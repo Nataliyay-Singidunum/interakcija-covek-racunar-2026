@@ -68,9 +68,9 @@ export class App {
       }
 
       for(let message of rsp.data) {
-        if (message.attachment != null){
+        if (message.attachment != null) {
           // Returns movie list
-          if (message.attachment.type == "movie_list" && Array.isArray(message.attachment.data)) {
+          if (message.attachment.type == 'movie_list' && Array.isArray(message.attachment.data)) {
             let html = '';
             for (let movie of message.attachment.data as MovieModel[]) {
               html += '<ul class="list-unstyled">';
@@ -88,7 +88,11 @@ export class App {
           }
 
           // Simple object lists
-          if (message.attachment.type == 'genre_list' || message.attachment.type == 'actor_list' || message.attachment.type == 'director_list') {
+          if (
+            message.attachment.type == 'genre_list' ||
+            message.attachment.type == 'actor_list' ||
+            message.attachment.type == 'director_list'
+          ) {
             let html = '<ul class="list-unstyled">';
 
             const MAX_ITEMS = 50;
@@ -110,9 +114,37 @@ export class App {
             });
           }
 
+          // Simple list (array)
+          if (message.attachment.type == 'simple_list') {
+            let html = `<ul class='list-unstyled'>`;
+            for (let obj of message.attachment.data) {
+              html += `<li>${obj}</li>`;
+            }
+            html += `</ul>`;
+            this.messages.push({
+              type: 'bot',
+              text: html,
+            });
+          }
+
+          // Place order
+          if (message.attachment.type == 'create_order') {
+            let html = `<ul class='list-unstyled'>`;
+            for (let obj of message.attachment.data) {
+              html += `<li>${obj}</li>`;
+            }
+            html += `</ul>`;
+            this.messages.push({
+              type: 'bot',
+              text: html,
+            });
+          }
+
           // Make an order
           if (message.attachment.type == 'order_movie') {
-            this.router.navigateByUrl(`/movie/${(message.attachment.data as MovieModel).shortUrl}/reservation`);
+            this.router.navigateByUrl(
+              `/movie/${(message.attachment.data as MovieModel).shortUrl}/reservation`,
+            );
           }
         }
         this.messages.push({

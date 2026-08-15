@@ -11,14 +11,20 @@ intents:
   - hello_world
   - latest_movies
   - search_movies
-  - order_movie
+  - order_movie:
+      use_entities: [ ]  # mucim se 4 sata opet samo ovo mi je falilo,story nisam dirala bkv nis
   - genre_list
   - actor_list
   - director_list
-  - order_cinema
-  - order_hall
-  - order_time
-  - order_count
+  - order_cinema:
+      use_entities: [ ]
+  - order_hall:
+      use_entities: [ ]
+  - order_time:
+      use_entities: [ ]
+  - order_count:
+      use_entities: [ ]
+  - list_cinema
 
 entities:
   - search_criteria
@@ -32,42 +38,42 @@ entities:
 slots:
   search_criteria:
     type: text
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type : from_entity
         entity: search_criteria
 
   order_criteria:
     type: text
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: order_criteria
 
   cinema_criteria:
     type: text
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: cinema_criteria
 
   hall_criteria:
     type: text
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: hall_criteria
 
   time_criteria:
     type: text
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: time_criteria
 
   count_criteria:
     type: text
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: count_criteria
@@ -124,9 +130,6 @@ responses:
 
   utter_confirm_order:
   - text: "Please confirm your order: "
-
-  utter_confirm_movie:
-    - text: "Please confirm your movie selection: "
 
   utter_choose_count:
   - text: "Please choose the number of tickets you want to purchase: "

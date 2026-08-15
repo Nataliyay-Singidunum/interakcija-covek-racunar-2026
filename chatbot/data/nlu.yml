@@ -98,7 +98,7 @@ nlu:
 - intent: order_cinema
   examples: |
     - order in cinema [usce](cinema_criteria)
-    - order cinema [rakovica](cinema_criteria)
+    - order cinema [beo](cinema_criteria)
     - choose cinema [rajiceva](cinema_criteria)
     - select cinema [ada](cinema_criteria)
 
@@ -211,6 +211,12 @@ nlu:
     - who are the directors
     - which movie directors are there
 
+# debug
+- intent: list_cinema
+  examples: |
+    - list cinemas
+    - cinemas
+    - what cinemas are there
 
 - intent: goodbye
   examples: |

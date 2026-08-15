@@ -6,6 +6,14 @@ from rasa_sdk.events import SlotSet
 import requests
 import unicodedata
 
+def normalize(text: str) -> str:
+  return (
+    unicodedata.normalize("NFKD", text)
+    .encode("ascii", "ignore")
+    .decode("utf-8")
+    .lower()
+  )
+
 class ActionHelloWorld(Action):
 
     def name(self) -> Text:
@@ -138,29 +146,12 @@ class ActionExtractMovie(Action):
       exact_movie = movies[0]
       short_url = exact_movie.get("shortUrl", "")
 
-      dispatcher.utter_message(text="Selected movie: " + exact_movie['title'])
+      dispatcher.utter_message(text="Selected movie: " + exact_movie['title'] + "<br/>Is this the movie you want to purchase tickets for?")
       return [SlotSet("movie_permalink", short_url)]
 
     dispatcher.utter_message(text="No movies for that criteria found :(" + str(criteria))
     return []
 
-
-class ActionPlaceOrder(Action):
-  def name(self) -> Text:
-    return "action_place_order"
-
-  def run(self, dispatcher: CollectingDispatcher,
-          tracker: Tracker,
-          domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-    permalink = tracker.get_slot("movie_permalink")
-    if not permalink:
-      dispatcher.utter_message(text="Please specify which movie you would like to order")
-      return []
-
-    dispatcher.utter_message(text="Permalink " + permalink)
-
-    return []
 
 class ActionListCinema(Action):
   def name(self) -> Text:
@@ -170,10 +161,11 @@ class ActionListCinema(Action):
           tracker: Tracker,
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-    bot_response = {"type": "simple_list","data": ["Usce", "Beo", "Ada Mall"]};
-    dispatcher.utter_message(text="Here are all of the available cinemas:  " + bot_response);
+    bot_response = {"type": "simple_list","data": ["Usce", "Beo", "Ada Mall"]}
+    dispatcher.utter_message(text="Here are all of the available cinemas:  ", attachment = bot_response)
 
-    return [];
+    return []
+
 
 class ActionListHall(Action):
   def name(self) -> Text:
@@ -183,10 +175,11 @@ class ActionListHall(Action):
           tracker: Tracker,
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-    bot_response = {"type": "simple_list","data": [ "Big", "Small", "Private"]};
-    dispatcher.utter_message(text="Here are all of the available halls:  " + bot_response);
+    bot_response = {"type": "simple_list","data": [ "Big", "Small", "Private"]}
+    dispatcher.utter_message(text="Here are all of the available halls:  ", attachment = bot_response)
 
-    return [];
+    return []
+
 
 class ActionListTime(Action):
   def name(self) -> Text:
@@ -196,10 +189,11 @@ class ActionListTime(Action):
           tracker: Tracker,
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-    bot_response = {"type": "simple_list","data": [ "Monday 22h", "Tuesday 17h", "Friday 13h"]};
-    dispatcher.utter_message(text="Here are all of the available screening times: " + bot_response);
+    bot_response = {"type": "simple_list","data": [ "Monday 22h", "Tuesday 17h", "Friday 13h"]}
+    dispatcher.utter_message(text="Here are all of the available screening times: ", attachment = bot_response)
 
-    return [];
+    return []
+
 
 class ActionSelectCinema(Action):
   def name(self) -> Text:
@@ -209,27 +203,28 @@ class ActionSelectCinema(Action):
           tracker: Tracker,
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-    criteria = tracker.get_slot("cinema_criteria");
-    cinemas = ["Usce", "Beo", "Ada Mall"];
-    matched = [];
+    criteria = tracker.get_slot("cinema_criteria")
+    cinemas = ["Usce", "Beo", "Ada Mall"]
+    matched = []
 
     if not criteria:
-      dispatcher.utter_message(text="Please specify which cinema you would like to book tickets for. ");
-      return [];
+      dispatcher.utter_message(text="Please specify which cinema you would like to book tickets for. ")
+      return []
 
     if criteria:
-      normalized_criteria = normalize(criteria);
+      normalized_criteria = normalize(criteria)
       for cinema in cinemas:
         if normalize(cinema) == normalized_criteria:
-          matched.append(cinema);
+          matched.append(cinema)
 
     if len(matched) > 0:
-      exact_cinema = matched[0];
-      dispatcher.utter_message(text='Selected cinema: '+ exact_cinema);
-      return [SlotSet('cinema_id',exact_cinema)];
+      exact_cinema = matched[0]
+      dispatcher.utter_message(text='Selected cinema: '+ exact_cinema)
+      return [SlotSet('cinema_id',exact_cinema)]
 
-    dispatcher.utter_message(text='No cinema for that criteria found!');
-    return [];
+    dispatcher.utter_message(text='No cinema for that criteria found!')
+    return []
+
 
 class ActionSelectHall(Action):
   def name(self) -> Text:
@@ -239,27 +234,28 @@ class ActionSelectHall(Action):
           tracker: Tracker,
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-    criteria = tracker.get_slot("hall_criteria");
-    halls = [ "Big", "Small", "Private"];
-    matched = [];
+    criteria = tracker.get_slot("hall_criteria")
+    halls = [ "Big", "Small", "Private"]
+    matched = []
 
     if not criteria:
-      dispatcher.utter_message(text="Please specify which hall you would like to book tickets for. ");
-      return [];
+      dispatcher.utter_message(text="Please specify which hall you would like to book tickets for. ")
+      return []
 
     if criteria:
-      normalized_criteria = normalize(criteria);
+      normalized_criteria = normalize(criteria)
       for hall in halls:
         if normalize(hall) == normalized_criteria:
-          matched.append(hall);
+          matched.append(hall)
 
     if len(matched) > 0:
-      exact_hall = matched[0];
-      dispatcher.utter_message(text='Selected hall: '+ exact_hall);
-      return [SlotSet('hall_id', exact_hall)];
+      exact_hall = matched[0]
+      dispatcher.utter_message(text='Selected hall: '+ exact_hall)
+      return [SlotSet('hall_id', exact_hall)]
 
-    dispatcher.utter_message(text='No halls for that criteria found!');
-    return [];
+    dispatcher.utter_message(text='No halls for that criteria found!')
+    return []
+
 
 class ActionSelectTime(Action):
   def name(self) -> Text:
@@ -269,30 +265,30 @@ class ActionSelectTime(Action):
           tracker: Tracker,
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-    criteria = tracker.get_slot("time_criteria");
-    times = [ "Monday 22h", "Tuesday 17h", "Friday 13h"];
-    matched = [];
+    criteria = tracker.get_slot("time_criteria")
+    times = [ "Monday 22h", "Tuesday 17h", "Friday 13h"]
+    matched = []
 
     if not criteria:
-      dispatcher.utter_message(text="Please specify which showing you would like to book tickets for. ");
-      return [];
+      dispatcher.utter_message(text="Please specify which showing you would like to book tickets for. ")
+      return []
 
     if criteria:
-      normalized_criteria = normalize(criteria);
+      normalized_criteria = normalize(criteria)
       for time in times:
         if normalize(time) == normalized_criteria:
-          matched.append(time);
+          matched.append(time)
 
     if len(matched) > 0:
-      exact_time = matched[0];
-      dispatcher.utter_message(text='Selected showing: '+ exact_time);
-      return [SlotSet('time_id', exact_time)];
+      exact_time = matched[0]
+      dispatcher.utter_message(text='Selected showing: '+ exact_time)
+      return [SlotSet('time_id', exact_time)]
 
-    dispatcher.utter_message(text='No showings for that criteria found!');
-    return [];
+    dispatcher.utter_message(text='No showings for that criteria found!')
+    return []
+
 
 class ActionSelectCount(Action):
-
   def name(self) -> Text:
     return "action_select_count"
 
@@ -304,9 +300,33 @@ class ActionSelectCount(Action):
     dispatcher.utter_message(text='Selected number of tickets: '+ criteria)
     return [SlotSet('ticket_count',criteria)]
 
+class ActionListOrder(Action):
+  def name(self) -> Text:
+    return "action_list_order"
+
+  def run(self, dispatcher: CollectingDispatcher,
+          tracker: Tracker,
+          domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+    order_list= [
+      'Movie: ' +  tracker.get_slot("movie_permalink"),
+      'Cienema: ' +  tracker.get_slot("cinema_id"),
+      'Hall: ' +  tracker.get_slot("hall_id"),
+      'Time: ' +  tracker.get_slot("time_id"),
+      'Count: ' +  tracker.get_slot("ticket_count"),
+      ]
+
+    dispatcher.utter_message(
+      text='This is your current order:',
+      attachment={
+        "type": "simple_list",
+        "data": order_list
+      }
+    )
+    return []
+
 
 class ActionPlaceOrder(Action):
-
   def name(self) -> Text:
     return "action_place_order"
 

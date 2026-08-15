@@ -33,10 +33,10 @@ stories:
   steps:
   - intent: order_movie
   - action: action_extract_movie
-  - action: utter_confirm_movie
   - intent: affirm
-  - action: action_select_cinema
+  - action: action_list_cinema
   - intent: order_cinema
+  - action: action_select_cinema
   - action: action_list_hall
   - intent: order_hall
   - action: action_select_hall
@@ -55,7 +55,6 @@ stories:
   steps:
   - intent: order_movie
   - action: action_extract_movie
-  - action: utter_confirm_movie
   - intent: deny
   - action: utter_goodbye
 

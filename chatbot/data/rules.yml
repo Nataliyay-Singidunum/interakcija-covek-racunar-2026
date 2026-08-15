@@ -42,4 +42,10 @@ rules:
     - intent: director_list
     - action: action_director_list
 
+# debug
+- rule: List cinemas
+  steps:
+    - intent: list_cinema
+    - action: action_list_cinema
+
 
