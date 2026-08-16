@@ -25,6 +25,7 @@ export class App {
   protected isChatVisible: boolean = false;
   protected userMessage: string = '';
   protected messages: MessageModel[] = [];
+  protected order_movie = signal<MovieModel | null>(null);
 
   constructor(
     private router: Router,
@@ -140,6 +141,31 @@ export class App {
             html += `<li>Time: ${obj.time}</li>`;
             html += `<li>Count: ${obj.count}</li>`;
             html += `</ul>`;
+
+            // 1. Wait for the Axios Promise to resolve using .then()
+            MovieService.getMovieByShortURL(obj.movie)
+              .then((response) => {
+                // Axios stores the actual JSON response inside the 'data' property
+                const order_movie = response.data;
+                console.log('Movie fetched successfully:', order_movie);
+
+                // 2. Create the reservation
+                UserService.createReservation({
+                  movieId: order_movie.movieId, // Make sure this matches your MovieModel property
+                  movieTitle: order_movie.title, // Make sure this matches your MovieModel property
+                  cinema: obj.cinema,
+                  hall: obj.hall,
+                  quantity: obj.count,
+                  status: 'na',
+                  time: obj.time,
+                  orderId: uuidv4(),
+                });
+              })
+              .catch((err) => {
+                // Catch any network errors or 404s
+                console.error('Failed to fetch movie details:', err);
+              });
+
 
             this.messages.push({
               type: 'bot',
