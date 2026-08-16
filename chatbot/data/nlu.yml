@@ -240,6 +240,15 @@ nlu:
     - of course
     - that sounds good
     - correct
+    - yeah
+    - yep
+    - sure
+    - yup
+    - da
+    - absolutely
+    - sounds good
+    - please do
+    - yes please
 
 
 - intent: deny

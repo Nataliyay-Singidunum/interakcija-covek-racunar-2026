@@ -1,7 +1,7 @@
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, Restarted
 
 import requests
 import unicodedata
@@ -132,6 +132,14 @@ class ActionExtractMovie(Action):
           tracker: Tracker,
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+    # debug
+    print(      "action_extract_movie -> " +
+                "SETUP -> " +
+                'Movie: ' +  str(tracker.get_slot("movie_permalink")) +
+                ' Cienema: ' +  str(tracker.get_slot("cinema_id")) +
+                ' Hall: ' +  str(tracker.get_slot("hall_id")) +
+                ' Time: ' +  str(tracker.get_slot("time_id")) +
+                ' Count: ' +  str(tracker.get_slot("ticket_count")))
     criteria = tracker.get_slot("order_criteria")
 
     if not criteria:
@@ -146,11 +154,12 @@ class ActionExtractMovie(Action):
       exact_movie = movies[0]
       short_url = exact_movie.get("shortUrl", "")
 
+      print("action_extract_movie -> " + str(short_url))
       dispatcher.utter_message(text="Selected movie: " + exact_movie['title'] + "<br/>Is this the movie you want to purchase tickets for?")
-      return [SlotSet("movie_permalink", short_url)]
+      return [SlotSet("movie_permalink", short_url), SlotSet("order_criteria", None)]
 
     dispatcher.utter_message(text="No movies for that criteria found :(" + str(criteria))
-    return []
+    return [SlotSet("order_criteria", None)]
 
 
 class ActionListCinema(Action):
@@ -204,6 +213,7 @@ class ActionSelectCinema(Action):
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
     criteria = tracker.get_slot("cinema_criteria")
+    print( "action_select_cinema -> user input " + criteria)
     cinemas = ["Usce", "Beo", "Ada Mall"]
     matched = []
 
@@ -219,7 +229,10 @@ class ActionSelectCinema(Action):
 
     if len(matched) > 0:
       exact_cinema = matched[0]
-      dispatcher.utter_message(text='Selected cinema: '+ exact_cinema)
+      dispatcher.utter_message(text='Selected cinema: ' + exact_cinema)
+      # debug
+      print("action_select_cinema -> tracker " + str(tracker.get_slot("search_criteria")))
+      print("action_select_cinema -> " + exact_cinema)
       return [SlotSet('cinema_id',exact_cinema)]
 
     dispatcher.utter_message(text='No cinema for that criteria found!')
@@ -251,6 +264,7 @@ class ActionSelectHall(Action):
     if len(matched) > 0:
       exact_hall = matched[0]
       dispatcher.utter_message(text='Selected hall: '+ exact_hall)
+      print("action_select_hall -> " + exact_hall)
       return [SlotSet('hall_id', exact_hall)]
 
     dispatcher.utter_message(text='No halls for that criteria found!')
@@ -282,6 +296,7 @@ class ActionSelectTime(Action):
     if len(matched) > 0:
       exact_time = matched[0]
       dispatcher.utter_message(text='Selected showing: '+ exact_time)
+      print("action_select_time -> " + exact_time)
       return [SlotSet('time_id', exact_time)]
 
     dispatcher.utter_message(text='No showings for that criteria found!')
@@ -298,6 +313,7 @@ class ActionSelectCount(Action):
 
     criteria = tracker.get_slot("count_criteria")
     dispatcher.utter_message(text='Selected number of tickets: '+ criteria)
+    print("action_select_cinema -> " + criteria)
     return [SlotSet('ticket_count',criteria)]
 
 class ActionListOrder(Action):
@@ -315,6 +331,8 @@ class ActionListOrder(Action):
       'Time: ' +  tracker.get_slot("time_id"),
       'Count: ' +  tracker.get_slot("ticket_count"),
       ]
+
+
 
     dispatcher.utter_message(
       text='This is your current order:',
@@ -349,4 +367,29 @@ class ActionPlaceOrder(Action):
         "data": order_details
       }
     )
-    return []
+
+    # debug
+    print(      "action_place_order -> " +
+                'Movie: ' +  str(tracker.get_slot("movie_permalink")) +
+                ' Cienema: ' +  str(tracker.get_slot("cinema_id")) +
+                ' Hall: ' +  str(tracker.get_slot("hall_id")) +
+                ' Time: ' +  str(tracker.get_slot("time_id")) +
+                ' Count: ' +  str(tracker.get_slot("ticket_count")))
+
+
+    # dodato da radi vise ordera unutar jedne sesije - nasla sam cistiji nacin
+
+    # return [
+    #   SlotSet("order_criteria", None),
+    #   SlotSet("movie_permalink", None),
+    #   SlotSet("cinema_criteria", None),
+    #   SlotSet("cinema_id", None),
+    #   SlotSet("hall_criteria", None),
+    #   SlotSet("hall_id", None),
+    #   SlotSet("time_criteria", None),
+    #   SlotSet("time_id", None),
+    #   SlotSet("count_criteria", None),
+    #   SlotSet("ticket_count", None)
+    # ]
+
+    return [Restarted()]

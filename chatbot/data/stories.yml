@@ -36,15 +36,23 @@ stories:
   - intent: affirm
   - action: action_list_cinema
   - intent: order_cinema
+    entities:
+      - cinema_criteria
   - action: action_select_cinema
   - action: action_list_hall
   - intent: order_hall
+    entities:
+      - hall_criteria
   - action: action_select_hall
   - action: action_list_time
   - intent: order_time
+    entities:
+      - time_criteria
   - action: action_select_time
   - action: utter_choose_count
   - intent: order_count
+    entities:
+      - count_criteria
   - action: action_select_count
   - action: action_list_order
   - action: utter_confirm_order   # ubi me ovde puca iz nekog razloga, dodala sam samo prompt za confirm u akciju

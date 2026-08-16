@@ -9,6 +9,7 @@ import { MovieService } from '../services/movie.service';
 import { Movie } from './movie/movie';
 import { MovieModel } from '../models/movie.model';
 import { AxiosResponse } from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-root',
@@ -63,6 +64,7 @@ export class App {
           type: 'bot',
           text: "Sorry I didn't understand your question. Please try again.",
         });
+        localStorage.setItem('icr_sender_id', uuidv4());  // posle 3 dana konacno fix za multiple orders in one session
         this.removeBotPlaceholder();
         return;
       }
@@ -129,18 +131,23 @@ export class App {
 
           // Place order
           if (message.attachment.type == 'create_order') {
+            const obj = message.attachment.data;
+
             let html = `<ul class='list-unstyled'>`;
-            for (let obj of message.attachment.data) {
-              html += `<li>${obj}</li>`;
-            }
+            html += `<li>Movie: ${obj.movie}</li>`;
+            html += `<li>Cinema: ${obj.cinema}</li>`;
+            html += `<li>Hall: ${obj.hall}</li>`;
+            html += `<li>Time: ${obj.time}</li>`;
+            html += `<li>Count: ${obj.count}</li>`;
             html += `</ul>`;
+
             this.messages.push({
               type: 'bot',
               text: html,
             });
           }
 
-          // Make an order
+          // Make an order  -- za sada ne salje nigde treba popravityi korisceno je u testing fazi, dodati sada u extract movie
           if (message.attachment.type == 'order_movie') {
             this.router.navigateByUrl(
               `/movie/${(message.attachment.data as MovieModel).shortUrl}/reservation`,
