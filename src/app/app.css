@@ -1,3 +1,17 @@
+.pink{
+  background-color: #b9206b;
+  color: white;
+}
+
+.pink-subtle{
+  background-color: rgb(185 32 107 / 0.1);
+  color: #b9206b;
+}
+
+.navbar-main .container {
+  align-content: space-between;
+}
+
 .chatbox-content{
   width: 500px;
   height: 600px;

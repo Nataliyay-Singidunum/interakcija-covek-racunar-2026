@@ -1,0 +1,45 @@
+@if (toy()){
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a class="text-decoration-none link-body-emphasis" routerLink="/">Home</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        {{toy()?.name}}
+      </li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <img style="border-radius: 6px" [src]="`https://raw.githubusercontent.com/Pequla/express-toys-api/refs/heads/main/src/public${toy()?.imageUrl}`" [alt]="toy()?.name" class="img-fluid">
+    </div>
+    <div class="col-12 col-md-8">
+      <div class="card">
+        <div class="card-header py-3 pink-subtle pink" style="background: rgb(185 32 107 / 0.1)">
+          <h4>{{toy()?.name}}</h4>
+        </div>
+        <div class="card-body mt-3 mb-3">
+          <p class="mb-4">{{toy()?.description}}</p>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <h6>Age Group - {{toy()!.ageGroup.name}}</h6>
+              <p>{{toy()!.ageGroup.description}}</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <h6>Toy type - {{toy()!.type.name}}</h6>
+              <p>{{toy()!.type.description}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer" style="background: rgb(185 32 107 / 0.1) ">
+          <a class="btn btn-success" [routerLink]="`/toy/${toy()?.permalink}/reservation`">
+            <i class="fa-solid fa-cart-shopping" style="color: rgb(255, 255, 255);"></i> Add to cart
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+}

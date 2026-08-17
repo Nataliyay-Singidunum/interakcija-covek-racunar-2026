@@ -1,8 +1,24 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
+<nav class="navbar navbar-expand-lg pink mb-0" data-bs-theme="dark">
   <div class="container">
     <a class="navbar-brand" routerLink="/">
-      <i class="fa-solid fa-graduation-cap" style="color: rgb(215, 155, 198);"></i> ICR2026
+      <img src="/alisa_small_light.png" style="max-width: 140px;">
     </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      </ul>
+      @if (hasAuth()) {
+        <a class="nav-link" routerLink="/profile" routerLinkActive="active">
+          <i class="fa-solid fa-circle-user" style="color: rgb(255, 255, 255);"></i> {{getUserName()}}
+        </a>
+      }
+    </div>
+  </div>
+</nav>
+<nav class="navbar navbar-expand-lg pink-subtle mb-3">
+  <div class="container">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -10,36 +26,29 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" routerLink="/" routerLinkActive="active">
-            <i class="fa-solid fa-house" style="color: rgb(215, 155, 198);"></i> Home
+            <i class="fa-solid fa-house" style="color: rgb(185, 32, 107);"></i> Home
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/about" routerLinkActive="active">
-            <i class="fa-solid fa-circle-info" style="color: rgb(215, 155, 198);"></i>About
+            <i class="fa-solid fa-circle-info" style="color: rgb(185, 32, 107);"></i>About
           </a>
         </li>
         @if (hasAuth()) {
           <li class="nav-item">
             <button type="button" class="nav-link" (click)="doLogout()" >
-              <i class="fa-solid fa-right-from-bracket" style="color: rgb(215, 155, 198);"></i>Logout
+              <i class="fa-solid fa-right-from-bracket" style="color: rgb(185, 32, 107);"></i>Logout
             </button>
           </li>
         } @else {
           <li class="nav-item">
             <a class="nav-link" routerLink="/login" routerLinkActive="active">
-              <i class="fa-solid fa-right-to-bracket" style="color: rgb(215, 155, 198);"></i> Login
+              <i class="fa-solid fa-right-to-bracket" style="color: rgb(185, 32, 107);"></i> Login
             </a>
           </li>
         }
       </ul>
-      @if (hasAuth()) {
-        <a class="nav-link" routerLink="/profile" routerLinkActive="active">
-          <i class="fa-solid fa-circle-user" style="color: rgb(215, 155, 198);"></i> Profile
-        </a>
-        <div  class="navbar-text">
-          <i class="fa-solid fa-user" style="color: rgb(215, 155, 198);"></i>{{getUserName()}}
-        </div>
-      }
+
     </div>
   </div>
 </nav>
@@ -50,7 +59,7 @@
   <div class="chatbot-containter position-fixed bottom-0 end-0 p-3">
     @if (!isChatVisible) {
       <button type="button" class="btn btn-primary rounded-circle p-3" (click)="toggleChat()">
-        <i class="fa-solid fa-comments" style="color: rgb(215, 155, 198);"></i>
+        <i class="fa-solid fa-comments" style="color: rgb(255, 255, 255);"></i>
       </button>
     } @else {
       <div class="chatbox card chatbox-content">
@@ -87,9 +96,32 @@
 
 
   </div>
-  <div class="text-center mt-3">
-    <p>&copy; {{year}} - Tehnicki fakultet - interakcija covek racunar</p>
-
-  </div>
-
 </div>
+<footer class="border-top mt-5 py-5 pink-subtle text-center">
+  <div class="container">
+    <h4 class="mb-3" ><img style="max-width: 140px;" src="/alisa_small_light_pink.png" routerLink="/"></h4>
+    <ul class="list-inline mb-4">
+      <li class="list-inline-item mx-3"><a class="link-body-emphasis text-decoration-none" routerLink="/home" routerLinkActive="active">Home</a></li>
+      <li class="list-inline-item mx-3"><a class="link-body-emphasis text-decoration-none" routerLink="/about" routerLinkActive="active">About</a></li>
+      <li class="list-inline-item mx-3"><a class="link-body-emphasis text-decoration-none" routerLink="/profile" routerLinkActive="active">Account</a></li>
+      <li class="list-inline-item mx-3"><a class="link-body-emphasis text-decoration-none" routerLink="/contact" routerLinkActive="active">Contact</a></li>
+
+    </ul>
+    <div class="d-flex justify-content-center gap-3 mb-3">
+      <a  href="https://github.com/Nnataliyay">
+        <i class="fa-brands fa-github fa-xl" style="color: rgb(185, 32, 107);"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/natalijajolovic/" role="button">
+        <i class="fa-brands fa-linkedin fa-xl" style="color: rgb(185, 32, 107);"></i>
+      </a>
+      <a href="https://discord.com/" role="button">
+        <i class="fa-brands fa-discord fa-xl" style="color: rgb(185, 32, 107);"></i>
+      </a>
+      <a href="https://orcid.org/my-orcid?orcid=0009-0000-6084-5708" role="button">
+        <i class="fa-brands fa-orcid fa-xl" style="color: rgb(185, 32, 107);"></i>
+    </a>
+
+    </div>
+    <span class="small text-body-secondary">&copy; 2026 Nataliyay - Natalija Jolovic 2022202496</span>
+  </div>
+</footer>
