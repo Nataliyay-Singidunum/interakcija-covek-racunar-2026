@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg pink mb-0" data-bs-theme="dark">
+<nav class="navbar sticky-top navbar-expand-lg pink mb-0" data-bs-theme="dark">
   <div class="container">
     <a class="navbar-brand" routerLink="/">
       <img src="/alisa_small_light.png" style="max-width: 140px;">
@@ -13,11 +13,14 @@
         <a class="nav-link" routerLink="/profile" routerLinkActive="active">
           <i class="fa-solid fa-circle-user" style="color: rgb(255, 255, 255);"></i> {{getUserName()}}
         </a>
+        <a class="nav-link mx-3" routerLink="/cart" routerLinkActive="active">
+          <i class="fa-solid fa-basket-shopping" style="color: rgb(255, 255, 255);"></i>
+        </a>
       }
     </div>
   </div>
 </nav>
-<nav class="navbar navbar-expand-lg pink-subtle mb-3">
+<nav class="navbar navbar-expand-lg pink-subtle">
   <div class="container">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -58,7 +61,7 @@
   <router-outlet />
   <div class="chatbot-containter position-fixed bottom-0 end-0 p-3">
     @if (!isChatVisible) {
-      <button type="button" class="btn btn-primary rounded-circle p-3" (click)="toggleChat()">
+      <button type="button" class="btn rounded-circle p-4 m-3" style="background: #b9206b" (click)="toggleChat()">
         <i class="fa-solid fa-comments" style="color: rgb(255, 255, 255);"></i>
       </button>
     } @else {
@@ -97,17 +100,17 @@
 
   </div>
 </div>
+
 <footer class="border-top mt-5 py-5 pink-subtle text-center">
   <div class="container">
-    <h4 class="mb-3" ><img style="max-width: 140px;" src="/alisa_small_light_pink.png" routerLink="/"></h4>
+    <h4 class="mb-5 mt-5" ><img style="max-width: 140px;" src="/alisa_small_light_pink.png" routerLink="/"></h4>
     <ul class="list-inline mb-4">
       <li class="list-inline-item mx-3"><a class="link-body-emphasis text-decoration-none" routerLink="/home" routerLinkActive="active">Home</a></li>
       <li class="list-inline-item mx-3"><a class="link-body-emphasis text-decoration-none" routerLink="/about" routerLinkActive="active">About</a></li>
       <li class="list-inline-item mx-3"><a class="link-body-emphasis text-decoration-none" routerLink="/profile" routerLinkActive="active">Account</a></li>
       <li class="list-inline-item mx-3"><a class="link-body-emphasis text-decoration-none" routerLink="/contact" routerLinkActive="active">Contact</a></li>
-
     </ul>
-    <div class="d-flex justify-content-center gap-3 mb-3">
+    <div class="d-flex justify-content-center gap-3 mb-4">
       <a  href="https://github.com/Nnataliyay">
         <i class="fa-brands fa-github fa-xl" style="color: rgb(185, 32, 107);"></i>
       </a>

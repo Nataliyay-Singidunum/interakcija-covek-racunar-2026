@@ -1,4 +1,4 @@
-<div class="card mb-3">
+<div class="card mb-3 mt-3">
   <div class="card-header" style="background: rgb(185 32 107 / 0.1)">
     <h5>User Details</h5>
   </div>
@@ -35,6 +35,39 @@
     </div>
   </div>
 </div>
+
+
+<div class="card mt-3 mb-3">
+  <div class="card-header" style="background: rgb(185 32 107 / 0.1)">
+    <h5>Cart </h5>
+  </div>
+  @if (activeUser()!.data.length > 0) {
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (order of activeUser()?.data; track $index){
+            @for (item of order.items.cartItem; track $index) {
+              <tr>
+                <th scope="row">{{item.item.name}}</th>
+                <td>{{item.quantity}}</td>
+                <td>{{item.quantity * item.item.price}}</td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+
+    </div>
+  }
+</div>
+
 <div class="card">
   <div class="card-header" style="background: rgb(185 32 107 / 0.1)">
     <h5>Orders </h5>
@@ -55,38 +88,14 @@
         </thead>
         <tbody>
           @for (order of activeUser()?.data; track $index){
-            <tr>
-              <th scope="row">{{order.movieTitle}}</th>
-              <td>{{order.cinema}}</td>
-              <td>{{order.hall}}</td>
-              <td>{{order.quantity}}</td>
-              <td>{{order.time}}</td>
-              <td>{{statusMap[order.status]}}</td>
-              <td>
+            @for (item of order.items.cartItem; track $index) {
+              <tr>
+                <th scope="row">{{item.item.name}}</th>
+                <td>{{item.quantity}}</td>
+              </tr>
+            }
 
-                @if (order.status == 'na') {
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-primary" (click)="pay(order)">Pay</button>
-                    <button type="button" class="btn btn-sm btn-danger" (click)="cancel(order)">Cancel</button>
-                  </div>
-                }
-                @if (order.status == 'paid') {
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-success" (click)="like(order)">Like</button>
-                    <button type="button" class="btn btn-sm btn-danger" (click)="dislike(order)">Dislike</button>
-                  </div>
-                }
-                @if (order.status == 'liked' || order.status == 'disliked') {
-                  <p>Rewiew submitted!</p>
-                }
-                @if (order.status == 'cancelled') {
-                  <p>Order cancelled.</p>
-                }
-              </td>
-            </tr>
           }
-
-
         </tbody>
       </table>
 

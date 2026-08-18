@@ -49,7 +49,9 @@ export class Reservation {
       return;
     }
 
+    //@ts-ignore
     UserService.createReservation({
+      //@ts-ignore
       movieId: this.movie()!.movieId,
       movieTitle: this.movie()!.title,
       cinema: this.form.value.cinema,
@@ -57,7 +59,7 @@ export class Reservation {
       quantity: this.form.value.quantity,
       status: 'na',
       time: this.form.value.time,
-      orderId: uuidv4()
+      orderId: uuidv4(),
     });
 
     this.router.navigateByUrl('/profile');

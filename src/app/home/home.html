@@ -1,3 +1,43 @@
+<div id="carouselExampleIndicators" class="carousel slide carousel-fade rounded-3 mb-3" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+  </div>
+  <div class="carousel-inner rounded-bottom-1">
+    <div class="carousel-item active">
+      <img src="/alisa_mad.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="/alisa_chair.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="/alisa_pink.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="/alisa_beeb.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="/squish.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="/squishies.jpeg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
 <div class="input-group mb-3">
   <span class="input-group-text" id="addon"><i class="fa-solid fa-magnifying-glass" style="color: rgb(255, 255, 255);"></i></span>
   <input type="text" class="form-control" placeholder="Search" aria-describedby="addon" [(ngModel)]="search" (keyup)="loadMovies()">
@@ -9,8 +49,14 @@
       <img [src]="`https://raw.githubusercontent.com/Pequla/express-toys-api/refs/heads/main/src/public${toy.imageUrl}`" class="card-img-top" [alt]="toy.name">
       <div class="card-body">
         <h5 class="card-title ">{{toy.name}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{toy.ageGroup.name}}</h6>
-        <p class="card-text">{{toy.targetGroup}} {{toy.imageUrl}}</p>
+        <p class="badge rounded-pill bg-secondary p-2">{{toy.ageGroup.name}} </p>
+        @if (toy.targetGroup == "dečak") {
+          <p  class="badge rounded-pill bg-primary-subtle p-2 mx-2 text-primary" >dečaci</p>
+        } @else if (toy.targetGroup == "devojčica"){
+          <p  class="badge rounded-pill p-2 mx-2" style="background: rgb(185 32 107 / 0.1); color: #b9206b" >devojčice</p>
+        } @else {
+          <p  class="badge rounded-pill bg-secondary-subtle p-2 mx-2 text-secondary"> {{toy.targetGroup}}</p>
+        }
         <p class="card-text">{{toy.description}}</p>
       </div>
       <div class="card-footer btn-group">
@@ -27,7 +73,7 @@
 </div>
 
 
-<div class="movies">
+<!--<div class="movies">
   @for (movie of movies(); track $index) {
     <div class="card">
       <img [src]="movie.poster" class="card-img-top" [alt]="movie.title">
@@ -48,6 +94,6 @@
     </div>
   }
 
-</div>
+</div>-->
 
 

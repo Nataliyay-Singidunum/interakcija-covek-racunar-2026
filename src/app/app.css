@@ -8,9 +8,7 @@
   color: #b9206b;
 }
 
-.navbar-main .container {
-  align-content: space-between;
-}
+
 
 .chatbox-content{
   width: 500px;
@@ -30,6 +28,10 @@
   max-width: 300px;
   text-wrap: wrap;
   font-weight: normal;
+}
+
+footer{
+  height: 600px;
 }
 
 /* Za tablet */

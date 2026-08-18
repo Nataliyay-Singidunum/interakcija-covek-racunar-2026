@@ -149,8 +149,8 @@ export class App {
                 const order_movie = response.data;
                 console.log('Movie fetched successfully:', order_movie);
 
-                // 2. Create the reservation
-                UserService.createReservation({
+                // 2. Create the reservation    FIX FOR TOY
+               /* UserService.createReservation({
                   movieId: order_movie.movieId, // Make sure this matches your MovieModel property
                   movieTitle: order_movie.title, // Make sure this matches your MovieModel property
                   cinema: obj.cinema,
@@ -159,7 +159,7 @@ export class App {
                   status: 'na',
                   time: obj.time,
                   orderId: uuidv4(),
-                });
+                });*/
               })
               .catch((err) => {
                 // Catch any network errors or 404s

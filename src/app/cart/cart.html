@@ -1,0 +1,36 @@
+<div class="card mt-3">
+  <div class="card-header" style="background: rgb(185 32 107 / 0.1)">
+    <h5>Cart </h5>
+  </div>
+  @if (activeUser()!.data.length > 0) {
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Item</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (order of activeUser()?.data; track $index){
+            @for (item of order.items.cartItem; track $index) {
+              <tr>
+                <th scope="row">{{item.item.name}}</th>
+                <td>{{item.quantity}}</td>
+                <td>{{item.quantity * item.item.price}}</td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+
+    </div>
+  }
+  <div class="card-footer d-flex justify-content-between" style="background: rgb(185 32 107 / 0.1)">
+    <h4 class="">Total price: price.00 RSD</h4>
+    <a class="btn btn-success" [routerLink]="`/toy/reservation`">
+      <i class="fa-solid fa-cart-shopping" style="color: rgb(255, 255, 255);"></i> Check out
+    </a>
+  </div>
+</div>
