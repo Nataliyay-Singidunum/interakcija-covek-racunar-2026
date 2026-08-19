@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
+
 }
 
 .movies .card{
@@ -15,6 +16,5 @@
 }
 
 .input-group{
-  max-width: 350px;
-  margin: auto;
+  max-width: 320px;
 }

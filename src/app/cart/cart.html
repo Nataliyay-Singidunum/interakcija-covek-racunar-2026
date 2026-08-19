@@ -4,22 +4,30 @@
   </div>
   @if (activeUser()!.data.length > 0) {
     <div class="card-body">
-      <table class="table">
+      <table class="table table-hover " style="border-color: rgb(185 32 107 / 0.2)">
         <thead>
         <tr>
           <th scope="col">Item</th>
           <th scope="col">Quantity</th>
           <th scope="col">Price</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
           @for (order of activeUser()?.data; track $index){
-            @for (item of order.items.cartItem; track $index) {
-              <tr>
-                <th scope="row">{{item.item.name}}</th>
-                <td>{{item.quantity}}</td>
-                <td>{{item.quantity * item.item.price}}</td>
-              </tr>
+            @if (order.items.status == "active") {
+              @for (item of order.items.cartItems; track $index) {
+                <tr>
+                  <th scope="row">{{item.item.name}}</th>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.quantity * item.item.price | number:'1.2-2'}}</td>
+                  <td class="text-end">
+                    <button  class="btn btn-light"><i class="fa-solid fa-minus" style="color: #b9206b;"></i></button>
+                    <button  class="btn btn-light mx-3"><i class="fa-solid fa-plus" style="color: #b9206b;"></i></button>
+                    <button  class="btn btn-light"><i class="fa-solid fa-trash-can" style="color: #b9206b;"></i></button>
+                  </td>
+                </tr>
+              }
             }
           }
         </tbody>
@@ -28,9 +36,9 @@
     </div>
   }
   <div class="card-footer d-flex justify-content-between" style="background: rgb(185 32 107 / 0.1)">
-    <h4 class="">Total price: price.00 RSD</h4>
-    <a class="btn btn-success" [routerLink]="`/toy/reservation`">
+    <h4 class="">Total price: {{ getTotalPrice() | number:'1.2-2' }} RSD</h4>
+    <button type="submit" class="btn btn-success" (click)="checkOut()">
       <i class="fa-solid fa-cart-shopping" style="color: rgb(255, 255, 255);"></i> Check out
-    </a>
+    </button>
   </div>
 </div>

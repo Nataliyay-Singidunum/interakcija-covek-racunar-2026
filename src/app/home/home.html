@@ -38,10 +38,68 @@
 </div>
 
 
-<div class="input-group mb-3">
-  <span class="input-group-text" id="addon"><i class="fa-solid fa-magnifying-glass" style="color: rgb(255, 255, 255);"></i></span>
-  <input type="text" class="form-control" placeholder="Search" aria-describedby="addon" [(ngModel)]="search" (keyup)="loadMovies()">
+<div class="d-flex justify-content-center gap-3 mb-3">
+
+  <select class="form-select" style="background: #f8e9f1; max-width: 160px; max-height: 38px; padding-right: 0" [(ngModel)]="searchCriteria" (change)="loadToys()">
+    <option selected>Search criteria</option>
+    <option value="1">Name</option>
+    <option value="2">Description</option>
+    <option value="3">Type</option>
+    <option value="4">Age range</option>
+    <option value="5">Target group</option>
+    <option value="6">Production Date</option>
+    <option value="7">Price</option>
+    <option value="8">Review</option>
+  </select>
+  @if (searchCriteria == "1" || searchCriteria == "2" || searchCriteria == "8" ) {
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="addon" style="background: #f8e9f1"><i class="fa-solid fa-magnifying-glass" style="color: rgb(255, 255, 255);"></i></span>
+      <input type="text" class="form-control" placeholder="Search" aria-describedby="addon" [(ngModel)]="search" (keyup)="loadToys()">
+    </div>
+  } @else if (searchCriteria == "3"){
+    <select class="form-select py-0" style="background: #f8e9f1; max-width: 320px; max-height: 38px;" [(ngModel)]="selectedType" (change)="loadToys()">
+      <option value="">All Types</option>
+      @for (type of uniqueTypes; track $index) {
+        <option [value]="type">{{ type }}</option>
+      }
+    </select>
+  } @else if (searchCriteria == "4"){
+    <select class="form-select py-0" style="background: #f8e9f1; max-width: 320px; max-height: 38px;" [(ngModel)]="selectedAgeGroup" (change)="loadToys()">
+      <option value="">All Age Groups</option>
+      @for (ageGroup of uniqueAgeGroups; track $index) {
+        <option [value]="ageGroup">{{ ageGroup }}</option>
+      }
+    </select>
+} @else if (searchCriteria == "5"){
+    <select class="form-select py-0" style="background: #f8e9f1; max-width: 320px; max-height: 38px;" [(ngModel)]="selectedTargetGroup" (change)="loadToys()">
+      <option value="">All Types</option>
+      @for (targetGroup of uniqueTargetGroups; track $index) {
+        <option [value]="targetGroup">{{ targetGroup }}</option>
+      }
+    </select>
+  } @else if (searchCriteria == "6"){
+    <select class="form-select py-0" style="background: #f8e9f1; max-width: 320px; max-height: 38px;" [(ngModel)]="selectedPeriod" (change)="loadToys()">
+      <option value="">All Periods</option>
+      @for (period of uniquePeriods; track $index) {
+        <option [value]="period">{{ period }}</option>
+      }
+    </select>
+  } @else if (searchCriteria == "7"){
+    <select class="form-select py-0" style="background: #f8e9f1; max-width: 320px; max-height: 38px; padding-right: 0" [(ngModel)]="selectedPriceRange" (change)="onPriceRangeChange()">
+      <option value="0-100000">All Prices</option>
+      <option value="0-1500">Under 1,500 RSD</option>
+      <option value="1500-3000">1,500 - 3,000 RSD</option>
+      <option value="3000-5000">3,000 - 5,000 RSD</option>
+      <option value="5000-100000">Over 5,000 RSD</option>
+    </select>
+  } @else {
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="addon" style="background: #f8e9f1"><i class="fa-solid fa-magnifying-glass" style="color: rgb(255, 255, 255);"></i></span>
+      <input type="text" class="form-control" placeholder="Search" aria-describedby="addon" [(ngModel)]="search" (keyup)="loadToys()">
+    </div>
+  }
 </div>
+
 
 <div class="movies">
   @for (toy of toys(); track $index) {
@@ -63,37 +121,12 @@
         <a class="btn btn-sm btn-primary" [routerLink]="`/toy/${toy.permalink}`">
           <i class="fa-solid fa-arrow-up-right-from-square" style="color: rgb(255, 255, 255);"></i> Details
         </a>
-        <a class="btn btn-sm btn-success" [routerLink]="`/movie/${toy.permalink}/reservation`">
+        <button class="btn btn-sm btn-success" (click)="addToCart(toy)">
           <i class="fa-solid fa-cart-shopping" style="color: rgb(255, 255, 255);"></i> Add to cart
-        </a>
+        </button>
       </div>
 
     </div>
   }
 </div>
-
-
-<!--<div class="movies">
-  @for (movie of movies(); track $index) {
-    <div class="card">
-      <img [src]="movie.poster" class="card-img-top" [alt]="movie.title">
-      <div class="card-body">
-        <h5 class="card-title ">{{movie.title}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{movie.director.name}}</h6>
-        <p class="card-text">{{movie.shortDescription}}</p>
-      </div>
-      <div class="card-footer btn-group">
-        <a class="btn btn-sm btn-primary" [routerLink]="`/movie/${movie.shortUrl}`">
-          <i class="fa-solid fa-arrow-up-right-from-square" style="color: rgb(255, 255, 255);"></i> Details
-        </a>
-        <a class="btn btn-sm btn-success" [routerLink]="`/movie/${movie.shortUrl}/reservation`">
-          <i class="fa-solid fa-cart-shopping" style="color: rgb(255, 255, 255);"></i> Add to cart
-        </a>
-      </div>
-
-    </div>
-  }
-
-</div>-->
-
 

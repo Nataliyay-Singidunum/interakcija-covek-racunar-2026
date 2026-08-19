@@ -45,7 +45,6 @@ export class Toy {
       this.utils.showAlert('Invalid form data');
       return;
     }
-
     if (!this.toy()) {
       this.utils.showAlert('Toy hasnt been loaded');
       return;

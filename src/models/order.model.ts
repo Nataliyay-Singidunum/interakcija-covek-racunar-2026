@@ -4,5 +4,14 @@ export interface OrderModel {
   orderId: string;
   items: CartModel;
   time: Date;
-  status: 'na' | 'paid' | 'cancelled' | 'liked' | 'disliked' ;
+  status:
+    | 'na'
+    | 'pay later'
+    | 'paid'
+    | 'cancelled'
+    | 'preparing'
+    | 'out for delivery'
+    | 'delivered'
+    | 'liked'
+    | 'disliked';
 }

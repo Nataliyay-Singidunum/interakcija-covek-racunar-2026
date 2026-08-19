@@ -9,7 +9,7 @@ export interface ToyModel {
   imageUrl: string;
   ageGroup: {
     ageGroupId: number;
-    name: number;
+    name: string;
     description: string;
   };
   type: {

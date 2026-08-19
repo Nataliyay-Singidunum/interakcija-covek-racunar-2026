@@ -17,12 +17,21 @@
     </div>
     <div class="col-12 col-md-8" >
       <div class="card" style="height: 416px">
-        <div class="card-header pink-subtle pink" style="background: rgb(185 32 107 / 0.1)">
-          <h4>{{toy()?.name}}</h4>
+        <div class="card-header d-flex  align-items-center gap-3 py-3" style="background: rgb(185 32 107 / 0.1)">
+          <h4 class="m-0">{{toy()?.name}} </h4>
+          <p class="badge rounded-pill bg-secondary p-2 m-0">{{toy()!.ageGroup.name}} </p>
+          @if (toy()!.targetGroup == "dečak") {
+            <p  class="badge rounded-pill bg-primary-subtle p-2 m-0 text-primary" >dečaci</p>
+          } @else if (toy()!.targetGroup == "devojčica"){
+            <p  class="badge rounded-pill p-2 m-0" style="background: rgb(185 32 107 / 0.1); color: #b9206b" >devojčice</p>
+          } @else {
+            <p  class="badge rounded-pill bg-secondary-subtle p-2 m-0 text-secondary"> {{toy()!.targetGroup}}</p>
+          }
         </div>
         <div class="card-body d-flex flex-column justify-content-center mb-3">
           <h6>Description </h6>
-          <p class="mb-4">{{toy()?.description}}</p>
+          <p class="mb-2 ">{{toy()?.description}}</p>
+          <p class="text-secondary mb-4">Date of production: {{toy()!.productionDate}}</p>
           <div class="row">
             <div class="col-12 col-md-6">
               <h6>Age Group - {{toy()!.ageGroup.name}}</h6>
@@ -34,7 +43,7 @@
             </div>
           </div>
         </div>
-        <div class="card-footer d-flex justify-content-between" style="background: rgb(185 32 107 / 0.1) ">
+        <div class="card-footer d-flex  align-items-center gap-2 py-3 justify-content-between" style="background: rgb(185 32 107 / 0.1) ">
           <h4 class="">{{toy()?.price}}.00 RSD</h4>
           <form class="d-flex gap-2" [formGroup]="cart_form" (ngSubmit)="onSubmit()">
             <div class="input-group" style="width: 140px;">
@@ -46,9 +55,9 @@
                 <i class="fa-solid fa-plus"></i>
               </button>
             </div>
-            <a class="btn btn-success" [routerLink]="`/toy/${toy()?.permalink}/reservation`">
+            <button type="submit" class="btn btn-success">
               <i class="fa-solid fa-cart-shopping" style="color: rgb(255, 255, 255);"></i> Add to cart
-            </a>
+            </button>
           </form>
 
 
