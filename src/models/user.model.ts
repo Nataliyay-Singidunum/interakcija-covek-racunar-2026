@@ -5,6 +5,8 @@ export interface UserModel {
   lastName: string;
   email: string;
   phone: string;
+  address: string;
+  favoriteTypes: string[];
   password: string;
   data: OrderModel[];
 }

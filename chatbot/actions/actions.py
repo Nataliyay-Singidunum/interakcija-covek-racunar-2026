@@ -15,16 +15,102 @@ def normalize(text: str) -> str:
   )
 
 class ActionHelloWorld(Action):
+  def name(self) -> Text:
+    return "action_hello_world"
 
-    def name(self) -> Text:
-        return "action_hello_world"
+  def run(self, dispatcher: CollectingDispatcher,
+    tracker: Tracker,
+    domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    dispatcher.utter_message(text="Hello World from actions!")
+    return []
 
-        dispatcher.utter_message(text="Hello World from actions!")
-        return []
+
+class ActionNewToys(Action):
+  def name(self) -> Text:
+    return "action_new_toys"
+  def run(self, dispatcher: CollectingDispatcher,
+          tracker: Tracker,
+          domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+    url="https://toy.pequla.com/api/toy"
+    rsp = requests.get(url)
+    toys = rsp.json()
+
+    toys.sort(key=lambda x: x.get("productionDate", ""), reverse=True)
+
+    if len(toys) >= 3:
+      bot_response = {
+        "type": "toy_list",
+        "data": toys[:3]
+      }
+      dispatcher.utter_message(text="Here are some new toys: ", attachment = bot_response)
+    else:
+      dispatcher.utter_message(text="Not enough toys found")
+    return []
+
+
+class ActionAllToys(Action):
+  def name(self) -> Text:
+    return "action_all_toys"
+  def run(self, dispatcher: CollectingDispatcher,
+          tracker: Tracker,
+          domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+    url="https://toy.pequla.com/api/toy"
+    rsp = requests.get(url)
+    toys = rsp.json()
+
+    toys.sort(key=lambda x: x.get("productionDate", ""), reverse=True)
+
+    if len(toys) >= 3:
+      bot_response = {
+        "type": "toy_list",
+        "data": toys
+      }
+      dispatcher.utter_message(text="Here are all toys: ", attachment = bot_response)
+    else:
+      dispatcher.utter_message(text="Not enough toys found")
+    return []
+
+class ActionAddToCart(Action):
+
+  def name(self) -> Text:
+    return "action_add_to_cart"
+
+  def run(self, dispatcher: CollectingDispatcher,
+          tracker: Tracker,
+          domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+    dispatcher.utter_message(text="Here are some new toys: action_add_to_cart ")
+    return []
+
+
+class ActionShowCart(Action):
+
+  def name(self) -> Text:
+    return "action_show_cart"
+
+  def run(self, dispatcher: CollectingDispatcher,
+          tracker: Tracker,
+          domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+    dispatcher.utter_message(text="Here are some new toys: action_show_cart ")
+    return []
+
+
+class ActionOrderToys(Action):
+
+  def name(self) -> Text:
+    return "action_order_toys"
+
+  def run(self, dispatcher: CollectingDispatcher,
+          tracker: Tracker,
+          domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+    dispatcher.utter_message(text="Here are some new toys: action_order_toys ")
+    return []
+
 
 class ActionLatestMovies(Action):
 
@@ -47,8 +133,6 @@ class ActionLatestMovies(Action):
       dispatcher.utter_message(text="Here are some movies: ", attachment = bot_response)
     else:
       dispatcher.utter_message(text="Not enough movies found")
-
-
 
     return []
 

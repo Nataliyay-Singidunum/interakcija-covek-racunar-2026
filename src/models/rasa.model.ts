@@ -2,6 +2,7 @@ export interface RasaModel {
   text: string;
   attachment: {
     type:
+      | 'toy_list'
       | 'movie_list'
       | 'single_movie'
       | 'genre_list'

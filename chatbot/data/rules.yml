@@ -17,6 +17,31 @@ rules:
     - intent: hello_world
     - action: action_hello_world
 
+- rule: Show new toys
+  steps:
+      - intent: new_toys
+      - action: action_new_toys
+
+- rule: Show all toys
+  steps:
+    - intent: all_toys
+    - action: action_all_toys
+
+- rule: Add to cart
+  steps:
+    - intent: add_to_cart
+    - action: action_add_to_cart
+
+- rule: Show cart
+  steps:
+    - intent: show_cart
+    - action: action_show_cart
+
+- rule: Order toys
+  steps:
+    - intent: order_toys
+    - action: action_order_toys
+
 - rule: Search movies
   steps:
     - intent: search_movies

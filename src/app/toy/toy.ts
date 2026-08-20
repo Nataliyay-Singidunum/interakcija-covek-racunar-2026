@@ -13,10 +13,11 @@ import {
 import { Utils } from '../utils';
 import { UserService } from '../../services/user.service';
 import { v4 as uuidv4 } from 'uuid';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-toy',
-  imports: [RouterLink, FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule, DecimalPipe],
   templateUrl: './toy.html',
   styleUrl: './toy.css',
 })

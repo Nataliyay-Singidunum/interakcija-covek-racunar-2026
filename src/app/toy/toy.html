@@ -28,23 +28,36 @@
             <p  class="badge rounded-pill bg-secondary-subtle p-2 m-0 text-secondary"> {{toy()!.targetGroup}}</p>
           }
         </div>
-        <div class="card-body d-flex flex-column justify-content-center mb-3">
-          <h6>Description </h6>
-          <p class="mb-2 ">{{toy()?.description}}</p>
-          <p class="text-secondary mb-4">Date of production: {{toy()!.productionDate}}</p>
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <h6>Age Group - {{toy()!.ageGroup.name}}</h6>
-              <p>{{toy()!.ageGroup.description}}</p>
+        <div class="card-body d-flex flex-column justify-content-between">
+          <div>
+            <p class="text-secondary mb-2">Date of production: {{toy()!.productionDate}}</p>
+            <div>TODO
+              4.0 <i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star-half-stroke" style="color: #b9206b;"></i><i class="fa-regular fa-star" style="color: #b9206b"></i>
             </div>
-            <div class="col-12 col-md-6">
-              <h6>Toy type - {{toy()!.type.name}}</h6>
-              <p>{{toy()!.type.description}}</p>
+            <div>TODO
+              reviews.count
             </div>
           </div>
+
+
+          <div>
+            <h6>Description </h6>
+            <p class="mb-2 ">{{toy()?.description}}</p>
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <h6>Age Group - {{toy()!.ageGroup.name}}</h6>
+                <p>{{toy()!.ageGroup.description}}</p>
+              </div>
+              <div class="col-12 col-md-6">
+                <h6>Toy type - {{toy()!.type.name}}</h6>
+                <p>{{toy()!.type.description}}</p>
+              </div>
+            </div>
+          </div>
+
         </div>
         <div class="card-footer d-flex  align-items-center gap-2 py-3 justify-content-between" style="background: rgb(185 32 107 / 0.1) ">
-          <h4 class="">{{toy()?.price}}.00 RSD</h4>
+          <h4 class="">{{toy()?.price | number:'1.2-2'}}</h4>
           <form class="d-flex gap-2" [formGroup]="cart_form" (ngSubmit)="onSubmit()">
             <div class="input-group" style="width: 140px;">
               <button class="btn btn-light border" type="button" (click)="decrement()">
@@ -59,8 +72,41 @@
               <i class="fa-solid fa-cart-shopping" style="color: rgb(255, 255, 255);"></i> Add to cart
             </button>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
+  <div class="mt-5">
+    <h4>Reviews and Ratings</h4>
+    <hr>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <h5 class="card-header">
+            Review title
+          </h5>
+          <div class="card-body">
+            <p class="card-title"><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-regular fa-star" style="color: #b9206b;"></i></p>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <figcaption class="blockquote-footer">
+              User123
+            </figcaption>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <h5 class="card-header">
+            Review title
+          </h5>
+          <div class="card-body">
+            <p class="card-title"><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-regular fa-star" style="color: #b9206b;"></i><i class="fa-regular fa-star" style="color: #b9206b;"></i></p>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <figcaption class="blockquote-footer">
+              User123
+            </figcaption>
+          </div>
         </div>
       </div>
     </div>

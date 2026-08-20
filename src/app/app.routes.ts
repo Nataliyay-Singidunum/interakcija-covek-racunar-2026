@@ -9,6 +9,7 @@ import { Reservation } from './reservation/reservation';
 import { Toy } from './toy/toy';
 import { Contact } from './contact/contact';
 import { Cart } from './cart/cart';
+import { EditProfile } from './edit-profile/edit-profile';
 
 export const routes: Routes = [
   { path: '', title: 'Home', component: Home },
@@ -20,6 +21,7 @@ export const routes: Routes = [
   { path: 'movie/:path', title: 'Movie', component: Movie },
   { path: 'toy/:path', title: 'Toy', component: Toy },
   { path: 'profile', title: 'Profile', component: Profile },
+  { path: 'edit-profile', title: 'Edit Profile', component: EditProfile },
   { path: 'cart', title: 'Cart', component: Cart },
   { path: '**', title: 'Home', component: Home },
 ];

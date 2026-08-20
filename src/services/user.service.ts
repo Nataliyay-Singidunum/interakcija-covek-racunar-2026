@@ -20,6 +20,8 @@ export class UserService {
             lastName: 'User',
             email: 'user@example.com',
             phone: '+381 321321',
+            address: 'Adresa 1',
+            favoriteTypes: [],
             password: 'user123',
             data: [
               {
@@ -122,7 +124,6 @@ export class UserService {
     const current = localStorage.getItem(this.ACTIVE_KEY);
     const all = this.getUsers();
 
-
     for (let user of all) {
       if (user.email === current) {
         // turn cart into order
@@ -135,7 +136,7 @@ export class UserService {
           }
         }
 
-        let newCart : OrderModel = {
+        let newCart: OrderModel = {
           orderId: uuidv4(),
           items: {
             cartId: uuidv4(),
@@ -149,8 +150,6 @@ export class UserService {
         user.data.push(newCart);
       }
     }
-
-
 
     localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
   }
@@ -180,5 +179,37 @@ export class UserService {
       }
     }
     localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
+  }
+
+  static updateUser(updatedUser: { firstName: string; lastName: string; email: string; phone: string; address: string; }) {
+    const currentEmail = localStorage.getItem(this.ACTIVE_KEY);
+
+    if (!currentEmail) {
+      throw new Error('No active user session found.');
+    }
+
+    const allUsers = this.getUsers();
+
+    for (let user of allUsers) {
+      if (user.email === currentEmail) {
+        // 1. Update primitive profile fields one by one
+        user.firstName = updatedUser.firstName;
+        user.lastName = updatedUser.lastName;
+        user.phone = updatedUser.phone;
+        user.address = updatedUser.address;
+
+
+        if (user.email !== updatedUser.email) {
+          user.email = updatedUser.email;
+          localStorage.setItem(this.ACTIVE_KEY, user.email);
+        }
+
+        break; // Stop looping once we found and updated our user
+      }
+    }
+
+    // 3. Save the entire updated array back to local storage
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(allUsers));
+
   }
 }

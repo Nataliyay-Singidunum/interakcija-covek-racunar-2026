@@ -1,0 +1,42 @@
+
+
+<div class="card login mt-3">
+  <div class="card-header" style="background: rgb(185 32 107 / 0.1)">
+    <h5>Edit Account</h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="change-first-name" class="form-label">First name</label>
+        <input type="text" class="form-control" id="change-first-name" formControlName="firstName">
+      </div>
+      <div class="mb-3">
+        <label for="change-first-name" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="change-last-name" formControlName="lastName">
+      </div>
+      <div class="mb-3">
+        <label for="change-email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="change-email" formControlName="email">
+      </div>
+      <div class="mb-3">
+      <label for="change-phone" class="form-label">Phone number</label>
+      <input type="text" class="form-control" id="change-phone" formControlName="phone">
+      </div>
+      <div class="mb-3">
+        <label for="change-address" class="form-label">Address</label>
+        <input type="text" class="form-control" id="change-address" formControlName="address">
+      </div>
+      <hr>
+      <div class="mb-3">
+        <label for="password" class="form-label">>Confirm Password to Save Changes<</label>
+        <input type="password" class="form-control" id="password" formControlName="password">
+      </div>
+      <div class="d-flex justify-content-center mt-4">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          <i class="fa-solid fa-arrow-up-right-from-square" style="color:rgb(255, 255, 255);"></i> Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

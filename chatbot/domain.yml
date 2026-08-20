@@ -9,7 +9,12 @@ intents:
   - mood_unhappy
   - bot_challenge
   - hello_world
-  - latest_movies
+  - new_toys
+  - all_toys
+  - add_to_cart
+  - show_cart
+  - order_toys
+  - latest_movies # MOVIES START HERE
   - search_movies
   - order_movie:
       use_entities: [ ]  # mucim se 4 sata opet samo ovo mi je falilo,story nisam dirala bkv nis
@@ -25,6 +30,7 @@ intents:
   - order_count:
       use_entities: [ ]
   - list_cinema
+
 
 entities:
   - search_criteria
@@ -138,7 +144,12 @@ responses:
 
 actions:
   - action_hello_world
-  - action_latest_movies
+  - action_new_toys
+  - action_all_toys
+  - action_add_to_cart
+  - action_show_cart
+  - action_order_toys
+  - action_latest_movies # MOVIES START HERE
   - action_search_movies
   - action_genre_list
   - action_actor_list

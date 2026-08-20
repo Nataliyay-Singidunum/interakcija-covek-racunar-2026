@@ -10,10 +10,13 @@ import { Movie } from './movie/movie';
 import { MovieModel } from '../models/movie.model';
 import { AxiosResponse } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import { ToyModel } from '../models/toy.model';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, DecimalPipe],
+  providers: [DecimalPipe],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -30,6 +33,7 @@ export class App {
   constructor(
     private router: Router,
     private utils: Utils,
+    private decimalPipe: DecimalPipe,
   ) {
     this.messages.push({
       type: 'bot',
@@ -59,100 +63,122 @@ export class App {
       text: this.botThinkingPlaceholder,
     });
 
-    RasaService.sendMessage(trimmedMessage).then((rsp) => {
-      if (rsp.data.length == 0) {
-        this.messages.push({
-          type: 'bot',
-          text: "Sorry I didn't understand your question. Please try again.",
-        });
-        localStorage.setItem('icr_sender_id', uuidv4());  // posle 3 dana konacno fix za multiple orders in one session
-        this.removeBotPlaceholder();
-        return;
-      }
+    RasaService.sendMessage(trimmedMessage)
+      .then((rsp) => {
+        if (rsp.data.length == 0) {
+          this.messages.push({
+            type: 'bot',
+            text: "Sorry I didn't understand your question. Please try again.",
+          });
+          localStorage.setItem('icr_sender_id', uuidv4()); // posle 3 dana konacno fix za multiple orders in one session
+          this.removeBotPlaceholder();
+          return;
+        }
 
-      for(let message of rsp.data) {
-        if (message.attachment != null) {
-          // Returns movie list
-          if (message.attachment.type == 'movie_list' && Array.isArray(message.attachment.data)) {
-            let html = '';
-            for (let movie of message.attachment.data as MovieModel[]) {
-              html += '<ul class="list-unstyled">';
-              html += `<li> Title: ${movie.title}</li>`;
-              html += `<li> Director: ${movie.director.name}</li>`;
-              html += `<li> Genre: ${movie.movieGenres.map((mg) => mg.genre.name)}</li>`;
+        for (let message of rsp.data) {
+          if (message.attachment != null) {
+            if (message.attachment.type == 'toy_list' && Array.isArray(message.attachment.data)) {
+              let html = '';
+              for (let toy of message.attachment.data as ToyModel[]) {
+                html += '<ul class="list-unstyled mb-3">';
+                html += `<li><h6 class="m-0">${toy.name}/h6></li>`;
+                html += `<li class="text-secondary mb-1">${toy.productionDate}</li>`;
+                html += `<li> ${toy.description}</li>`;
+                html += `<li><img style="max-width: 50px;" src="https://raw.githubusercontent.com/Pequla/express-toys-api/refs/heads/main/src/public${toy.imageUrl}" class="card-img-top my-2 rounded-1" [alt]="toy.name"></li>`;
+                html += `<li><b>Cena: ${this.decimalPipe.transform(toy.price, '1.2-2')} RSD</b></li>`;
+                html += `<li><a href="/toy/${toy.permalink}">More details...</a></li>`;
+
+                html += `</ul>`;
+                /*              html += `<li> Genre: ${movie.movieGenres.map((mg) => mg.genre.name)}</li>`;
               html += `<li> Actors: ${movie.movieActors.map((ma) => ma.actor.name)}</li>`;
               html += `</ul>`;
-              html += `<p>${movie.description}</p>`;
-            }
-            this.messages.push({
-              type: 'bot',
-              text: html,
-            });
-          }
-
-          // Simple object lists
-          if (
-            message.attachment.type == 'genre_list' ||
-            message.attachment.type == 'actor_list' ||
-            message.attachment.type == 'director_list'
-          ) {
-            let html = '<ul class="list-unstyled">';
-
-            const MAX_ITEMS = 50;
-            const itemsToDisplay = message.attachment.data.slice(0, MAX_ITEMS);
-
-            for (let obj of itemsToDisplay) {
-              html += `<li>${obj.name}</li>`;
+              html += `<p>${movie.description}</p>`;*/
+              }
+              this.messages.push({
+                type: 'bot',
+                text: html,
+              });
             }
 
-            if (message.attachment.data.length > MAX_ITEMS) {
-              const remaining = message.attachment.data.length - MAX_ITEMS;
-              html += `</br><li><em>...and ${remaining} more unlisted.</em></li>`;
+            // Returns movie list                             MOVIES START HERE
+            if (message.attachment.type == 'movie_list' && Array.isArray(message.attachment.data)) {
+              let html = '';
+              for (let movie of message.attachment.data as MovieModel[]) {
+                html += '<ul class="list-unstyled">';
+                html += `<li> Title: ${movie.title}</li>`;
+                html += `<li> Director: ${movie.director.name}</li>`;
+                html += `<li> Genre: ${movie.movieGenres.map((mg) => mg.genre.name)}</li>`;
+                html += `<li> Actors: ${movie.movieActors.map((ma) => ma.actor.name)}</li>`;
+                html += `</ul>`;
+                html += `<p>${movie.description}</p>`;
+              }
+              this.messages.push({
+                type: 'bot',
+                text: html,
+              });
             }
 
-            html += `</ul>`;
-            this.messages.push({
-              type: 'bot',
-              text: html,
-            });
-          }
+            // Simple object lists
+            if (
+              message.attachment.type == 'genre_list' ||
+              message.attachment.type == 'actor_list' ||
+              message.attachment.type == 'director_list'
+            ) {
+              let html = '<ul class="list-unstyled">';
 
-          // Simple list (array)
-          if (message.attachment.type == 'simple_list') {
-            let html = `<ul class='list-unstyled'>`;
-            for (let obj of message.attachment.data) {
-              html += `<li>${obj}</li>`;
+              const MAX_ITEMS = 50;
+              const itemsToDisplay = message.attachment.data.slice(0, MAX_ITEMS);
+
+              for (let obj of itemsToDisplay) {
+                html += `<li>${obj.name}</li>`;
+              }
+
+              if (message.attachment.data.length > MAX_ITEMS) {
+                const remaining = message.attachment.data.length - MAX_ITEMS;
+                html += `</br><li><em>...and ${remaining} more unlisted.</em></li>`;
+              }
+
+              html += `</ul>`;
+              this.messages.push({
+                type: 'bot',
+                text: html,
+              });
             }
-            html += `</ul>`;
-            this.messages.push({
-              type: 'bot',
-              text: html,
-            });
-          }
 
-          // Place order
-          if (message.attachment.type == 'create_order') {
-            const obj = message.attachment.data;
+            // Simple list (array)
+            if (message.attachment.type == 'simple_list') {
+              let html = `<ul class='list-unstyled'>`;
+              for (let obj of message.attachment.data) {
+                html += `<li>${obj}</li>`;
+              }
+              html += `</ul>`;
+              this.messages.push({
+                type: 'bot',
+                text: html,
+              });
+            }
 
-            let html = `<ul class='list-unstyled'>`;
-            html += `<li>Movie: ${obj.movie}</li>`;
-            html += `<li>Cinema: ${obj.cinema}</li>`;
-            html += `<li>Hall: ${obj.hall}</li>`;
-            html += `<li>Time: ${obj.time}</li>`;
-            html += `<li>Count: ${obj.count}</li>`;
-            html += `</ul>`;
+            // Place order
+            if (message.attachment.type == 'create_order') {
+              const obj = message.attachment.data;
 
-            // 1. Wait for the Axios Promise to resolve using .then()
-            MovieService.getMovieByShortURL(obj.movie)
-              .then((response) => {
-                // Axios stores the actual JSON response inside the 'data' property
-                const order_movie = response.data;
-                console.log('Movie fetched successfully:', order_movie);
+              let html = `<ul class='list-unstyled'>`;
+              html += `<li>Movie: ${obj.movie}</li>`;
+              html += `<li>Cinema: ${obj.cinema}</li>`;
+              html += `<li>Hall: ${obj.hall}</li>`;
+              html += `<li>Time: ${obj.time}</li>`;
+              html += `<li>Count: ${obj.count}</li>`;
+              html += `</ul>`;
 
-                // 2. Create the reservation    FIX FOR TOY
-               /* UserService.createReservation({
-                  movieId: order_movie.movieId, // Make sure this matches your MovieModel property
-                  movieTitle: order_movie.title, // Make sure this matches your MovieModel property
+              MovieService.getMovieByShortURL(obj.movie)
+
+                .then((response) => {
+                  const order_movie = response.data;
+                  console.log('Movie fetched successfully:', order_movie);
+
+                  /* UserService.createReservation({
+                  movieId: order_movie.movieId,
+                  movieTitle: order_movie.title,
                   cinema: obj.cinema,
                   hall: obj.hall,
                   quantity: obj.count,
@@ -160,114 +186,44 @@ export class App {
                   time: obj.time,
                   orderId: uuidv4(),
                 });*/
-              })
-              .catch((err) => {
-                // Catch any network errors or 404s
-                console.error('Failed to fetch movie details:', err);
+                })
+                .catch((err) => {
+                  console.error('Failed to fetch movie details:', err);
+                });
+
+              this.messages.push({
+                type: 'bot',
+                text: html,
               });
+            }
 
-
-            this.messages.push({
-              type: 'bot',
-              text: html,
-            });
+            // Make an order  -- za sada ne salje nigde treba popravityi korisceno je u testing fazi, dodati sada u extract movie
+            if (message.attachment.type == 'order_movie') {
+              this.router.navigateByUrl(
+                `/movie/${(message.attachment.data as MovieModel).shortUrl}/reservation`,
+              );
+            }
           }
+          this.messages.push({
+            type: 'bot',
+            text: message.text,
+          });
+        }
 
-          // Make an order  -- za sada ne salje nigde treba popravityi korisceno je u testing fazi, dodati sada u extract movie
-          if (message.attachment.type == 'order_movie') {
-            this.router.navigateByUrl(
-              `/movie/${(message.attachment.data as MovieModel).shortUrl}/reservation`,
-            );
+        this.messages = this.messages.filter((m) => {
+          if (m.type === 'bot') {
+            return m.text != this.botThinkingPlaceholder;
           }
-        }
-        this.messages.push({
-          type: 'bot',
-          text: message.text
+          return true;
         });
-      }
-
-      this.messages = this.messages.filter( m=>{
-        if(m.type === 'bot'){
-          return m.text != this.botThinkingPlaceholder;
-        }
-        return true;
-      });
-
-
-    }).catch(()=>{
-      this.removeBotPlaceholder();
-      this.messages.push({
-        type: 'error',
-        text: "Sorry, something went wrong. Please try again."
-      });
-    });
-
-    // Lokalna verzija u jsu - Bez Rase - 8. termin - 30+ min
-
-/*    if (trimmedMessage.includes('all movies')) {
-      await this.createBotResponseAsMovieList();
-      return;
-    }
-
-    if (trimmedMessage.endsWith('movie details')) {
-      const query = trimmedMessage.split('movie details')[0].trim();
-
-      const movies = await   MovieService.getMovies(query);
-      if (movies.data.length > 0) {
-
-        const movie = movies.data[0];
-        let html = '<ul class="list-unstyled">';
-        html += `<li> Title: ${movie.title}</li>`;
-        html += `<li> Director: ${movie.director.name}</li>`;
-        html += `<li> Genre: ${movie.movieGenres.map(mg => mg.genre.name)}</li>`;
-        html += `<li> Actors: ${movie.movieActors.map((a) => a.actor.name)}</li>`;
-        html += `</ul>`;
-        html += `<p>${movie.description}</p>`
-
+      })
+      .catch(() => {
+        this.removeBotPlaceholder();
         this.messages.push({
-          type: 'bot',
-          text: html
+          type: 'error',
+          text: 'Sorry, something went wrong. Please try again.',
         });
-
-      } else {
-        this.messages.push({
-          type: 'bot',
-          text: 'Movie not found :('
-        });
-      }
-
-      this.removeBotPlaceholder();
-      return;
-    }
-
-    const genres = await MovieService.getGenres();
-    if (trimmedMessage.includes('genre list')) {
-      let html = '<ul class="list-unstyled">';
-      genres.data
-        .map((g) => `<li>${g.name}</li>`)
-        .forEach((g) => (html += g));
-      html += '</ul>';
-
-      this.messages.push({
-        type: 'bot',
-        text: html,
       });
-      this.removeBotPlaceholder();
-      return;
-    }
-    console.log(genres.data);
-    for (let genre of genres.data) {
-
-      if (trimmedMessage.includes('genre ' + genre.name.toLowerCase())) {
-        await this.createBotResponseAsMovieList(genre.genreId);
-        return
-      }
-    }
-    this.removeBotPlaceholder();
-    this.messages.push({
-      type: 'bot',
-      text: "Seems like i cant help you with that!"
-    });*/
   }
 
   async createBotResponseAsMovieList(genre: number = 0) {

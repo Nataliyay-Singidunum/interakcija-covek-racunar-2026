@@ -23,6 +23,101 @@ nlu:
     - hello world
     - action hello world
 
+- intent: new_toys
+  examples: |
+    - whats new
+    - show me new toys
+    - new toys
+    - whats new in
+    - what are the newest toys
+    - show me the latest arrivals
+    - any new toys in stock
+    - what just arrived
+    - latest toys
+    - recently added toys
+    - what are the latest additions
+    - do you have any new toys
+    - new arrivals
+    - what's fresh in the store
+    - show me recently released toys
+    - I want to see new toys
+    - any new additions to the catalog
+    - what toys are new
+    - got any new stuff
+    - display new toys
+    - what is the latest toy
+    - anything new added recently
+    - bring up the newest toys
+
+- intent: all_toys
+  examples: |
+    - show me all toys
+    - all toys
+    - show all
+    - list all toys
+    - give me the full list of toys
+    - what toys do you have
+    - show me every toy
+    - I want to see all the toys
+    - display all toys
+    - what toys are available
+    - show me your entire catalog
+    - list everything you have
+    - can I see all the toys
+    - what do you have in stock
+    - complete toy list
+    - show me the whole collection
+    - list toys
+    - give me all toys
+    - show me everything
+
+- intent: add_to_cart
+  examples: |
+    - add to my cart
+    - add that toy to my cart
+    - put this in my cart
+    - add it to the basket
+    - I want to buy this one
+    - drop this in my cart
+    - add item to cart
+    - can you add this to my basket?
+    - put that in the cart
+    - include this in my order
+    - add toy to basket
+    - put it in my shopping cart
+    - I'll take this one
+
+- intent: show_cart
+  examples: |
+    - show me my cart
+    - what is in my cart?
+    - open my cart
+    - view basket
+    - check my cart
+    - what did I add to my cart?
+    - show basket
+    - display my shopping cart
+    - let me see my cart
+    - what am I buying?
+    - what is currently in my basket?
+    - review my cart
+
+- intent: order_toys
+  examples: |
+    - checkout
+    - i want to place my order
+    - order
+    - buy now
+    - finish my order
+    - proceed to checkout
+    - let's pay
+    - complete my purchase
+    - confirm my order
+    - pay for my cart
+    - checkout now
+    - I'm ready to checkout
+    - process my order
+    - finish shopping
 
 - intent: latest_movies
   examples: |

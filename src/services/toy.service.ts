@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { ToyModel } from '../models/toy.model';
 import { MovieModel } from '../models/movie.model';
+import { TypeModel } from '../models/type.model';
+import { AgeGroupModel } from '../models/age-group';
 
 const client = axios.create({
   baseURL: 'https://toy.pequla.com/api',
@@ -28,10 +30,10 @@ export class ToyService {
   }
 
   static async getToyTypes() {
-    return client.get<ToyModel[]>('/toy/type');
+    return client.get<TypeModel[]>('/type');
   }
 
   static async getToyAgeGroups() {
-    return client.get<ToyModel[]>('/toy/age-group');
+    return client.get<AgeGroupModel[]>('/age-group');
   }
 }
