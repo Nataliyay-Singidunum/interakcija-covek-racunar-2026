@@ -80,6 +80,45 @@ export class Profile {
     console.log('Movie fetched successfully:', typeList);
   }
 
+  protected showAddMenu: boolean = false;
+  protected showRemoveMenu: boolean = false;
+  toggleAddMenu() {
+    this.showAddMenu = !this.showAddMenu;
+    this.showRemoveMenu = false;
+  }
+  toggleRemoveMenu() {
+    this.showRemoveMenu = !this.showRemoveMenu;
+    this.showAddMenu = false;
+  }
+
+  getAvailableTypes(): string[] {
+    const userFavorites = this.activeUser()?.favoriteTypes || [];
+    return this.types.filter((t) => !userFavorites.includes(t));
+  }
+
+  addFavoriteType(newType: string) {
+    const user = this.activeUser();
+    if (user) {
+      const currentFavorites = user.favoriteTypes ? [...user.favoriteTypes] : [];
+      currentFavorites.push(newType);
+      user.favoriteTypes = currentFavorites;
+      this.activeUser.set(user);
+      UserService.updateUserFavorites(user.email, currentFavorites);
+      this.showAddMenu = false;
+    }
+  }
+
+  removeFavoriteType(typeToRemove: string) {
+    const user = this.activeUser();
+    if (user && user.favoriteTypes) {
+      const updatedFavorites = user.favoriteTypes.filter((t) => t !== typeToRemove);
+      user.favoriteTypes = updatedFavorites;
+      this.activeUser.set(user);
+      UserService.updateUserFavorites(user.email, updatedFavorites);
+      this.showRemoveMenu = false;
+    }
+  }
+
   doLogout() {
     this.utils.showDialog(
       'Are you sure you want to logout?',

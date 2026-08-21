@@ -79,9 +79,9 @@
 
   <div class="mt-5">
     <h4>Reviews and Ratings</h4>
-    <hr>
+    <hr class="mb-0">
     <div class="row">
-      <div class="col-12 col-md-6">
+<!--      <div class="col-12 col-md-6 mt-3">          OLD TEMPLATE
         <div class="card">
           <h5 class="card-header">
             Review title
@@ -95,7 +95,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-6 mt-3">
         <div class="card">
           <h5 class="card-header">
             Review title
@@ -108,7 +108,31 @@
             </figcaption>
           </div>
         </div>
-      </div>
+      </div>-->
+      @for (review of reviews(); track review.reviewId) {
+        <div class="col-12 col-md-6 mt-3" >
+          <div class="card">
+            <h5 class="card-header">
+              {{ review.reviewTitle || 'Review' }}
+            </h5>
+            <div class="card-body">
+              <p class="card-title">
+                @for (star of starArray; track $index) {
+                  @if (star <= review.rating) {
+                    <i class="fa-solid fa-star" style="color: #b9206b;"></i>
+                  } @else {
+                    <i class="fa-regular fa-star" style="color: #b9206b;"></i>
+                  }
+                }
+              </p>
+              <p class="card-text">{{ review.reviewText }}</p>
+              <figcaption class="blockquote-footer">
+                {{ review.username }} <cite title="Date">on {{ review.date | date:'mediumDate' }}</cite>
+              </figcaption>
+            </div>
+          </div>
+        </div>
+      }
     </div>
   </div>
 }

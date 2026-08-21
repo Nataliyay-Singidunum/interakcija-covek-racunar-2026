@@ -154,6 +154,18 @@ export class UserService {
     localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
   }
 
+  static updateUserFavorites(email: string, newFavorites: string[]) {
+    const all = this.getUsers();
+
+    for (let u of all) {
+      if (u.email === email) {
+        u.favoriteTypes = newFavorites;
+        break;
+      }
+    }
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
+  }
+
   // Movie v
 
   static createReservation(order: OrderModel) {
@@ -181,7 +193,13 @@ export class UserService {
     localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
   }
 
-  static updateUser(updatedUser: { firstName: string; lastName: string; email: string; phone: string; address: string; }) {
+  static updateUser(updatedUser: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    address: string;
+  }) {
     const currentEmail = localStorage.getItem(this.ACTIVE_KEY);
 
     if (!currentEmail) {
@@ -198,7 +216,6 @@ export class UserService {
         user.phone = updatedUser.phone;
         user.address = updatedUser.address;
 
-
         if (user.email !== updatedUser.email) {
           user.email = updatedUser.email;
           localStorage.setItem(this.ACTIVE_KEY, user.email);
@@ -210,6 +227,5 @@ export class UserService {
 
     // 3. Save the entire updated array back to local storage
     localStorage.setItem(this.USERS_KEY, JSON.stringify(allUsers));
-
   }
 }

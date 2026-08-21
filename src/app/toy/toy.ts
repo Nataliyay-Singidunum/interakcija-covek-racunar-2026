@@ -13,16 +13,20 @@ import {
 import { Utils } from '../utils';
 import { UserService } from '../../services/user.service';
 import { v4 as uuidv4 } from 'uuid';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, DatePipe } from '@angular/common';
+import { ReviewModel } from '../../models/review.model';
+import { ReviewService } from '../review.service';
 
 @Component({
   selector: 'app-toy',
-  imports: [RouterLink, FormsModule, ReactiveFormsModule, DecimalPipe],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule, DecimalPipe, DatePipe],
   templateUrl: './toy.html',
   styleUrl: './toy.css',
 })
 export class Toy {
   protected toy = signal<ToyModel | null>(null);
+  protected reviews = signal<ReviewModel[]>([]);
+  protected starArray = [1, 2, 3, 4, 5];
   protected cart_form: FormGroup;
 
   constructor(
@@ -33,7 +37,11 @@ export class Toy {
   ) {
     this.route.params.subscribe((p) => {
       if (p['path']) {
-        ToyService.getToyByPermalink(p['path']).then((rsp) => this.toy.set(rsp.data));
+        ToyService.getToyByPermalink(p['path']).then((rsp) => {
+          this.toy.set(rsp.data);
+          const toyId = rsp.data.toyId;
+          this.reviews.set(ReviewService.getReviewsForToy(toyId));
+        });
       }
     });
     this.cart_form = this.builder.group({
@@ -53,6 +61,7 @@ export class Toy {
     UserService.createCartItem({
       item: this.toy()!,
       quantity: this.cart_form.value.quantity,
+      status: 'na',
     });
     this.router.navigateByUrl('/cart');
   }

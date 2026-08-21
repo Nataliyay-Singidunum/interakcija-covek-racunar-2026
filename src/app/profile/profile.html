@@ -2,7 +2,7 @@
   <div class="card-header" style="background: rgb(185 32 107 / 0.1)">
     <h5>User Details</h5>
   </div>
-  <div class="card-body">
+  <div class="card-body mb-3">
     <div class="row">
       <div class="col-12 col-md-6">
         <table class="table" style="border-color: rgb(185 32 107 / 0.2)">
@@ -35,20 +35,62 @@
     </div>
     <div class="d-flex gap-3 flex-wrap">
       <p class="p-0 m-0 mx-2 text-capitalize">Favorite toy types: </p>
-      @for (type of this.types; track $index) {
-        <p  class="badge rounded-pill p-2 px-3 m-0" style="background: rgb(185 32 107 / 0.1); color: #b9206b" >{{type}}</p>
+      @for (type of activeUser()?.favoriteTypes; track $index) {
+        <p class="badge rounded-pill p-2 px-3 m-0" style="background: #f8e9f1; color: #b9206b">{{ type }}</p>
       }
+
+
+      <div style="position: relative;">
+        <button class="badge rounded-pill p-2 px-3 m-0 border-0"
+                style="background: #f8e9f1; color: #b9206b; cursor: pointer;"
+                (click)="toggleAddMenu()">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+        @if (showAddMenu) {
+          <div class="dropdown-menu show shadow-sm" style="position: absolute; top: 120%; left: 0; z-index: 1000; min-width: 150px;">
+            @if (getAvailableTypes().length > 0) {
+              @for (availableType of getAvailableTypes(); track $index) {
+                <button type="button" class="dropdown-item" (click)="addFavoriteType(availableType)">
+                  {{ availableType }}
+                </button>
+              }
+            } @else {
+              <div class="p-2 text-muted text-center" style="font-size: 10pt;">All types already added!</div>
+            }
+          </div>
+        }
     </div>
-    <div class=" d-flex justify-content-end gap-3">
+      <div style="position: relative;">
+        <button class="badge rounded-pill p-2 px-3 m-0 border-0"
+                style="background: #f8e9f1; color: #b9206b; cursor: pointer;"
+                (click)="toggleRemoveMenu()">
+          <i class="fa-solid fa-minus"></i>
+        </button>
+
+        @if (showRemoveMenu) {
+          <div class="dropdown-menu show shadow-sm" style="position: absolute; top: 120%; left: 0; z-index: 1000; min-width: 150px;">
+            @if (activeUser()!.favoriteTypes!.length) {
+              @for (favoriteType of activeUser()?.favoriteTypes; track $index) {
+                <button type="button" class="dropdown-item" (click)="removeFavoriteType(favoriteType)">
+                  {{ favoriteType }}
+                </button>
+              }
+            } @else {
+              <div class="p-2 text-muted text-center" style="font-size: 10pt">No favorites to remove!</div>
+            }
+          </div>
+        }
+      </div>
+    <div class=" d-flex justify-content-end gap-3" style="width: 100%">
       <a class="btn" style="background: rgb(185 32 107 / 0.1);" [routerLink]="`/edit-profile`" >
         <i class="fa-solid fa-pen-to-square" style="color: #b9206b;"></i> Edit
       </a>
 
-      <button type="button" class="btn" style="background: rgb(185 32 107 / 0.1);" (click)="doLogout()" >
-        <i class="fa-solid fa-right-from-bracket" style="color: rgb(185, 32, 107); "></i>Logout
+      <button type="button" class="btn" style="background: #f8e9f1;" (click)="doLogout()" >
+        <i class="fa-solid fa-right-from-bracket" style="color: #b9206b; "></i>Logout
       </button>
     </div>
-
+    </div>
   </div>
 
 </div>
@@ -129,11 +171,8 @@
               }
                 </tbody>
               </table>
-
-
             }
           }
-
     </div>
   } @else {
     <div class="card-body">

@@ -15,7 +15,7 @@ import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, DecimalPipe],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule],
   providers: [DecimalPipe],
   templateUrl: './app.html',
   styleUrl: './app.css',

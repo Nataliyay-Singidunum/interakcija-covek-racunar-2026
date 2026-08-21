@@ -138,6 +138,7 @@ export class Home {
     UserService.createCartItem({
       item: toy,
       quantity: 1,
+      status: 'na'
     });
   }
 }
