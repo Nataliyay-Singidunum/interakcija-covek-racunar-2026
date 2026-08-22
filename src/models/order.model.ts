@@ -12,6 +12,6 @@ export interface OrderModel {
     | 'preparing'
     | 'out for delivery'
     | 'delivered'
-    | 'liked'
-    | 'disliked';
+    | 'waiting for review'
+    | 'reviewed';
 }

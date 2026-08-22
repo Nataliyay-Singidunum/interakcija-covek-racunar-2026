@@ -30,20 +30,34 @@
         </div>
         <div class="card-body d-flex flex-column justify-content-between">
           <div>
-            <p class="text-secondary mb-2">Date of production: {{toy()!.productionDate}}</p>
-            <div>TODO
-              4.0 <i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star-half-stroke" style="color: #b9206b;"></i><i class="fa-regular fa-star" style="color: #b9206b"></i>
+
+            <div class="d-flex align-items-center gap-2">
+              <span class="fw-bold" style="font-size: 1.1rem; color: #b9206b;">
+                {{ averageRating() | number:'1.1-1' }}
+              </span>
+              <div>
+                @for (star of starArray; track $index) {
+                  @if (averageRating() >= star) {
+                    <i class="fa-solid fa-star" style="color: #b9206b;"></i>
+                  } @else if (averageRating() >= star - 0.5) {
+                    <i class="fa-solid fa-star-half-stroke" style="color: #b9206b;"></i>
+                  } @else {
+                    <i class="fa-regular fa-star" style="color: #b9206b;"></i>
+                  }
+                }
+              </div>
             </div>
-            <div>TODO
-              reviews.count
+            <div class="text-secondary mt-1" style="font-size: 10pt;">
+              {{ reviews().length }} {{ reviews().length === 1 ? 'review' : 'reviews' }}
             </div>
           </div>
 
 
           <div>
             <h6>Description </h6>
-            <p class="mb-2 ">{{toy()?.description}}</p>
-            <div class="row">
+            <p class="mb-0">{{toy()?.description}}</p>
+            <p class="text-secondary mb-2" style="font-size: 10pt;">Date of production: {{toy()!.productionDate | date:'mediumDate' }}</p>
+            <div class="row mb-2">
               <div class="col-12 col-md-6">
                 <h6>Age Group - {{toy()!.ageGroup.name}}</h6>
                 <p>{{toy()!.ageGroup.description}}</p>
@@ -76,7 +90,66 @@
       </div>
     </div>
   </div>
+  @if (canReview) {
+    <div class="mt-5">
+      <h4>Leave a Review!</h4>
+      <hr class="mb-0">
+      <div class=" mt-3" style="width: 50%; margin: auto" >
+        <div class="card">
+          <form [formGroup]="review_form" (ngSubmit)="onReviewSubmit()">
+            <h5 class="card-header">
+              <input type="text" formControlName="reviewTitle" placeholder="Review Title..." class="form-control">
+            </h5>
+            <div class="card-body">
+              <div class="card-title d-flex gap-1" (mouseleave)="onStarLeave()" >
+                <!--<button type="button" class="hover-box">                                            TEST VER
+                  <i class="fa-regular fa-star star-rating shown-element" style="color: #b9206b;"></i>
+                  <div class="hidden-element"> <i class="fa-solid fa-star" style="color: #b9206b;"></i></div>
+                </button>
+                <button class="hover-box">
+                  <i class="fa-regular fa-star star-rating shown-element" style="color: #b9206b;"></i>
+                  <div class="hidden-element"> <i class="fa-solid fa-star" style="color: #b9206b;"></i></div>
+                </button>
+                <button class="hover-box">
+                  <i class="fa-regular fa-star star-rating shown-element" style="color: #b9206b;"></i>
+                  <div class="hidden-element"> <i class="fa-solid fa-star" style="color: #b9206b;"></i></div>
+                </button>
+                <button class="hover-box">
+                  <i class="fa-regular fa-star star-rating shown-element" style="color: #b9206b;"></i>
+                  <div class="hidden-element"> <i class="fa-solid fa-star" style="color: #b9206b;"></i></div>
+                </button>
+                <button type="button" class="hover-box">
+                  <i class="fa-regular fa-star star-rating shown-element" style="color: #b9206b;"></i>
+                  <div class="hidden-element"> <i class="fa-solid fa-star" style="color: #b9206b;"></i></div>
+                </button>-->
 
+                @for (star of starArray; track $index) {
+                  <button type="button" class="border-0 bg-transparent p-0 m-0" (click)="setRating(star)" (mouseenter)="onStarHover(star)" style="cursor: pointer;">
+                    @if (star <= (hoveredRating || selectedRating)) {
+                      <i class="fa-solid fa-star" style="color: #b9206b;"></i>
+                    } @else {
+                      <i class="fa-regular fa-star" style="color: #b9206b;"></i>
+                    }
+                  </button>
+                }
+              </div>
+              <p class="card-text mb-2">
+                <textarea formControlName="reviewText" class="form-control" placeholder="Write your review here..." id="reviewText" rows="5" style="width: 100%"></textarea>
+              </p>
+              <div class="d-flex justify-content-center mt-0">
+                <button type="submit" class="btn btn-success">
+                  <i class="fa-solid fa-pen" style="color: rgb(255, 255, 255);"></i> Submit
+                </button>
+              </div>
+
+
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  }
   <div class="mt-5">
     <h4>Reviews and Ratings</h4>
     <hr class="mb-0">

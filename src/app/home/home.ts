@@ -6,10 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { ToyModel } from '../../models/toy.model';
 import { ToyService } from '../../services/toy.service';
 import { UserService } from '../../services/user.service';
+import { ReviewService } from '../../services/review.service';
+import { DecimalPipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, DecimalPipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -31,6 +34,7 @@ export class Home {
   selectedTargetGroup: string = '';
   uniquePeriods: string[] = [];
   selectedPeriod: string = '';
+  protected selectedRating: number = 0;
 
   constructor(private router: Router) {
     this.loadToys();
@@ -80,7 +84,8 @@ export class Home {
       this.searchCriteria !== '4' &&
       this.searchCriteria !== '5' &&
       this.searchCriteria !== '6' &&
-      this.searchCriteria !== '7'
+      this.searchCriteria !== '7' &&
+      this.searchCriteria !== '8'
     ) {
       return;
     }
@@ -95,7 +100,8 @@ export class Home {
           this.searchCriteria !== '4' &&
           this.searchCriteria !== '5' &&
           this.searchCriteria !== '6' &&
-          this.searchCriteria !== '7'
+          this.searchCriteria !== '7' &&
+          this.searchCriteria !== '8'
         ) {
           return true;
         }
@@ -117,28 +123,55 @@ export class Home {
             if (!this.selectedPeriod) return true;
             const toyYear = toy.productionDate.substring(0, 4);
             const toyMonth = parseInt(toy.productionDate.substring(5, 7), 10);
-            const toyPeriod = toyMonth <= 6 ? `${toyYear} Half 1 (Jan-Jun)` : `${toyYear} Half 2 (Jul-Dec)`;
+            const toyPeriod =
+              toyMonth <= 6 ? `${toyYear} Half 1 (Jan-Jun)` : `${toyYear} Half 2 (Jul-Dec)`;
             return toyPeriod === this.selectedPeriod;
           case '7':
             return toy.price >= this.minPrice && toy.price <= this.maxPrice;
-          case '8': // TODO
-            return true;
-
+          case '8':
+            return this.getAverageRating(toy.toyId) >= this.selectedRating;
           default:
             return toy.name.toLowerCase().includes(searchTerm);
         }
       });
 
-      // Finally, update the signal with the fully filtered list
+      if (this.searchCriteria === '8') {
+        filteredToys.sort(
+          (a, b) => this.getAverageRating(b.toyId) - this.getAverageRating(a.toyId),
+        );
+      }
       this.toys.set(filteredToys);
     });
+  }
+
+  protected getAverageRating(toyId: number): number {
+    const revs = ReviewService.getReviewsForToy(toyId);
+    if (revs.length === 0) return 0;
+
+    const sum = revs.reduce((total, review) => total + review.rating, 0);
+    return sum / revs.length;
   }
 
   protected addToCart(toy: ToyModel) {
     UserService.createCartItem({
       item: toy,
       quantity: 1,
-      status: 'na'
+      status: 'na',
+    });
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Item Added to Cart',
+      showConfirmButton: false,
+      timer: 1500,
+      backdrop: `
+        rgba(0,0,123,0.4)
+        url("/nyan.gif")
+        top
+        no-repeat
+      `,
     });
   }
+
+  protected readonly ReviewService = ReviewService;
 }

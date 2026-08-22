@@ -17,6 +17,12 @@ export class Utils {
       confirmButtonText: confirm,
       cancelButtonText: cancel,
       customClass: this.bootstrapClasses,
+      backdrop: `
+        rgba(0,0,123,0.4)
+        url("/nyan.gif")
+        top
+        no-repeat
+      `,
     }).then((result) => {
       if (result.isConfirmed) {
         callback();
@@ -29,6 +35,12 @@ export class Utils {
       icon: 'info',
       title: text,
       customClass: this.bootstrapClasses,
-    })
+      backdrop: `
+        rgba(0,0,123,0.4)
+        url("/nyan.gif")
+        top
+        no-repeat
+      `,
+    });
   }
 }

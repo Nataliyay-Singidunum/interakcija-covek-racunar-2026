@@ -40,4 +40,19 @@ export class Cart {
 
     return total;
   }
+
+  increment(toyId: number) {
+    UserService.modifyCartItem(toyId, 1);
+    this.activeUser.set(UserService.getActiveUser()); // Refreshes the signal to update UI
+  }
+
+  decrement(toyId: number) {
+    UserService.modifyCartItem(toyId, -1);
+    this.activeUser.set(UserService.getActiveUser());
+  }
+
+  remove(toyId: number) {
+    UserService.modifyCartItem(toyId, 0); // Passing 0 acts as our delete trigger
+    this.activeUser.set(UserService.getActiveUser());
+  }
 }

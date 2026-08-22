@@ -1,0 +1,16 @@
+.hidden-element {
+  display: none;
+}
+
+.hover-box:hover .hidden-element {
+  display: inline-block;
+}
+
+.hover-box:hover .shown-element {
+  display: none;
+}
+
+.card-title button {
+  all: unset;
+  cursor: pointer;
+}

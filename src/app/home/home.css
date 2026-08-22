@@ -1,4 +1,4 @@
-.movies{
+.toys{
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
@@ -6,11 +6,11 @@
 
 }
 
-.movies .card{
+.toys .card{
   max-width: 240px;
 }
 
-.movies .btn-group{
+.toys .btn-group{
   display: flex;
   justify-content: flex-end;
 }

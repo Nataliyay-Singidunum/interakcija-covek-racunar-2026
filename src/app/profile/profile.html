@@ -102,7 +102,7 @@
   </div>
   @if (activeUser()!.data.length > 0) {
     <div class="card-body " >
-      <table class="table" style="border-color: rgb(185 32 107 / 0.2)">
+      <table class="table mb-3" style="border-color: rgb(185 32 107 / 0.2)">
         <thead>
         <tr>
           <th scope="col">Item</th>
@@ -125,6 +125,12 @@
         </tbody>
       </table>
 
+      <div class=" d-flex justify-content-end gap-3 mb-3" style="width: 100%">
+        <a class="btn" style="background: rgb(185 32 107 / 0.1);" [routerLink]="`/cart`" >
+          <i class="fa-solid fa-pen-to-square" style="color: #b9206b;"></i> View Details & Checkout
+        </a>
+      </div>
+
     </div>
   }
 </div>
@@ -141,13 +147,11 @@
             @if (order.items.status != 'active') {
 
               <table class="table mb-5 caption-top" style="border-color: rgb(185 32 107 / 0.2)">
-                <!--<caption>Order {{ $index + 1}}</caption>-->
-
                 <thead>
                 <tr>
                   <th scope="col">Order id: {{order.orderId}}</th>
-                  <th scope="col">Time: {{order.time}}</th>
-                  <th scope="col">Status: {{order.status}}</th>
+                  <th scope="col">Time: {{order.time| date:'mediumDate'  }}</th>
+                  <th scope="col">Status: {{ statusMap[order.status] || order.status }}</th>
                   <th scope="col"></th>
                   <th scope="col">Options</th>
                 </tr>
@@ -156,7 +160,24 @@
                   <th scope="col">Quantity</th>
                   <th scope="col"></th>
                   <th scope="col"></th>
-                  <th scope="col"></th>
+                  <th scope="col">
+                    @if (order.status === 'pay later') {
+                      <button class="btn btn-light py-1 mx-3" style="color: #b9206b" (click)="pay(order)">
+                        <i class="fa-solid fa-credit-card" style="color: #b9206b;"></i>Pay
+                      </button>
+                      <button class="btn btn-light py-1 mx-3" style="color: #b9206b"  (click)="cancel(order)">
+                        <i class="fa-solid fa-xmark" style="color: #b9206b;"></i>Cancel
+                      </button>
+                    } @else if (order.status === 'paid' || order.status === 'preparing' || order.status === 'out for delivery') {
+                      <button class="btn btn-light py-1 mx-3" style="color: #b9206b"  (click)="nextState(order)">
+                        <i class="fa-solid fa-forward" style="color: #b9206b;"></i>Next Step
+                      </button>
+                    } @else if (order.status === 'delivered') {
+                      <button class="btn btn-light py-1 mx-3" style="color: #b9206b" (click)="confirmDelivery(order)">
+                        <i class="fa-solid fa-clipboard-check" style="color: #b9206b;"></i>Confirm Delivery
+                      </button>
+                    }
+                  </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -166,7 +187,13 @@
                   <td>{{item.quantity}}</td>
                   <td></td>
                   <td></td>
-                  <td></td>
+                  <td>
+                    @if (order.status === 'waiting for review') {
+                      <a class="btn btn-light py-1 mx-3" style="color: #b9206b"  [routerLink]="['/toy', item.item.permalink]">
+                        <i class="fa-solid fa-pen-to-square" style="color: #b9206b;"></i> Leave a review
+                      </a>
+                    }
+                  </td>
                 </tr>
               }
                 </tbody>

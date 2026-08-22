@@ -22,9 +22,9 @@
                   <td>{{item.quantity}}</td>
                   <td>{{item.quantity * item.item.price | number:'1.2-2'}}</td>
                   <td class="text-end">
-                    <button  class="btn btn-light"><i class="fa-solid fa-minus" style="color: #b9206b;"></i></button>
-                    <button  class="btn btn-light mx-3"><i class="fa-solid fa-plus" style="color: #b9206b;"></i></button>
-                    <button  class="btn btn-light"><i class="fa-solid fa-trash-can" style="color: #b9206b;"></i></button>
+                    <button  class="btn btn-light" (click)="decrement(item.item.toyId)"><i class="fa-solid fa-minus" style="color: #b9206b;"></i></button>
+                    <button  class="btn btn-light mx-3" (click)="increment(item.item.toyId)"><i class="fa-solid fa-plus" style="color: #b9206b;"></i></button>
+                    <button  class="btn btn-light" (click)="remove(item.item.toyId)"><i class="fa-solid fa-trash-can" style="color: #b9206b;"></i></button>
                   </td>
                 </tr>
               }

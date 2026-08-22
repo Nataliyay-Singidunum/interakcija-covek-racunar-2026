@@ -41,18 +41,18 @@
 <div class="d-flex justify-content-center gap-3 mb-3">
 
   <select class="form-select" style="background: #f8e9f1; max-width: 160px; max-height: 38px; padding-right: 0" [(ngModel)]="searchCriteria" (change)="loadToys()">
-    <option selected>Search criteria</option>
+    <option value="0" selected>Search criteria</option>
     <option value="1">Name</option>
     <option value="2">Description</option>
     <option value="3">Type</option>
     <option value="4">Age range</option>
     <option value="5">Target group</option>
     <option value="6">Production Date</option>
-    <option value="7">Price</option>
+    <option value="7">Price</option>]\
     <option value="8">Review</option>
   </select>
-  @if (searchCriteria == "1" || searchCriteria == "2" || searchCriteria == "8" ) {
-    <div class="input-group mb-3">
+  @if (searchCriteria == "0" || searchCriteria == "1" || searchCriteria == "2" ) {
+    <div class="input-group">
       <span class="input-group-text" id="addon" style="background: #f8e9f1"><i class="fa-solid fa-magnifying-glass" style="color: rgb(255, 255, 255);"></i></span>
       <input type="text" class="form-control" placeholder="Search" aria-describedby="addon" [(ngModel)]="search" (keyup)="loadToys()">
     </div>
@@ -92,7 +92,16 @@
       <option value="3000-5000">3,000 - 5,000 RSD</option>
       <option value="5000-100000">Over 5,000 RSD</option>
     </select>
-  } @else {
+  } @else if (searchCriteria == "8") {
+  <select class="form-select py-0" style="background: #f8e9f1; max-width: 320px; max-height: 38px;" [(ngModel)]="selectedRating" (change)="loadToys()">
+    <option value="0">Any</option>
+    <option value="5">5</option>
+    <option value="4.5">4.5+</option>
+    <option value="4">4+</option>
+    <option value="3.5">3.5+</option>
+    <option value="2">2+</option>
+  </select>
+} @else {
     <div class="input-group mb-3">
       <span class="input-group-text" id="addon" style="background: #f8e9f1"><i class="fa-solid fa-magnifying-glass" style="color: rgb(255, 255, 255);"></i></span>
       <input type="text" class="form-control" placeholder="Search" aria-describedby="addon" [(ngModel)]="search" (keyup)="loadToys()">
@@ -101,21 +110,38 @@
 </div>
 
 
-<div class="movies">
+<div class="toys">
   @for (toy of toys(); track $index) {
-    <div class="card">
+    <div class="card ">
       <img [src]="`https://raw.githubusercontent.com/Pequla/express-toys-api/refs/heads/main/src/public${toy.imageUrl}`" class="card-img-top" [alt]="toy.name">
-      <div class="card-body">
-        <h5 class="card-title ">{{toy.name}}</h5>
-        <p class="badge rounded-pill bg-secondary p-2">{{toy.ageGroup.name}} </p>
-        @if (toy.targetGroup == "dečak") {
-          <p  class="badge rounded-pill bg-primary-subtle p-2 mx-2 text-primary" >dečaci</p>
-        } @else if (toy.targetGroup == "devojčica"){
-          <p  class="badge rounded-pill p-2 mx-2" style="background: rgb(185 32 107 / 0.1); color: #b9206b" >devojčice</p>
-        } @else {
-          <p  class="badge rounded-pill bg-secondary-subtle p-2 mx-2 text-secondary"> {{toy.targetGroup}}</p>
-        }
-        <p class="card-text">{{toy.description}}</p>
+      <div class="card-body d-flex flex-column justify-content-between">
+        <div class="d-inline">
+          <h5 class="card-title ">{{toy.name}} </h5>
+
+          <p class="badge rounded-pill bg-secondary mb-1 p-2">{{toy.ageGroup.name}} </p>
+          @if (toy.targetGroup == "dečak") {
+            <p  class="badge rounded-pill bg-primary-subtle p-2 mb-1 mx-2 text-primary" >dečaci</p>
+          } @else if (toy.targetGroup == "devojčica"){
+            <p  class="badge rounded-pill p-2 mx-2 mb-1" style="background: #f8e9f1; color: #b9206b" >devojčice</p>
+          } @else {
+            <p  class="badge rounded-pill bg-secondary-subtle p-2 mb-0 mx-2 text-secondary"> {{toy.targetGroup}}</p>
+          }
+          <div class="mb-1">
+          <span class="fw-bold" style="color: #b9206b;font-size: 10pt;">
+            {{ getAverageRating(toy.toyId) | number:'1.1-1' }} <i class="fa-solid fa-star"></i>
+          </span>
+            <span class="text-muted" style="font-size: 10pt;;">
+             ({{ ReviewService.getReviewsForToy(toy.toyId).length }})
+          </span>
+          </div>
+          <div style="height: 80px">
+            <p class="card-text" >{{toy.description}}</p>
+          </div>
+        </div>
+
+
+        <p class="justify-content-end align-content-end mt-3 mb-0 fw-semibold text-end" style="height: 20px">{{toy.price  | number:'1.2-2' }} RSD</p>
+
       </div>
       <div class="card-footer btn-group">
         <a class="btn btn-sm btn-primary" [routerLink]="`/toy/${toy.permalink}`">
