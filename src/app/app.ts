@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { Utils } from './utils';
@@ -12,6 +12,8 @@ import { AxiosResponse } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { ToyModel } from '../models/toy.model';
 import { DecimalPipe } from '@angular/common';
+import { ReviewService } from '../services/review.service';
+import { ToyService } from '../services/toy.service';
 
 @Component({
   selector: 'app-root',
@@ -34,15 +36,24 @@ export class App {
     private router: Router,
     private utils: Utils,
     private decimalPipe: DecimalPipe,
+    private cdr: ChangeDetectorRef        // baca update kad stigne poruka da ne mora da se ukliktava
   ) {
     this.messages.push({
       type: 'bot',
-      text: 'How can I help you?',
+      text: 'Hiiii! How can I help? :) ',
     });
   }
 
   toggleChat() {
     this.isChatVisible = !this.isChatVisible;
+  }
+
+  protected getAverageRating(toyId: number): number {
+    const revs = ReviewService.getReviewsForToy(toyId);
+    if (revs.length === 0) return 0;
+
+    const sum = revs.reduce((total, review) => total + review.rating, 0);
+    return sum / revs.length;
   }
 
   async sendUserMessage() {
@@ -81,22 +92,85 @@ export class App {
               let html = '';
               for (let toy of message.attachment.data as ToyModel[]) {
                 html += '<ul class="list-unstyled mb-3">';
-                html += `<li><h6 class="m-0">${toy.name}/h6></li>`;
+                html += `<li class="d-flex align-items-baseline justify-content-between mb-0">
+                          <h6 class="mb-0">${toy.name}</h6>
+                          <p class="mb-0 pink-subtle">
+                          ${this.decimalPipe.transform(this.getAverageRating(toy.toyId), '1.2-2')}
+                          <i class="fa-solid fa-star"></i></p></li>`;
                 html += `<li class="text-secondary mb-1">${toy.productionDate}</li>`;
                 html += `<li> ${toy.description}</li>`;
-                html += `<li><img style="max-width: 50px;" src="https://raw.githubusercontent.com/Pequla/express-toys-api/refs/heads/main/src/public${toy.imageUrl}" class="card-img-top my-2 rounded-1" [alt]="toy.name"></li>`;
-                html += `<li><b>Cena: ${this.decimalPipe.transform(toy.price, '1.2-2')} RSD</b></li>`;
-                html += `<li><a href="/toy/${toy.permalink}">More details...</a></li>`;
 
+                html += '<li class="mt-1">';
+                html += `<p class="badge rounded-pill bg-secondary p-2 mb-0">${toy.ageGroup.name} </p>`;
+                if (toy.targetGroup == 'dečak') {
+                  html +=
+                    '<p  class="badge rounded-pill bg-primary-subtle p-2 mx-2 mb-1 text-primary" >dečaci</p>';
+                } else if (toy.targetGroup == 'devojčica') {
+                  html += `<p  class="badge rounded-pill p-2 mx-2 color-pink mb-1" >devojčice</p>`;
+                } else {
+                  html += `<p  class="badge rounded-pill bg-secondary-subtle p-2 mx-2 mb-1 text-secondary"> ${toy.targetGroup}</p>`;
+                }
+                html += `<p class="badge rounded-pill bg-secondary p-2 mb-0">${toy.type.name} </p>`;
+                html += '</li>';
+                html += `<li><img style="max-width: 50px;" src="https://raw.githubusercontent.com/Pequla/express-toys-api/refs/heads/main/src/public${toy.imageUrl}" class="card-img-top mb-1 rounded-1" [alt]="toy.name"></li>`;
+                html += `<li><b>Cena: ${this.decimalPipe.transform(toy.price, '1.2-2')} RSD</b></li>`;
+                html += '</hr>';
+                html += `<li><a href="/toy/${toy.permalink}">More details...</a></li>`;
+                html += `<li class="my-3"><hr></li>`;
                 html += `</ul>`;
-                /*              html += `<li> Genre: ${movie.movieGenres.map((mg) => mg.genre.name)}</li>`;
-              html += `<li> Actors: ${movie.movieActors.map((ma) => ma.actor.name)}</li>`;
-              html += `</ul>`;
-              html += `<p>${movie.description}</p>`;*/
               }
               this.messages.push({
                 type: 'bot',
                 text: html,
+              });
+            }
+
+            if (message.attachment.type == 'toy_rating_list' && message.attachment.data) {
+              const criteriaString = String(message.attachment.data).replace(/[^0-9.]/g, '');
+              const minRating = parseFloat(criteriaString) || 0;
+
+              ToyService.getToys().then((rsp) => {
+                const allToys = rsp.data;
+                let toys = allToys.filter((toy: ToyModel) => {
+                  return this.getAverageRating(toy.toyId) >= minRating;
+                });
+
+                let html = '';
+                for (let toy of toys as ToyModel[]) {
+                  html += '<ul class="list-unstyled mb-3">';
+                  html += `<li class="d-flex align-items-baseline justify-content-between mb-0">
+                          <h6 class="mb-0">${toy.name}</h6>
+                          <p class="mb-0 pink-subtle">
+                          ${this.decimalPipe.transform(this.getAverageRating(toy.toyId), '1.2-2')}
+                          <i class="fa-solid fa-star"></i></p></li>`;
+                  html += `<li class="text-secondary mb-1">${toy.productionDate}</li>`;
+                  html += `<li> ${toy.description}</li>`;
+
+                  html += '<li class="mt-1">';
+                  html += `<p class="badge rounded-pill bg-secondary p-2 mb-0">${toy.ageGroup.name} </p>`;
+                  if (toy.targetGroup == 'dečak') {
+                    html +=
+                      '<p  class="badge rounded-pill bg-primary-subtle p-2 mx-2 mb-1 text-primary" >dečaci</p>';
+                  } else if (toy.targetGroup == 'devojčica') {
+                    html += `<p  class="badge rounded-pill p-2 mx-2 color-pink mb-1" >devojčice</p>`;
+                  } else {
+                    html += `<p  class="badge rounded-pill bg-secondary-subtle p-2 mx-2 mb-1 text-secondary"> ${toy.targetGroup}</p>`;
+                  }
+                  html += `<p class="badge rounded-pill bg-secondary p-2 mb-0">${toy.type.name} </p>`;
+                  html += '</li>';
+                  html += `<li><img style="max-width: 50px;" src="https://raw.githubusercontent.com/Pequla/express-toys-api/refs/heads/main/src/public${toy.imageUrl}" class="card-img-top mb-1 rounded-1" [alt]="toy.name"></li>`;
+                  html += `<li><b>Cena: ${this.decimalPipe.transform(toy.price, '1.2-2')} RSD</b></li>`;
+                  html += '</hr>';
+                  html += `<li><a href="/toy/${toy.permalink}">More details...</a></li>`;
+                  html += `<li class="my-3"><hr></li>`;
+                  html += `</ul>`;
+                }
+                this.messages.push({
+                  type: 'bot',
+                  text: html,
+                });
+
+                this.cdr.detectChanges();
               });
             }
 
@@ -216,6 +290,7 @@ export class App {
           }
           return true;
         });
+        this.cdr.detectChanges();
       })
       .catch(() => {
         this.removeBotPlaceholder();

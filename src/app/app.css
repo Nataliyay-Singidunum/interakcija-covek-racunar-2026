@@ -1,13 +1,12 @@
-.pink{
-  background-color: #b9206b;
-  color: white;
+.color-pink{
+  background-color: #b9206b !important;
+  color: white !important;
 }
 
 .pink-subtle{
   background-color: #f8e9f1;
   color: #b9206b;
 }
-
 
 .chatbox-content{
   width: 500px;

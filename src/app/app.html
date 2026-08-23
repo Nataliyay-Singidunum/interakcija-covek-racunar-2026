@@ -1,4 +1,4 @@
-<nav class="navbar sticky-top navbar-expand-lg pink mb-0" data-bs-theme="dark">
+<nav class="navbar sticky-top navbar-expand-lg color-pink mb-0" data-bs-theme="dark">
   <div class="container">
     <a class="navbar-brand" routerLink="/">
       <img src="/alisa_small_light.png" style="max-width: 140px;">
@@ -75,7 +75,7 @@
             @for (msg of messages; track $index) {
               @if (msg.type == "user") {
                 <div class="text-end">
-                  <div class="badge pink msg-content text-white mb-1">{{msg.text}}</div>
+                  <div class="badge color-pink msg-content text-white mb-1">{{msg.text}}</div>
                 </div>
               }
               @if (msg.type == "bot") {

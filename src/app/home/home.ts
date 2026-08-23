@@ -145,11 +145,11 @@ export class Home {
   }
 
   protected getAverageRating(toyId: number): number {
-    const revs = ReviewService.getReviewsForToy(toyId);
-    if (revs.length === 0) return 0;
+    const reviews = ReviewService.getReviewsForToy(toyId);
+    if (reviews.length === 0) return 0;
 
-    const sum = revs.reduce((total, review) => total + review.rating, 0);
-    return sum / revs.length;
+    const sum = reviews.reduce((total, review) => total + review.rating, 0);
+    return sum / reviews.length;
   }
 
   protected addToCart(toy: ToyModel) {

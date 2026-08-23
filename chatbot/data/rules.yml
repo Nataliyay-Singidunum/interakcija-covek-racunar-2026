@@ -17,15 +17,55 @@ rules:
     - intent: hello_world
     - action: action_hello_world
 
+- rule: Show all toys
+  steps:
+    - intent: all_toys
+    - action: action_all_toys
+
 - rule: Show new toys
   steps:
       - intent: new_toys
       - action: action_new_toys
 
-- rule: Show all toys
+- rule: Show toys by name
   steps:
-    - intent: all_toys
-    - action: action_all_toys
+    - intent: toys_by_name
+    - action: action_toys_by_name
+
+- rule: Show toys by description
+  steps:
+    - intent: toys_by_description
+    - action: action_toys_by_description
+
+- rule: Show toys by type
+  steps:
+    - intent: toys_by_type
+    - action: action_toys_by_type
+
+- rule: Show toys by price
+  steps:
+    - intent: toys_by_price
+    - action: action_toys_by_price
+
+- rule: Show toys by age
+  steps:
+    - intent: toys_by_age
+    - action: action_toys_by_age
+
+- rule: Show toys by target group
+  steps:
+    - intent: toys_by_target_group
+    - action: action_toys_by_target_group
+
+- rule: Show toys by date
+  steps:
+    - intent: toys_by_date
+    - action: action_toys_by_date
+
+- rule: Show toys by rating
+  steps:
+    - intent: toys_by_rating
+    - action: action_toys_by_rating
 
 - rule: Add to cart
   steps:

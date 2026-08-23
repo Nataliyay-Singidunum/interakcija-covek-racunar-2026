@@ -23,6 +23,28 @@ nlu:
     - hello world
     - action hello world
 
+- intent: all_toys
+  examples: |
+    - show me all toys
+    - all toys
+    - show all
+    - list all toys
+    - give me the full list of toys
+    - what toys do you have
+    - show me every toy
+    - I want to see all the toys
+    - display all toys
+    - what toys are available
+    - show me your entire catalog
+    - list everything you have
+    - can I see all the toys
+    - what do you have in stock
+    - complete toy list
+    - show me the whole collection
+    - list toys
+    - give me all toys
+    - show me everything
+
 - intent: new_toys
   examples: |
     - whats new
@@ -49,27 +71,201 @@ nlu:
     - anything new added recently
     - bring up the newest toys
 
-- intent: all_toys
+- intent: toys_by_name
   examples: |
-    - show me all toys
-    - all toys
-    - show all
-    - list all toys
-    - give me the full list of toys
-    - what toys do you have
-    - show me every toy
-    - I want to see all the toys
-    - display all toys
-    - what toys are available
-    - show me your entire catalog
-    - list everything you have
-    - can I see all the toys
-    - what do you have in stock
-    - complete toy list
-    - show me the whole collection
-    - list toys
-    - give me all toys
-    - show me everything
+    - search by name [plišana panda](toy_name)
+    - search toys by name [drvena slagalica životinje](toy_name)
+    - toy name [slikovnica životinje](toy_name)
+    - search by name [monopol junior](toy_name)
+    - look for a toy by name [lego classic set](toy_name)
+    - find a toy called [figura dinosaurusa](toy_name)
+    - search for [mala slikovnica boje](toy_name)
+    - do you have [plišana panda](toy_name)
+    - look up toy [muzički bubanj](toy_name)
+    - find by name [set za crtanje](toy_name)
+    - search toy name [figurica princeze](toy_name)
+    - find by name [igra memorije](toy_name)
+    - lookup by toy name [drvena slagalica životinje](toy_name)
+    - i want to search for [muzička tamburina](toy_name)
+    - search item name [plišana jednorog](toy_name)
+    - find toy title [drvena slagalica životinje](toy_name)
+
+- regex: toy_name
+  examples: |
+    - (?<=toy called ).*
+    - (?<=search for ).*
+    - (?<=do you have ).*
+    - (?<=look up toy ).*
+    - (?<=by name ).*
+
+- intent: toys_by_description
+  examples: |
+    - search toys by description [akciona](toy_description)
+    - search by description [metal](toy_description)
+    - look for toys with description containing [figura](toy_description)
+    - find toys described as [edukativna](toy_description)
+    - show me toys with descriptions mentioning [drvo](toy_description)
+    - i want toys described with [svetla](toy_description)
+    - search description for [automobili](toy_description)
+    - find items described as [interaktivno](toy_description)
+    - can you find toys with descriptions that contain [životinje](toy_description)
+    - look up toys by description [mekano](toy_description)
+    - search for descriptions matching [slagalica](toy_description)
+    - show me items described as [plastika](toy_description)
+    - toys with description [pamuk](toy_description)
+
+- regex: toy_description
+  examples: |
+    - (?<=description containing ).*
+    - (?<=by description ).*
+    - (?<=described as ).*
+    - (?<=descriptions mentioning ).*
+    - (?<=described with ).*
+    - (?<=description for ).*
+    - (?<=that contain ).*
+    - (?<=descriptions matching ).*
+    - (?<=with description ).*
+
+- intent: toys_by_type
+  examples: |
+    - search toys by type [slagalica](toy_type)
+    - search by type [plišane](toy_type)
+    - show me [vozilo](toy_type) toys
+    - i want to see [edukativne](toy_type) toys
+    - filter by type [akcione figure](toy_type)
+    - do you have any [društvene igre](toy_type)
+    - find type [plišane](toy_type)
+    - look for [konstruktori](toy_type) type
+    - search for toy category [drvene](toy_type)
+    - show me type [slagalica](toy_type)
+
+- regex: toy_type
+  examples: |
+    - (?<=by type ).*
+    - (?<=show me ).*(?= toys)
+    - (?<=see ).*(?= toys)
+    - (?<=any ).*
+    - (?<=type ).*
+    - (?<=category ).*
+
+- intent: toys_by_price
+  examples: |
+    - search toys priced [under 1,500](toy_price)
+    - search by price [under 1,500](toy_price)
+    - show me toys between [1,500 - 3,000](toy_price)
+    - filter by price [3,000 - 5,000](toy_price)
+    - find toys [over 5,000 RSD](toy_price)
+    - what do you have [under 1,500 RSD](toy_price)
+    - price range [1,500 - 3,000 RSD](toy_price)
+    - search for toys [3,000 - 5,000 RSD](toy_price)
+    - show me items that are [over 5,000 RSD](toy_price)
+    - show me [all Prices](toy_price)
+    - toys that are [under 1,500 RSD](toy_price)
+    - looking for toys around [1,500 - 3,000 RSD](toy_price)
+
+- regex: toy_price
+  examples: |
+    - (?<=toys priced ).*
+    - (?<=toys between ).*
+    - (?<=toys around ).*
+    - (?<=by price ).*
+    - (?<=have ).*
+    - (?<=range ).*
+    - (?<=are ).*
+
+- intent: toys_by_age
+  examples: |
+    - search toys for age [3-5](toy_age)
+    - search for age [3-5](toy_age)
+    - toys for [0-2](toy_age) years old
+    - show me toys for age group [6-9](toy_age)
+    - i need something for [3-5]
+    - find something for a [0-2](toy_age) year old
+    - filter by age [3-5](toy_age)
+    - what do you have for age over [10](toy_age)
+    - age range [6-9](toy_age)
+    - looking for toys for [3-5](toy_age)
+    - do you have items for age [0-2](toy_age)
+
+- regex: toy_age
+  examples: |
+    - (?<=for age ).*
+    - (?<=age over ).*
+    - (?<=toys for ).*(?= years old)
+    - (?<=age group ).*
+    - (?<=for a ).*(?= year old)
+    - (?<=by age ).*
+    - (?<=age range ).*
+
+- intent: toys_by_target_group
+  examples: |
+    - search toys for [devojčica](toy_target_group)
+    - show me toys for [dečaci](toy_target_group)
+    - filter by target group [svi](toy_target_group)
+    - find something for [dečaci](toy_target_group)
+    - do you have toys for [devojčica](toy_target_group)
+    - target group [svi](toy_target_group)
+    - looking for a toy for [dečaci](toy_target_group)
+    - show me [devojčica](toy_target_group) items
+    - toys suited for [svi](toy_target_group)
+
+- regex: toy_target_group
+  examples: |
+    - (?<=toys for ).*
+    - (?<=target group ).*
+    - (?<=something for ).*
+    - (?<=toy for ).*
+    - (?<=show me ).*(?= items)
+    - (?<=suited for ).*
+
+- intent: toys_by_date
+  examples: |
+    - search toys produced in [2024 half 1](toy_date)
+    - search produced in [2024 half 2](toy_date)
+    - show me toys from [2023 half 2](toy_date)
+    - filter by date [2024 half 1](toy_date)
+    - what toys were made in [2024](toy_date)
+    - find toys by production date [2023 half 2](toy_date)
+    - toys released in [2024 half 2](toy_date)
+    - items from [2023 half 2](toy_date)
+    - looking for toys dated [2024 half 1](toy_date)
+
+- regex: toy_date
+  examples: |
+    - (?<=produced in ).*
+    - (?<=from ).*
+    - (?<=by date ).*
+    - (?<=made in ).*
+    - (?<=production date ).*
+    - (?<=released in ).*
+    - (?<=dated ).*
+
+- intent: toys_by_rating
+  examples: |
+    - search toys with rating [4.5](toy_rating) and up
+    - search rating above [4]
+    - search rated [5](toy_rating)
+    - show me toys rated [3.5](toy_rating)+
+    - filter by rating [4.5](toy_rating)
+    - find toys with [5](toy_rating) stars
+    - highly rated toys over [4](toy_rating)
+    - what are your [2](toy_rating) star toys
+    - toys with review score [4](toy_rating)
+    - review of [4.5](toy_rating) or higher
+    - toys with at least [4](toy_rating) rating
+
+- regex: toy_rating
+  examples: |
+    - (?<=rating ).*(?= and up)
+    - (?<=rated ).*(?=\+)
+    - (?<=by rating ).*
+    - (?<=rating above ).*
+    - (?<=with ).*(?= stars)
+    - (?<=over ).*
+    - (?<=your ).*(?= star)
+    - (?<=review score ).*
+    - (?<=review of ).*(?= or higher)
+    - (?<=least ).*(?= rating)
 
 - intent: add_to_cart
   examples: |
@@ -101,6 +297,29 @@ nlu:
     - what am I buying?
     - what is currently in my basket?
     - review my cart
+
+- intent: continue_shopping
+  examples: |
+    - i would like to continue shopping
+    - shop more
+    - more
+    - shop
+    - i want more
+    - continue
+    - i want to keep shopping
+    - let's keep shopping
+    - take me back to the store
+    - back to shopping
+    - i want to buy more items
+    - add more stuff
+    - return to catalog
+    - go back to shop
+    - keep browsing
+    - browse more
+    - let me see more
+    - anything else to buy?
+    - view more toys
+    - back to the store
 
 - intent: order_toys
   examples: |
@@ -183,12 +402,10 @@ nlu:
     - order movie [the godfather](order_criteria)
     - order movie name [interstellar](order_criteria)
 
-
 - regex: order_criteria
   examples: |
     - (?<=movie name ).*
     - (?<=movie ).*
-
 
 - intent: order_cinema
   examples: |

@@ -9,10 +9,19 @@ intents:
   - mood_unhappy
   - bot_challenge
   - hello_world
-  - new_toys
   - all_toys
+  - new_toys
+  - toys_by_name
+  - toys_by_description
+  - toys_by_type
+  - toys_by_price
+  - toys_by_age
+  - toys_by_target_group
+  - toys_by_date
+  - toys_by_rating
   - add_to_cart
   - show_cart
+  - continue_shopping
   - order_toys
   - latest_movies # MOVIES START HERE
   - search_movies
@@ -33,6 +42,14 @@ intents:
 
 
 entities:
+  - toy_name
+  - toy_description
+  - toy_type
+  - toy_price
+  - toy_age
+  - toy_target_group
+  - toy_date
+  - toy_rating
   - search_criteria
   - order_criteria
   - movie_permalink
@@ -43,6 +60,62 @@ entities:
   - cinema_id
 
 slots:
+  toy_name:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: toy_name
+
+  toy_description:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: toy_description
+
+  toy_type:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: toy_type
+
+  toy_price:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: toy_price
+
+  toy_age:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: toy_age
+
+  toy_target_group:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: toy_target_group
+
+  toy_date:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: toy_date
+
+  toy_rating:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: toy_rating
+
   search_criteria:
     type: text
     influence_conversation: false
@@ -145,6 +218,14 @@ responses:
 actions:
   - action_hello_world
   - action_new_toys
+  - action_toys_by_name
+  - action_toys_by_description
+  - action_toys_by_type
+  - action_toys_by_price
+  - action_toys_by_age
+  - action_toys_by_target_group
+  - action_toys_by_date
+  - action_toys_by_rating
   - action_all_toys
   - action_add_to_cart
   - action_show_cart
