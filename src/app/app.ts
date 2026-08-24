@@ -48,6 +48,10 @@ export class App {
     this.isChatVisible = !this.isChatVisible;
   }
 
+  protected noAccessAlert(){
+    this.utils.showAlert("Please log in to access your cart!")
+  }
+
   protected getAverageRating(toyId: number): number {
     const revs = ReviewService.getReviewsForToy(toyId);
     if (revs.length === 0) return 0;
@@ -55,6 +59,8 @@ export class App {
     const sum = revs.reduce((total, review) => total + review.rating, 0);
     return sum / revs.length;
   }
+
+
 
   async sendUserMessage() {
     if (this.waitingForResponse) {

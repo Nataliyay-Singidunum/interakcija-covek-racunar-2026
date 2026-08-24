@@ -147,9 +147,16 @@
         <a class="btn btn-sm btn-primary" [routerLink]="`/toy/${toy.permalink}`">
           <i class="fa-solid fa-arrow-up-right-from-square" style="color: rgb(255, 255, 255);"></i> Details
         </a>
-        <button class="btn btn-sm btn-success" (click)="addToCart(toy)">
-          <i class="fa-solid fa-cart-shopping" style="color: rgb(255, 255, 255);"></i> Add to cart
-        </button>
+        @if (UserService.hasAuth()) {
+          <button class="btn btn-sm btn-success" (click)="addToCart(toy)">
+            <i class="fa-solid fa-cart-shopping" style="color: rgb(255, 255, 255);"></i> Add to cart
+          </button>
+        } @else {
+          <button class="btn btn-sm btn-success" routerLink="/login" (click)="noAccessAlert()">
+            <i class="fa-solid fa-cart-shopping" style="color: rgb(255, 255, 255);"></i> Add to cart
+          </button>
+        }
+
       </div>
 
     </div>

@@ -4,11 +4,17 @@ import { ToyModel } from '../models/toy.model';
 import { CartItemModel } from '../models/cartItem.model';
 import { v4 as uuidv4 } from 'uuid';
 import { CartModel } from '../models/cart.model';
+import { Router } from '@angular/router';
+import { Utils } from '../app/utils';
+import { DecimalPipe } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 
 export class UserService {
   public static USERS_KEY = 'icr_users';
   public static ACTIVE_KEY = 'icr_active';
   public static TO_KEY = 'icr_to';
+
+  constructor(private utils: Utils) {}
 
   static getUsers(): UserModel[] {
     if (!localStorage.getItem(this.USERS_KEY)) {
@@ -218,6 +224,10 @@ export class UserService {
       }
     }
     localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
+  }
+
+  hasAuth() {
+    return UserService.hasAuth();
   }
 
   // Movie v

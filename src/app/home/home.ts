@@ -9,6 +9,7 @@ import { UserService } from '../../services/user.service';
 import { ReviewService } from '../../services/review.service';
 import { DecimalPipe } from '@angular/common';
 import Swal from 'sweetalert2';
+import { Utils } from '../utils';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +37,10 @@ export class Home {
   selectedPeriod: string = '';
   protected selectedRating: number = 0;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private utils: Utils,
+  ) {
     this.loadToys();
   }
 
@@ -74,6 +78,10 @@ export class Home {
     this.maxPrice = Number(limits[1]);
 
     this.loadToys();
+  }
+
+  protected noAccessAlert() {
+    this.utils.showAlert('Please log in to access your cart!');
   }
 
   protected loadToys() {
@@ -174,4 +182,5 @@ export class Home {
   }
 
   protected readonly ReviewService = ReviewService;
+  protected readonly UserService = UserService;
 }

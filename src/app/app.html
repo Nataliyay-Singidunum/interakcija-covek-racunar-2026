@@ -16,6 +16,13 @@
         <a class="nav-link mx-3" routerLink="/cart" routerLinkActive="active">
           <i class="fa-solid fa-basket-shopping" style="color: rgb(255, 255, 255);"></i>
         </a>
+      } @else {
+        <a class="nav-link" routerLink="/login" routerLinkActive="active">
+          <i class="fa-solid fa-right-to-bracket" style="color: #f8e9f1;"></i> Login
+        </a>
+        <a class="nav-link mx-3" routerLink="/login" routerLinkActive="active">
+          <i class="fa-solid fa-basket-shopping" style="color: rgb(255, 255, 255);" (click)="noAccessAlert()"></i>
+        </a>
       }
     </div>
   </div>
@@ -42,12 +49,6 @@
             <button type="button" class="nav-link" (click)="doLogout()" >
               <i class="fa-solid fa-right-from-bracket" style="color: rgb(185, 32, 107);"></i>Logout
             </button>
-          </li>
-        } @else {
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/login" routerLinkActive="active">
-              <i class="fa-solid fa-right-to-bracket" style="color: rgb(185, 32, 107);"></i> Login
-            </a>
           </li>
         }
       </ul>

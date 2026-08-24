@@ -3,6 +3,7 @@ import { UserModel } from '../../models/user.model';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { DecimalPipe } from '@angular/common';
+import { Utils } from '../utils';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +14,7 @@ import { DecimalPipe } from '@angular/common';
 export class Cart {
   protected activeUser = signal<UserModel | null>(null);
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private utils: Utils) {
     if (!UserService.hasAuth()) {
       localStorage.setItem(UserService.TO_KEY, 'profile');
       this.router.navigateByUrl('/login');
@@ -23,7 +24,7 @@ export class Cart {
   }
   protected checkOut() {
     UserService.createOrder();
-    this.router.navigateByUrl('/profile');
+    this.utils.showAlert("Order successfully created, see updates on your profile page. :)");
   }
 
   protected getTotalPrice() {
