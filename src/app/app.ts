@@ -125,6 +125,45 @@ export class App {
               });
             }
 
+            if (message.attachment.type == 'toy') {
+              let html = '';
+              let toy = message.attachment.data;
+
+              html += '<ul class="list-unstyled mb-3">';
+              html += `<li class="d-flex align-items-baseline justify-content-between mb-0">
+                        <h6 class="mb-0">${toy.name}</h6>
+                        <p class="mb-0 pink-subtle">
+                        ${this.decimalPipe.transform(this.getAverageRating(toy.toyId), '1.2-2')}
+                        <i class="fa-solid fa-star"></i></p></li>`;
+              html += `<li class="text-secondary mb-1">${toy.productionDate}</li>`;
+              html += `<li> ${toy.description}</li>`;
+
+              html += '<li class="mt-1">';
+              html += `<p class="badge rounded-pill bg-secondary p-2 mb-0">${toy.ageGroup.name} </p>`;
+              if (toy.targetGroup == 'dečak') {
+                html +=
+                  '<p  class="badge rounded-pill bg-primary-subtle p-2 mx-2 mb-1 text-primary" >dečaci</p>';
+              } else if (toy.targetGroup == 'devojčica') {
+                html += `<p  class="badge rounded-pill p-2 mx-2 color-pink mb-1" >devojčice</p>`;
+              } else {
+                html += `<p  class="badge rounded-pill bg-secondary-subtle p-2 mx-2 mb-1 text-secondary"> ${toy.targetGroup}</p>`;
+              }
+              html += `<p class="badge rounded-pill bg-secondary p-2 mb-0">${toy.type.name} </p>`;
+              html += '</li>';
+              html += `<li><img style="max-width: 50px;" src="https://raw.githubusercontent.com/Pequla/express-toys-api/refs/heads/main/src/public${toy.imageUrl}" class="card-img-top mb-1 rounded-1" [alt]="toy.name"></li>`;
+              html += `<li><b>Cena: ${this.decimalPipe.transform(toy.price, '1.2-2')} RSD</b></li>`;
+              html += '</hr>';
+              html += `<li><a href="/toy/${toy.permalink}">More details...</a></li>`;
+              html += `<li class="my-3"><hr></li>`;
+              html += `</ul>`;
+
+              this.messages.push({
+                type: 'bot',
+                text: html,
+              });
+            }
+
+
             if (message.attachment.type == 'toy_rating_list' && message.attachment.data) {
               const criteriaString = String(message.attachment.data).replace(/[^0-9.]/g, '');
               const minRating = parseFloat(criteriaString) || 0;

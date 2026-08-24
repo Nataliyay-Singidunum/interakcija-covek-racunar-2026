@@ -29,41 +29,105 @@ stories:
   - intent: deny
   - action: utter_goodbye
 
-- story: Place an order
-  steps:
-  - intent: order_movie
-  - action: action_extract_movie
-  - intent: affirm
-  - action: action_list_cinema
-  - intent: order_cinema
-    entities:
-      - cinema_criteria
-  - action: action_select_cinema
-  - action: action_list_hall
-  - intent: order_hall
-    entities:
-      - hall_criteria
-  - action: action_select_hall
-  - action: action_list_time
-  - intent: order_time
-    entities:
-      - time_criteria
-  - action: action_select_time
-  - action: utter_choose_count
-  - intent: order_count
-    entities:
-      - count_criteria
-  - action: action_select_count
-  - action: action_list_order
-  - action: utter_confirm_order   # ubi me ovde puca iz nekog razloga, dodala sam samo prompt za confirm u akciju
-  - intent: affirm                # skontala sam sta se desava, extract kad cuva slot omete izvrsavanje uttera, radilo je sa odmah akcijom jer je svakako cekao input neki i nije mu smetao "signalcic" u prici koji ometa dalje - barem sam ja ovako razumela - odose 3 sata zivota
-  - action: action_place_order
 
-- story: Deny order
+- story: Add to cart - deny
   steps:
-  - intent: order_movie
-  - action: action_extract_movie
+  - intent: add_to_cart
+  - action: utter_choose_toy
+  - intent: pick_toy
+    entities:    # ipak je ovo   oba su
+      - picked_toy
+  - action: action_pick_toy  # ovde je problem
   - intent: deny
   - action: utter_goodbye
+
+- story: Add to cart - affirm - keep shopping - affirm
+  steps:
+    - intent: add_to_cart
+    - action: utter_choose_toy
+    - intent: pick_toy
+      entities:
+        - picked_toy
+    - action: action_pick_toy
+    - intent: affirm
+    - action: action_add_to_cart
+    - action: action_show_cart
+    - action: utter_keep_shopping
+    - intent: affirm
+    - action: action_keep_shopping
+
+- story: Add to cart - affirm - keep shopping - deny - order
+  steps:
+    - intent: add_to_cart
+    - action: utter_choose_toy
+    - intent: pick_toy
+      entities:
+        - picked_toy
+    - action: action_pick_toy
+    - intent: affirm
+    - action: action_add_to_cart
+    - action: action_show_cart
+    - action: utter_keep_shopping
+    - intent: deny
+    - action: utter_order_toys
+    - intent: affirm
+    - action: action_order_toys
+    - action: utter_goodbye
+
+- story: Add to cart - affirm - keep shopping - deny - failed order
+  steps:
+    - intent: add_to_cart
+    - action: utter_choose_toy
+    - intent: pick_toy
+      entities:
+        - picked_toy
+    - action: action_pick_toy
+    - intent: affirm
+    - action: action_add_to_cart
+    - action: action_show_cart
+    - action: utter_keep_shopping
+    - intent: deny
+    - action: utter_order_toys
+    - intent: deny
+    - action: utter_cart_saved
+    - action: utter_goodbye
+
+
+#- story: Place an order
+#  steps:
+#  - intent: order_movie
+#  - action: action_extract_movie
+#  - intent: affirm
+#  - action: action_list_cinema
+#  - intent: order_cinema
+#    entities:
+#      - cinema_criteria
+#  - action: action_select_cinema
+#  - action: action_list_hall
+#  - intent: order_hall
+#    entities:
+#      - hall_criteria
+#  - action: action_select_hall
+#  - action: action_list_time
+#  - intent: order_time
+#    entities:
+#      - time_criteria
+#  - action: action_select_time
+#  - action: utter_choose_count
+#  - intent: order_count
+#    entities:
+#      - count_criteria
+#  - action: action_select_count
+#  - action: action_list_order
+#  - action: utter_confirm_order   # ubi me ovde puca iz nekog razloga, dodala sam samo prompt za confirm u akciju
+#  - intent: affirm                # skontala sam sta se desava, extract kad cuva slot omete izvrsavanje uttera, radilo je sa odmah akcijom jer je svakako cekao input neki i nije mu smetao "signalcic" u prici koji ometa dalje - barem sam ja ovako razumela - odose 3 sata zivota
+#  - action: action_place_order
+#
+#- story: Deny order
+#  steps:
+#  - intent: order_movie
+#  - action: action_extract_movie
+#  - intent: deny
+#  - action: utter_goodbye
 
 

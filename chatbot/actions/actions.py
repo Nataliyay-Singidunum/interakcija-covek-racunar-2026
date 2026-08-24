@@ -324,6 +324,7 @@ class ActionToysByDate(Action):
 
     return [SlotSet("toy_date", None)]
 
+
 class ActionToysByRating(Action):
   def name(self) -> Text:
     return "action_toys_by_rating"
@@ -344,9 +345,45 @@ class ActionToysByRating(Action):
     return [SlotSet("toy_rating", None)]
 
 
+class ActionPickToy(Action):
+  def name(self) -> Text:
+    return "action_pick_toy"
+
+  def run(self, dispatcher: CollectingDispatcher,
+          tracker: Tracker,
+          domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+    picked_toy = tracker.get_slot("picked_toy")
+    print("action_pick_toy, picked_toy: ", picked_toy) # DEBUG
+    if not picked_toy:
+      dispatcher.utter_message(text="I didn't quite catch the name. Could you type it again?")
+      return []
+
+    url="https://toy.pequla.com/api/toy"
+    rsp = requests.get(url)
+    toys = rsp.json()
+
+    toysByName = [
+      toy for toy in toys
+      if picked_toy.lower() in toy.get("name").lower()
+    ]
+
+    if len(toysByName) > 0:
+      toy = toysByName[0]
+      short_url = toy.get("permalink", "")
+      print(short_url)
+      bot_response = {"type": "toy","data": toysByName[0]}
+      dispatcher.utter_message(text="Here are the search results for: " + str(picked_toy), attachment = bot_response)
+      dispatcher.utter_message(text="Is this the toy you were looking for? ")
+      return [SlotSet("toy_permalink", short_url)]
+    else:
+      dispatcher.utter_message(text="I couldn't find any toys matching: " + str(picked_toy))
+
+
+    return []
+
 
 class ActionAddToCart(Action):
-
   def name(self) -> Text:
     return "action_add_to_cart"
 
@@ -354,12 +391,13 @@ class ActionAddToCart(Action):
           tracker: Tracker,
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+    picked_toy = tracker.get_slot("picked_toy")
+    print("action_pick_toy, picked_toy: ", picked_toy) # DEBUG
     dispatcher.utter_message(text="Here are some new toys: action_add_to_cart ")
     return []
 
 
 class ActionShowCart(Action):
-
   def name(self) -> Text:
     return "action_show_cart"
 
@@ -368,6 +406,17 @@ class ActionShowCart(Action):
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
     dispatcher.utter_message(text="Here are some new toys: action_show_cart ")
+    return []
+
+class ActionKeepShopping(Action):
+  def name(self) -> Text:
+    return "action_keep_shopping"
+
+  def run(self, dispatcher: CollectingDispatcher,
+          tracker: Tracker,
+          domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+    dispatcher.utter_message(text="Here are some new toys: action_keep_shopping ")
     return []
 
 

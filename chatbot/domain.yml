@@ -19,6 +19,8 @@ intents:
   - toys_by_target_group
   - toys_by_date
   - toys_by_rating
+  - pick_toy:
+      use_entities: [ ]
   - add_to_cart
   - show_cart
   - continue_shopping
@@ -43,6 +45,7 @@ intents:
 
 entities:
   - toy_name
+  - toy_permalink
   - toy_description
   - toy_type
   - toy_price
@@ -50,6 +53,7 @@ entities:
   - toy_target_group
   - toy_date
   - toy_rating
+  - picked_toy
   - search_criteria
   - order_criteria
   - movie_permalink
@@ -66,6 +70,12 @@ slots:
     mappings:
       - type: from_entity
         entity: toy_name
+
+  toy_permalink:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
 
   toy_description:
     type: text
@@ -115,6 +125,13 @@ slots:
     mappings:
       - type: from_entity
         entity: toy_rating
+
+  picked_toy:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: picked_toy
 
   search_criteria:
     type: text
@@ -203,7 +220,7 @@ responses:
   - text: "Great, carry on!"
 
   utter_goodbye:
-  - text: "Bye"
+  - text: "Bye! "
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
@@ -214,9 +231,21 @@ responses:
   utter_choose_count:
   - text: "Please choose the number of tickets you want to purchase: "
 
+  utter_choose_toy:
+    - text: "What toy would you like to add to your cart? "
+
+  utter_keep_shopping:
+    - text: "Would you like to continue shopping? "
+
+  utter_order_toys:
+    - text: "Would you like to check out your current cart? "
+
+  utter_cart_saved:
+    - text: "No worries, your cart has been saved. You can come back to check out any time! "
 
 actions:
   - action_hello_world
+  - action_all_toys
   - action_new_toys
   - action_toys_by_name
   - action_toys_by_description
@@ -226,9 +255,10 @@ actions:
   - action_toys_by_target_group
   - action_toys_by_date
   - action_toys_by_rating
-  - action_all_toys
+  - action_pick_toy
   - action_add_to_cart
   - action_show_cart
+  - action_keep_shopping
   - action_order_toys
   - action_latest_movies # MOVIES START HERE
   - action_search_movies

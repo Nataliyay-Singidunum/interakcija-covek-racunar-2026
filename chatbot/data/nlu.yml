@@ -267,6 +267,41 @@ nlu:
     - (?<=review of ).*(?= or higher)
     - (?<=least ).*(?= rating)
 
+- intent: pick_toy
+  examples: |
+    - select by name [plišana panda](picked_toy)
+    - pick [drvena slagalica životinje](picked_toy)
+    - i want to buy [slikovnica životinje](picked_toy)
+    - i want to add [monopol junior](picked_toy)
+    - add [lego classic set](picked_toy)
+    - I'll take [plišana panda](picked_toy)
+    - let's go with [monopol junior](picked_toy)
+    - put [drvena slagalica životinje](picked_toy) in my cart
+    - select [lego classic set](picked_toy)
+    - choose [slikovnica životinje](picked_toy)
+    - i want [plišana panda](picked_toy)
+    - get me a [drvena slagalica životinje](picked_toy)
+    - add [monopol junior](picked_toy) to cart
+    - grab [lego classic set](picked_toy)
+    - add [plišana panda](picked_toy) to my order
+
+- regex: picked_toy
+  examples: |
+    - (?<=toy called ).*
+    - (?<=buy ).*
+    - (?<=do you have ).*
+    - (?<=add ).*
+    - (?<=by name ).*
+    - (?<=take ).*
+    - (?<=go with ).*
+    - (?<=put ).*(?= in my cart)
+    - (?<=select ).*
+    - (?<=choose ).*
+    - (?<=want ).*
+    - (?<=get me a ).*
+    - (?<=grab ).*
+    - (?<=pick ).*
+
 - intent: add_to_cart
   examples: |
     - add to my cart

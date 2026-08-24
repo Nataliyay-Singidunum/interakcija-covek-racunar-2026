@@ -27,10 +27,10 @@ rules:
       - intent: new_toys
       - action: action_new_toys
 
-- rule: Show toys by name
-  steps:
-    - intent: toys_by_name
-    - action: action_toys_by_name
+#- rule: Show toys by name
+#  steps:
+#    - intent: toys_by_name
+#    - action: action_toys_by_name
 
 - rule: Show toys by description
   steps:
@@ -67,10 +67,10 @@ rules:
     - intent: toys_by_rating
     - action: action_toys_by_rating
 
-- rule: Add to cart
-  steps:
-    - intent: add_to_cart
-    - action: action_add_to_cart
+#- rule: Add to cart
+#  steps:
+#    - intent: add_to_cart
+#    - action: action_add_to_cart
 
 - rule: Show cart
   steps:
