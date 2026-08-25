@@ -81,36 +81,36 @@ rules:
   steps:
     - intent: order_toys
     - action: action_order_toys
-
-- rule: Search movies
-  steps:
-    - intent: search_movies
-    - action: action_search_movies
-
-- rule: Recommend movies
-  steps:
-    - intent: latest_movies
-    - action: action_latest_movies
-
-- rule: List genres
-  steps:
-    - intent: genre_list
-    - action: action_genre_list
-
-- rule: List actors
-  steps:
-    - intent: actor_list
-    - action: action_actor_list
-
-- rule: List directors
-  steps:
-    - intent: director_list
-    - action: action_director_list
-
-# debug
-- rule: List cinemas
-  steps:
-    - intent: list_cinema
-    - action: action_list_cinema
-
+#
+#- rule: Search movies
+#  steps:
+#    - intent: search_movies
+#    - action: action_search_movies
+#
+#- rule: Recommend movies
+#  steps:
+#    - intent: latest_movies
+#    - action: action_latest_movies
+#
+#- rule: List genres
+#  steps:
+#    - intent: genre_list
+#    - action: action_genre_list
+#
+#- rule: List actors
+#  steps:
+#    - intent: actor_list
+#    - action: action_actor_list
+#
+#- rule: List directors
+#  steps:
+#    - intent: director_list
+#    - action: action_director_list
+#
+## debug
+#- rule: List cinemas
+#  steps:
+#    - intent: list_cinema
+#    - action: action_list_cinema
+#
 

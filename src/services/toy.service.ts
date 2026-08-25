@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { ToyModel } from '../models/toy.model';
-import { MovieModel } from '../models/movie.model';
 import { TypeModel } from '../models/type.model';
 import { AgeGroupModel } from '../models/age-group';
 

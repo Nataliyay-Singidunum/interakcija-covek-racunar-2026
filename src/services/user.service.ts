@@ -71,6 +71,7 @@ export class UserService {
     return JSON.parse(localStorage.getItem(this.USERS_KEY)!);
   }
 
+
   static findUserByEmail(email: string) {
     const users = this.getUsers();
     const selectedUser = users.find((user) => user.email === email);
@@ -95,9 +96,11 @@ export class UserService {
     }
   }
 
+
   static hasAuth() {
     return localStorage.getItem(this.ACTIVE_KEY) !== null;
   }
+
 
   static getActiveUser() {
     if (!this.hasAuth()) {
@@ -106,9 +109,11 @@ export class UserService {
     return this.findUserByEmail(localStorage.getItem(this.ACTIVE_KEY)!);
   }
 
+
   static logout() {
     localStorage.removeItem(this.ACTIVE_KEY);
   }
+
 
   static createCartItem(item: CartItemModel) {
     const activeEmail = localStorage.getItem('icr_active');
@@ -123,7 +128,6 @@ export class UserService {
     const user = allUsers[userIndex];
 
     let activeOrder = user.data.find((order: any) => order.items.status === 'active');
-
     if (!activeOrder) {
       activeOrder = {
         orderId: uuidv4(),
@@ -140,16 +144,15 @@ export class UserService {
     const existingItem = activeOrder.items.cartItems.find(
       (cartItem: any) => cartItem.item.toyId === item.item.toyId,
     );
-
     if (existingItem) {
       existingItem.quantity += item.quantity;
     } else {
       activeOrder.items.cartItems.push(item);
     }
-
     allUsers[userIndex] = user;
     localStorage.setItem('icr_users', JSON.stringify(allUsers));
   }
+
 
   static modifyCartItem(toyId: number, change: number) {
     const activeEmail = localStorage.getItem('icr_active');
@@ -174,11 +177,11 @@ export class UserService {
       } else {
         activeOrder.items.cartItems[itemIndex].quantity += change;
       }
-
       allUsers[userIndex] = user;
       localStorage.setItem('icr_users', JSON.stringify(allUsers));
     }
   }
+
 
   static createOrder() {
     const current = localStorage.getItem(this.ACTIVE_KEY);
@@ -186,7 +189,6 @@ export class UserService {
 
     for (let user of all) {
       if (user.email === current) {
-        // turn cart into order
         for (let order of user.data) {
           if (order.items.status === 'active') {
             order.orderId = uuidv4();
@@ -195,7 +197,6 @@ export class UserService {
             order.status = 'pay later';
           }
         }
-
         let newCart: OrderModel = {
           orderId: uuidv4(),
           items: {
@@ -206,13 +207,12 @@ export class UserService {
           time: new Date(),
           status: 'na',
         };
-
         user.data.push(newCart);
       }
     }
-
     localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
   }
+
 
   static updateUserFavorites(email: string, newFavorites: string[]) {
     const all = this.getUsers();
@@ -226,11 +226,6 @@ export class UserService {
     localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
   }
 
-  hasAuth() {
-    return UserService.hasAuth();
-  }
-
-  // Movie v
 
   static createReservation(order: OrderModel) {
     const current = localStorage.getItem(this.ACTIVE_KEY);
@@ -268,6 +263,7 @@ export class UserService {
     localStorage.setItem(this.USERS_KEY, JSON.stringify(all));
   }
 
+
   static updateUser(updatedUser: {
     firstName: string;
     lastName: string;
@@ -280,27 +276,21 @@ export class UserService {
     if (!currentEmail) {
       throw new Error('No active user session found.');
     }
-
     const allUsers = this.getUsers();
 
     for (let user of allUsers) {
       if (user.email === currentEmail) {
-        // 1. Update primitive profile fields one by one
         user.firstName = updatedUser.firstName;
         user.lastName = updatedUser.lastName;
         user.phone = updatedUser.phone;
         user.address = updatedUser.address;
-
         if (user.email !== updatedUser.email) {
           user.email = updatedUser.email;
           localStorage.setItem(this.ACTIVE_KEY, user.email);
         }
-
-        break; // Stop looping once we found and updated our user
+        break;
       }
     }
-
-    // 3. Save the entire updated array back to local storage
     localStorage.setItem(this.USERS_KEY, JSON.stringify(allUsers));
   }
 }

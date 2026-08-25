@@ -25,22 +25,22 @@ intents:
   - show_cart
   - continue_shopping
   - order_toys
-  - latest_movies # MOVIES START HERE
-  - search_movies
-  - order_movie:
-      use_entities: [ ]  # mucim se 4 sata opet samo ovo mi je falilo,story nisam dirala bkv nis
-  - genre_list
-  - actor_list
-  - director_list
-  - order_cinema:
-      use_entities: [ ]
-  - order_hall:
-      use_entities: [ ]
-  - order_time:
-      use_entities: [ ]
-  - order_count:
-      use_entities: [ ]
-  - list_cinema
+#  - latest_movies # MOVIES START HERE
+#  - search_movies
+#  - order_movie:
+#      use_entities: [ ]  # mucim se 4 sata opet samo ovo mi je falilo,story nisam dirala bkv nis
+#  - genre_list
+#  - actor_list
+#  - director_list
+#  - order_cinema:
+#      use_entities: [ ]
+#  - order_hall:
+#      use_entities: [ ]
+#  - order_time:
+#      use_entities: [ ]
+#  - order_count:
+#      use_entities: [ ]
+#  - list_cinema
 
 
 entities:
@@ -54,14 +54,14 @@ entities:
   - toy_date
   - toy_rating
   - picked_toy
-  - search_criteria
-  - order_criteria
-  - movie_permalink
-  - cinema_criteria
-  - hall_criteria
-  - time_criteria
-  - count_criteria
-  - cinema_id
+#  - search_criteria
+#  - order_criteria
+#  - movie_permalink
+#  - cinema_criteria
+#  - hall_criteria
+#  - time_criteria
+#  - count_criteria
+#  - cinema_id
 
 slots:
   toy_name:
@@ -133,77 +133,77 @@ slots:
       - type: from_entity
         entity: picked_toy
 
-  search_criteria:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type : from_entity
-        entity: search_criteria
-
-  order_criteria:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: order_criteria
-
-  cinema_criteria:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: cinema_criteria
-
-  hall_criteria:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: hall_criteria
-
-  time_criteria:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: time_criteria
-
-  count_criteria:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: count_criteria
-
-  cinema_id:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: custom
-
-  hall_id:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: custom
-
-  time_id:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: custom
-
-  ticket_count:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: custom
-
-  movie_permalink:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: custom
+#  search_criteria:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type : from_entity
+#        entity: search_criteria
+#
+#  order_criteria:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type: from_entity
+#        entity: order_criteria
+#
+#  cinema_criteria:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type: from_entity
+#        entity: cinema_criteria
+#
+#  hall_criteria:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type: from_entity
+#        entity: hall_criteria
+#
+#  time_criteria:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type: from_entity
+#        entity: time_criteria
+#
+#  count_criteria:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type: from_entity
+#        entity: count_criteria
+#
+#  cinema_id:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type: custom
+#
+#  hall_id:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type: custom
+#
+#  time_id:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type: custom
+#
+#  ticket_count:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type: custom
+#
+#  movie_permalink:
+#    type: text
+#    influence_conversation: false
+#    mappings:
+#      - type: custom
 
 responses:
   utter_greet:
@@ -260,21 +260,21 @@ actions:
   - action_show_cart
   - action_keep_shopping
   - action_order_toys
-  - action_latest_movies # MOVIES START HERE
-  - action_search_movies
-  - action_genre_list
-  - action_actor_list
-  - action_director_list
-  - action_extract_movie
-  - action_select_cinema
-  - action_select_hall
-  - action_select_time
-  - action_select_count
-  - action_list_order
-  - action_place_order
-  - action_list_cinema
-  - action_list_hall
-  - action_list_time
+#  - action_latest_movies # MOVIES START HERE
+#  - action_search_movies
+#  - action_genre_list
+#  - action_actor_list
+#  - action_director_list
+#  - action_extract_movie
+#  - action_select_cinema
+#  - action_select_hall
+#  - action_select_time
+#  - action_select_count
+#  - action_list_order
+#  - action_place_order
+#  - action_list_cinema
+#  - action_list_hall
+#  - action_list_time
 
 
 session_config:
