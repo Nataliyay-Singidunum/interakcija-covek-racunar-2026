@@ -102,27 +102,6 @@
             </h5>
             <div class="card-body">
               <div class="card-title d-flex gap-1" (mouseleave)="onStarLeave()" >
-                <!--<button type="button" class="hover-box">                                            TEST VER
-                  <i class="fa-regular fa-star star-rating shown-element" style="color: #b9206b;"></i>
-                  <div class="hidden-element"> <i class="fa-solid fa-star" style="color: #b9206b;"></i></div>
-                </button>
-                <button class="hover-box">
-                  <i class="fa-regular fa-star star-rating shown-element" style="color: #b9206b;"></i>
-                  <div class="hidden-element"> <i class="fa-solid fa-star" style="color: #b9206b;"></i></div>
-                </button>
-                <button class="hover-box">
-                  <i class="fa-regular fa-star star-rating shown-element" style="color: #b9206b;"></i>
-                  <div class="hidden-element"> <i class="fa-solid fa-star" style="color: #b9206b;"></i></div>
-                </button>
-                <button class="hover-box">
-                  <i class="fa-regular fa-star star-rating shown-element" style="color: #b9206b;"></i>
-                  <div class="hidden-element"> <i class="fa-solid fa-star" style="color: #b9206b;"></i></div>
-                </button>
-                <button type="button" class="hover-box">
-                  <i class="fa-regular fa-star star-rating shown-element" style="color: #b9206b;"></i>
-                  <div class="hidden-element"> <i class="fa-solid fa-star" style="color: #b9206b;"></i></div>
-                </button>-->
-
                 @for (star of starArray; track $index) {
                   <button type="button" class="border-0 bg-transparent p-0 m-0" (click)="setRating(star)" (mouseenter)="onStarHover(star)" style="cursor: pointer;">
                     @if (star <= (hoveredRating || selectedRating)) {
@@ -154,35 +133,8 @@
     <h4>Reviews and Ratings</h4>
     <hr class="mb-0">
     <div class="row">
-<!--      <div class="col-12 col-md-6 mt-3">          OLD TEMPLATE
-        <div class="card">
-          <h5 class="card-header">
-            Review title
-          </h5>
-          <div class="card-body">
-            <p class="card-title"><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-regular fa-star" style="color: #b9206b;"></i></p>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <figcaption class="blockquote-footer">
-              User123
-            </figcaption>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-6 mt-3">
-        <div class="card">
-          <h5 class="card-header">
-            Review title
-          </h5>
-          <div class="card-body">
-            <p class="card-title"><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-solid fa-star" style="color: #b9206b;"></i><i class="fa-regular fa-star" style="color: #b9206b;"></i><i class="fa-regular fa-star" style="color: #b9206b;"></i></p>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <figcaption class="blockquote-footer">
-              User123
-            </figcaption>
-          </div>
-        </div>
-      </div>-->
-      @for (review of reviews(); track review.reviewId) {
+      @if( reviews().length > 0){
+        @for (review of reviews(); track review.reviewId) {
         <div class="col-12 col-md-6 mt-3" >
           <div class="card">
             <h5 class="card-header">
@@ -205,6 +157,9 @@
             </div>
           </div>
         </div>
+      }
+      } @else {
+        <p class="mt-5 mb-5  text-center">No reviews yet. Purchase this item and be the first to make a review!</p>
       }
     </div>
   </div>

@@ -90,7 +90,7 @@ stories:
 #      entities:
 #        - picked_toy
     - action: action_pick_toy
-    - intent: affirm
+    - intent: affirm      # ovde puca
     - action: action_add_to_cart
     - action: action_show_cart
     - action: utter_keep_shopping

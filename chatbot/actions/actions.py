@@ -391,8 +391,8 @@ class ActionAddToCart(Action):
           tracker: Tracker,
           domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-    picked_toy = tracker.get_slot("picked_toy")
-    print("action_pick_toy, picked_toy: ", picked_toy) # DEBUG
+    toy_permalink = tracker.get_slot("toy_permalink")
+    print("action_pick_toy, toy_permalink: ", toy_permalink) # DEBUG
     dispatcher.utter_message(text="Here are some new toys: action_add_to_cart ")
     return []
 
