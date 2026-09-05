@@ -23,6 +23,7 @@ nlu:
     - hello world
     - action hello world
 
+
 - intent: all_toys
   examples: |
     - show me all toys
@@ -44,6 +45,7 @@ nlu:
     - list toys
     - give me all toys
     - show me everything
+
 
 - intent: new_toys
   examples: |
@@ -71,6 +73,7 @@ nlu:
     - anything new added recently
     - bring up the newest toys
 
+
 - intent: toys_by_name
   examples: |
     - search by name [plišana panda](toy_name)
@@ -97,6 +100,7 @@ nlu:
     - (?<=do you have ).*
     - (?<=look up toy ).*
     - (?<=by name ).*
+
 
 - intent: toys_by_description
   examples: |
@@ -126,6 +130,7 @@ nlu:
     - (?<=descriptions matching ).*
     - (?<=with description ).*
 
+
 - intent: toys_by_type
   examples: |
     - search toys by type [slagalica](toy_type)
@@ -147,6 +152,7 @@ nlu:
     - (?<=any ).*
     - (?<=type ).*
     - (?<=category ).*
+
 
 - intent: toys_by_price
   examples: |
@@ -173,6 +179,7 @@ nlu:
     - (?<=range ).*
     - (?<=are ).*
 
+
 - intent: toys_by_age
   examples: |
     - search toys for age [3-5](toy_age)
@@ -197,6 +204,7 @@ nlu:
     - (?<=by age ).*
     - (?<=age range ).*
 
+
 - intent: toys_by_target_group
   examples: |
     - search toys for [devojčica](toy_target_group)
@@ -217,6 +225,7 @@ nlu:
     - (?<=toy for ).*
     - (?<=show me ).*(?= items)
     - (?<=suited for ).*
+
 
 - intent: toys_by_date
   examples: |
@@ -239,6 +248,7 @@ nlu:
     - (?<=production date ).*
     - (?<=released in ).*
     - (?<=dated ).*
+
 
 - intent: toys_by_rating
   examples: |
@@ -267,13 +277,13 @@ nlu:
     - (?<=review of ).*(?= or higher)
     - (?<=least ).*(?= rating)
 
+
 - intent: pick_toy
   examples: |
     - select by name [plišana panda](picked_toy)
     - pick [drvena slagalica životinje](picked_toy)
     - i want to buy [slikovnica životinje](picked_toy)
     - i want to add [monopol junior](picked_toy)
-    - add [lego classic set](picked_toy)
     - I'll take [plišana panda](picked_toy)
     - let's go with [monopol junior](picked_toy)
     - put [drvena slagalica životinje](picked_toy) in my cart
@@ -281,16 +291,13 @@ nlu:
     - choose [slikovnica životinje](picked_toy)
     - i want [plišana panda](picked_toy)
     - get me a [drvena slagalica životinje](picked_toy)
-    - add [monopol junior](picked_toy) to cart
     - grab [lego classic set](picked_toy)
-    - add [plišana panda](picked_toy) to my order
 
 - regex: picked_toy
   examples: |
     - (?<=toy called ).*
     - (?<=buy ).*
     - (?<=do you have ).*
-    - (?<=add ).*
     - (?<=by name ).*
     - (?<=take ).*
     - (?<=go with ).*
@@ -301,6 +308,7 @@ nlu:
     - (?<=get me a ).*
     - (?<=grab ).*
     - (?<=pick ).*
+
 
 - intent: add_to_cart
   examples: |
@@ -318,6 +326,7 @@ nlu:
     - put it in my shopping cart
     - I'll take this one
 
+
 - intent: show_cart
   examples: |
     - show me my cart
@@ -332,6 +341,7 @@ nlu:
     - what am I buying?
     - what is currently in my basket?
     - review my cart
+
 
 - intent: continue_shopping
   examples: |
@@ -356,6 +366,7 @@ nlu:
     - view more toys
     - back to the store
 
+
 - intent: order_toys
   examples: |
     - checkout
@@ -373,197 +384,6 @@ nlu:
     - process my order
     - finish shopping
 
-#- intent: latest_movies
-#  examples: |
-#    - recommend me some movies
-#    - give me some movies
-#    - can you recommend me
-#    - any chance you got some movies for me
-#    - anything new in the offer
-#    - anything fresh
-#    - can you give me some fresh movies
-#    - your recommendations
-#    - recommend movies
-#    - suggest some movies
-#    - movie recommendations
-#    - I want movie recommendations
-#    - show me some movies
-#    - list some movies
-#    - what are the latest movies
-#    - any new movies available
-#    - what movies are new
-#    - new movie releases
-#    - recently released movies
-#    - what’s new to watch
-#    - any fresh movie releases
-#    - got any good movies
-#    - any good movies to watch
-#    - what should I watch
-#    - what do you recommend watching
-#    - I’m looking for something to watch
-#    - surprise me with a movie
-#    - could you recommend some movies
-#    - can you suggest a movie for me
-#    - would you recommend any movies
-#    - do you have any movie suggestions
-#    - movies
-#    - new movies
-#    - recommendations
-#
-#
-#- intent: search_movies
-#  examples: |
-#    - search movies for [brutalista](search_criteria)
-#    - search movies for [inception](search_criteria)
-#    - search movies for [the godfather](search_criteria)
-#    - search movies for [interstellar](search_criteria)
-#    - please find movies by [tarantino](search_criteria)
-#    - movies like [avatar](search_criteria)
-#    - movies like [the matrix](search_criteria)
-#
-#
-#- regex: search_criteria
-#  examples: |
-#    - (?<=movies for ).*
-#    - (?<=movies by ).*
-#    - (?<=search for ).*
-#    - (?<=movies like ).*
-#
-#
-#- intent: order_movie
-#  examples: |
-#    - order movie [brutalista](order_criteria)
-#    - order movie name [inception](order_criteria)
-#    - order movie [the godfather](order_criteria)
-#    - order movie name [interstellar](order_criteria)
-#
-#- regex: order_criteria
-#  examples: |
-#    - (?<=movie name ).*
-#    - (?<=movie ).*
-#
-#- intent: order_cinema
-#  examples: |
-#    - order in cinema [usce](cinema_criteria)
-#    - order cinema [beo](cinema_criteria)
-#    - choose cinema [rajiceva](cinema_criteria)
-#    - select cinema [ada](cinema_criteria)
-#
-#- regex: cinema_criteria
-#  examples: |
-#    - (?<=in cinema ).*
-#    - (?<=cinema ).*
-#
-#
-#- intent: order_hall
-#  examples: |
-#    - order hall [velika](hall_criteria)
-#    - order hall name [mala](hall_criteria)
-#    - choose hall [privatana](hall_criteria)
-#    - choose hall name [srednja](hall_criteria)
-#    - select hall [velika](hall_criteria)
-#    - select hall name [privatana](hall_criteria)
-#
-#- regex: hall_criteria
-#  examples: |
-#    - (?<=hall name ).*
-#    - (?<=hall ).*
-#
-#- intent: order_time
-#  examples: |
-#    - order at [today](time_criteria)
-#    - choose time [now](time_criteria)
-#    - select time [tomorrow](time_criteria)
-#
-#- regex: time_criteria
-#  examples: |
-#    - (?<=at ).*
-#    - (?<=time ).*
-#
-#
-#- intent: order_count
-#  examples: |
-#    - order [1](count_criteria)
-#    - take [3](count_criteria)
-#
-#- regex: count_criteria
-#  examples: |
-#    - (?<=order ).*
-#    - (?<=take ).*
-#
-#
-#- intent: genre_list
-#  examples: |
-#    - list all genres
-#    - list movie genres
-#    - show all genres
-#    - show me all genres
-#    - what genres exist
-#    - what movie genres are available
-#    - which genres do you have
-#    - what kinds of movies are there
-#    - give me all the genres
-#    - give me the list of genres
-#    - can you list the genres
-#    - tell me the available genres
-#    - what genres can I choose from
-#    - what categories of movies exist
-#    - movie categories
-#    - film genres
-#    - available genres
-#    - genres
-#    - genre list
-#
-#
-#- intent: actor_list
-#  examples: |
-#    - list all actors
-#    - list movie actors
-#    - show all actors
-#    - show me all actors
-#    - what actors are available
-#    - which actors do you have
-#    - give me a list of actors
-#    - give me all the actors
-#    - can you list the actors
-#    - tell me the actors
-#    - actor list
-#    - actors
-#    - available actors
-#    - movie actors
-#    - film actors
-#    - what actors exist
-#    - who are the actors
-#    - which movie actors are there
-#
-#
-#- intent: director_list
-#  examples: |
-#    - list all directors
-#    - list movie directors
-#    - show all directors
-#    - show me all directors
-#    - what directors are available
-#    - which directors do you have
-#    - give me a list of directors
-#    - give me all the directors
-#    - can you list the directors
-#    - tell me the directors
-#    - director list
-#    - directors
-#    - available directors
-#    - movie directors
-#    - film directors
-#    - what directors exist
-#    - who are the directors
-#    - which movie directors are there
-#
-## debug
-#- intent: list_cinema
-#  examples: |
-#    - list cinemas
-#    - cinemas
-#    - what cinemas are there
 
 - intent: goodbye
   examples: |
@@ -607,6 +427,34 @@ nlu:
     - don't like that
     - no way
     - not really
+
+
+- intent: thanks
+  examples: |
+    - thanks
+    - thank you
+    - thankss
+    - thanksss
+    - thankie
+    - ty
+    - tyyy
+    - thanks a lot
+    - thank you so much
+    - thanks a million
+    - i appreciate it
+    - appreciated
+    - much appreciated
+    - thanks bot
+    - thnx
+    - tnx
+    - cheers
+    - thank u
+    - perfect thanks
+    - great thanks
+    - cool thanks
+    - you're the best
+    - thanks for the help
+    - awesome thanks
 
 
 - intent: mood_great

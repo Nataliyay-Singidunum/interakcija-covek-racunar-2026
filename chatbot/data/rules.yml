@@ -7,6 +7,11 @@ rules:
   - intent: goodbye
   - action: utter_goodbye
 
+- rule: Say you're welcome
+  steps:
+    - intent: thanks
+    - action: utter_youre_welcome
+
 - rule: Say 'I am a bot' anytime the user challenges
   steps:
   - intent: bot_challenge
@@ -27,10 +32,10 @@ rules:
       - intent: new_toys
       - action: action_new_toys
 
-#- rule: Show toys by name
-#  steps:
-#    - intent: toys_by_name
-#    - action: action_toys_by_name
+- rule: Show toys by name
+  steps:
+    - intent: toys_by_name
+    - action: action_toys_by_name
 
 - rule: Show toys by description
   steps:
@@ -81,36 +86,3 @@ rules:
   steps:
     - intent: order_toys
     - action: action_order_toys
-#
-#- rule: Search movies
-#  steps:
-#    - intent: search_movies
-#    - action: action_search_movies
-#
-#- rule: Recommend movies
-#  steps:
-#    - intent: latest_movies
-#    - action: action_latest_movies
-#
-#- rule: List genres
-#  steps:
-#    - intent: genre_list
-#    - action: action_genre_list
-#
-#- rule: List actors
-#  steps:
-#    - intent: actor_list
-#    - action: action_actor_list
-#
-#- rule: List directors
-#  steps:
-#    - intent: director_list
-#    - action: action_director_list
-#
-## debug
-#- rule: List cinemas
-#  steps:
-#    - intent: list_cinema
-#    - action: action_list_cinema
-#
-

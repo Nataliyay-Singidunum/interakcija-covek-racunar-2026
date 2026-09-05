@@ -9,6 +9,9 @@ export interface RasaModel {
       | 'director_list'
       | 'order_movie'
       | 'simple_list'
+      | 'cart_item'
+      | 'show_cart'
+      | 'place_order'
       | 'create_order';
     data: any;
   };

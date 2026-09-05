@@ -5,6 +5,7 @@ intents:
   - goodbye
   - affirm
   - deny
+  - thanks
   - mood_great
   - mood_unhappy
   - bot_challenge
@@ -25,22 +26,6 @@ intents:
   - show_cart
   - continue_shopping
   - order_toys
-#  - latest_movies # MOVIES START HERE
-#  - search_movies
-#  - order_movie:
-#      use_entities: [ ]  # mucim se 4 sata opet samo ovo mi je falilo,story nisam dirala bkv nis
-#  - genre_list
-#  - actor_list
-#  - director_list
-#  - order_cinema:
-#      use_entities: [ ]
-#  - order_hall:
-#      use_entities: [ ]
-#  - order_time:
-#      use_entities: [ ]
-#  - order_count:
-#      use_entities: [ ]
-#  - list_cinema
 
 
 entities:
@@ -54,14 +39,7 @@ entities:
   - toy_date
   - toy_rating
   - picked_toy
-#  - search_criteria
-#  - order_criteria
-#  - movie_permalink
-#  - cinema_criteria
-#  - hall_criteria
-#  - time_criteria
-#  - count_criteria
-#  - cinema_id
+
 
 slots:
   toy_name:
@@ -133,77 +111,6 @@ slots:
       - type: from_entity
         entity: picked_toy
 
-#  search_criteria:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type : from_entity
-#        entity: search_criteria
-#
-#  order_criteria:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type: from_entity
-#        entity: order_criteria
-#
-#  cinema_criteria:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type: from_entity
-#        entity: cinema_criteria
-#
-#  hall_criteria:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type: from_entity
-#        entity: hall_criteria
-#
-#  time_criteria:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type: from_entity
-#        entity: time_criteria
-#
-#  count_criteria:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type: from_entity
-#        entity: count_criteria
-#
-#  cinema_id:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type: custom
-#
-#  hall_id:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type: custom
-#
-#  time_id:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type: custom
-#
-#  ticket_count:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type: custom
-#
-#  movie_permalink:
-#    type: text
-#    influence_conversation: false
-#    mappings:
-#      - type: custom
 
 responses:
   utter_greet:
@@ -225,6 +132,12 @@ responses:
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
 
+  utter_sorry:
+    - text: "Sorry, please try to find your toy again. "
+
+  utter_youre_welcome:
+    - text: "Np!! hihi ^^ "
+
   utter_confirm_order:
   - text: "Please confirm your order: "
 
@@ -238,7 +151,7 @@ responses:
     - text: "Would you like to continue shopping? "
 
   utter_order_toys:
-    - text: "Would you like to check out your current cart? "
+    - text: "Would you like to place an order? "
 
   utter_cart_saved:
     - text: "No worries, your cart has been saved. You can come back to check out any time! "
@@ -260,21 +173,6 @@ actions:
   - action_show_cart
   - action_keep_shopping
   - action_order_toys
-#  - action_latest_movies # MOVIES START HERE
-#  - action_search_movies
-#  - action_genre_list
-#  - action_actor_list
-#  - action_director_list
-#  - action_extract_movie
-#  - action_select_cinema
-#  - action_select_hall
-#  - action_select_time
-#  - action_select_count
-#  - action_list_order
-#  - action_place_order
-#  - action_list_cinema
-#  - action_list_hall
-#  - action_list_time
 
 
 session_config:

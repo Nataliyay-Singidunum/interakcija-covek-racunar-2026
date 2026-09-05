@@ -5,7 +5,6 @@ import { Utils } from './utils';
 import { MessageModel } from '../models/message.model';
 import { RasaService } from '../services/rasa.service';
 import { FormsModule } from '@angular/forms';
-import { AxiosResponse } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { ToyModel } from '../models/toy.model';
 import { DecimalPipe } from '@angular/common';
@@ -55,7 +54,6 @@ export class App {
     const sum = revs.reduce((total, review) => total + review.rating, 0);
     return sum / revs.length;
   }
-
 
 
   async sendUserMessage() {
@@ -216,7 +214,7 @@ export class App {
             }
 
 
-            // Simple list (array)
+            // simple list
             if (message.attachment.type == 'simple_list') {
               let html = `<ul class='list-unstyled'>`;
               for (let obj of message.attachment.data) {
@@ -226,6 +224,83 @@ export class App {
               this.messages.push({
                 type: 'bot',
                 text: html,
+              });
+            }
+
+            // add to cart
+            if (message.attachment.type == 'cart_item') {
+              let toy = message.attachment.data;
+
+              UserService.createCartItem({
+                item: toy,
+                quantity: 1,
+                status: 'na'
+              })
+
+              let confirmation = "Cart updated!";
+              this.messages.push({
+                type: 'bot',
+                text: confirmation,
+              });
+            }
+
+
+            // show cart
+            if (message.attachment.type == 'show_cart') {
+              let html = '';
+              const user = UserService.getActiveUser();
+              let activeCart = null;
+
+              if (user && user.data) {
+                for (let order of user.data) {
+                  if (order.items.status === 'active') {
+                    activeCart = order.items;
+                    break;
+                  }
+                }
+              }
+
+              if (!activeCart || !activeCart.cartItems || activeCart.cartItems.length === 0) {
+                html =
+                  '<i>Your cart is currently empty! You can add toys on the starting page.</i>';
+              } else {
+                html = '<ul class="m-1 p-0">';
+                let total = 0;
+
+                for (let cartItem of activeCart.cartItems) {
+                  let toy = cartItem.item;
+                  let qty = cartItem.quantity;
+                  let itemTotal = toy.price * qty;
+                  total += itemTotal;
+
+                  html += `<li class="d-flex justify-content-between gap-2">
+                    <div class="mb-1" style="margin-right: 5px">
+                      <p class="my-0">${toy.name}</p>
+                      <small class="text-muted">Quantity: ${qty}</small>
+                    </div>
+                    <span class="text-muted">${this.decimalPipe.transform(itemTotal, '1.2-2')} RSD</span>
+                  </li>`;
+                }
+                html += `<li class="d-flex justify-content-between" style="background: rgb(185 32 107 / 0.1)">
+                <span><b>Total price</b></span>
+                <strong>${this.decimalPipe.transform(total, '1.2-2')} RSD</strong>
+                </li>`;
+                html += '</ul>';
+              }
+              this.messages.push({
+                type: 'bot',
+                text: html,
+              });
+            }
+
+            if (message.attachment.type == 'place_order') {
+
+              UserService.createOrder()
+
+              let confirmation = 'Order placed!';
+              this.messages.push({
+                type: 'bot',
+                text: confirmation,
               });
             }
 
